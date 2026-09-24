@@ -289,6 +289,17 @@ input {
       <button onclick="resetDesign()">
         Zurücksetzen
       </button>
+      <button onclick="changeSize(-0.1)">
+  − Kleiner
+</button>
+
+<button onclick="changeSize(0.1)">
+  + Größer
+</button>
+
+<button onclick="rotateGarment()">
+  ↻ Drehen
+</button>
     </div>
 
   </div>
@@ -420,7 +431,26 @@ function makeDraggable(element) {
   element.addEventListener("pointercancel", function() {
     dragging = false;
   });
+}let garmentScale = 1;
+let garmentRotation = 0;
+
+function updateGarmentTransform() {
+  garment.style.transform =
+    `scale(${garmentScale}) rotate(${garmentRotation}deg)`;
 }
+
+function changeSize(amount) {
+  garmentScale += amount;
+
+  if (garmentScale < 0.5) garmentScale = 0.5;
+  if (garmentScale > 1.6) garmentScale = 1.6;
+
+  updateGarmentTransform();
+}
+
+function rotateGarment() {
+  garmentRotation += 15;
+  updateGarmentTransform()
 
 function saveDesign() {
 
