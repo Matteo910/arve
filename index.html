@@ -1,1 +1,469 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arvé</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0f0d;
+  color: #f1eee5;
+}
+
+header {
+  padding: 22px;
+  text-align: center;
+  border-bottom: 1px solid #303831;
+}
+
+.logo {
+  font-size: 32px;
+  letter-spacing: 6px;
+  font-weight: bold;
+}
+
+.subtitle {
+  color: #aaa99f;
+  margin-top: 6px;
+}
+
+.app {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.panel {
+  background: #121814;
+  border: 1px solid #303831;
+  border-radius: 16px;
+  padding: 15px;
+}
+
+.panel h3 {
+  margin-top: 0;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: #d8d2c4;
+}
+
+button {
+  background: #1d2720;
+  color: #f1eee5;
+  border: 1px solid #465148;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #29372d;
+}
+
+button.active {
+  background: #5b1f2a;
+  border-color: #8d4655;
+}
+
+.colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.color {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 2px solid #777;
+  cursor: pointer;
+}
+
+.workspace {
+  min-height: 600px;
+  background: #171c18;
+  border: 1px solid #303831;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+}
+
+.clothing-area {
+  position: relative;
+  width: 330px;
+  height: 430px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.garment {
+  width: 260px;
+  height: 320px;
+  background: #f1eee5;
+  clip-path: polygon(
+    25% 5%,
+    42% 0%,
+    50% 12%,
+    58% 0%,
+    75% 5%,
+    100% 28%,
+    84% 43%,
+    74% 30%,
+    74% 100%,
+    26% 100%,
+    26% 30%,
+    16% 43%,
+    0% 28%
+  );
+  position: relative;
+  transition: 0.3s;
+}
+
+.garment.shirt {
+  height: 350px;
+}
+
+.garment.pants {
+  width: 240px;
+  height: 350px;
+  clip-path: polygon(
+    15% 0,
+    85% 0,
+    100% 100%,
+    58% 100%,
+    50% 55%,
+    42% 100%,
+    0 100%
+  );
+}
+
+.garment.pattern {
+  background-image:
+    linear-gradient(45deg, rgba(0,0,0,.15) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(0,0,0,.15) 25%, transparent 25%);
+  background-size: 30px 30px;
+}
+
+.element {
+  position: absolute;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  z-index: 5;
+}
+
+.design-text {
+  font-size: 25px;
+  font-weight: bold;
+  color: #111;
+}
+
+.sticker {
+  font-size: 45px;
+}
+
+input {
+  width: 100%;
+  padding: 11px;
+  border-radius: 9px;
+  border: 1px solid #465148;
+  background: #0b0f0d;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.status {
+  text-align: center;
+  color: #aaa99f;
+  margin-top: 15px;
+}
+
+@media (min-width: 800px) {
+  .controls {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">ARVÉ</div>
+  <div class="subtitle">Design your own clothing</div>
+</header>
+
+<div class="app">
+
+  <div class="controls">
+
+    <div class="panel">
+      <h3>KLEIDUNG</h3>
+
+      <button onclick="setGarment('tshirt')" id="tshirtBtn" class="active">
+        T-Shirt
+      </button>
+
+      <button onclick="setGarment('shirt')" id="shirtBtn">
+        Hemd
+      </button>
+
+      <button onclick="setGarment('pants')" id="pantsBtn">
+        Hose
+      </button>
+    </div>
+
+    <div class="panel">
+      <h3>FARBE</h3>
+
+      <div class="colors">
+
+        <div class="color" style="background:#f1eee5"
+             onclick="changeColor('#f1eee5')"></div>
+
+        <div class="color" style="background:#111111"
+             onclick="changeColor('#111111')"></div>
+
+        <div class="color" style="background:#173326"
+             onclick="changeColor('#173326')"></div>
+
+        <div class="color" style="background:#5b1f2a"
+             onclick="changeColor('#5b1f2a')"></div>
+
+        <div class="color" style="background:#777777"
+             onclick="changeColor('#777777')"></div>
+
+        <div class="color" style="background:#c9b58a"
+             onclick="changeColor('#c9b58a')"></div>
+
+      </div>
+
+      <button onclick="togglePattern()">
+        Muster
+      </button>
+    </div>
+
+    <div class="panel">
+      <h3>DESIGN</h3>
+
+      <input id="textInput" placeholder="Text eingeben...">
+
+      <button onclick="addText()">
+        Text hinzufügen
+      </button>
+
+      <button onclick="addSticker('★')">
+        ★
+      </button>
+
+      <button onclick="addSticker('✦')">
+        ✦
+      </button>
+
+      <button onclick="addSticker('◆')">
+        ◆
+      </button>
+
+      <button onclick="saveDesign()">
+        Design speichern
+      </button>
+
+      <button onclick="resetDesign()">
+        Zurücksetzen
+      </button>
+    </div>
+
+  </div>
+
+  <div class="workspace">
+
+    <div class="clothing-area" id="clothingArea">
+
+      <div class="garment" id="garment"></div>
+
+    </div>
+
+  </div>
+
+  <div class="status" id="status">
+    Elemente kannst du mit dem Finger verschieben.
+  </div>
+
+</div>
+
+<script>
+
+const garment = document.getElementById("garment");
+const clothingArea = document.getElementById("clothingArea");
+const statusText = document.getElementById("status");
+
+function setGarment(type) {
+
+  garment.className = "garment";
+
+  if (type === "shirt") {
+    garment.classList.add("shirt");
+  }
+
+  if (type === "pants") {
+    garment.classList.add("pants");
+  }
+
+  document.querySelectorAll(".panel:first-child button")
+    .forEach(button => button.classList.remove("active"));
+
+  document.getElementById(type + "Btn").classList.add("active");
+}
+
+function changeColor(color) {
+  garment.style.backgroundColor = color;
+}
+
+function togglePattern() {
+  garment.classList.toggle("pattern");
+}
+
+function addText() {
+
+  const input = document.getElementById("textInput");
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  const element = document.createElement("div");
+
+  element.className = "element design-text";
+  element.textContent = text;
+
+  element.style.left = "120px";
+  element.style.top = "180px";
+
+  clothingArea.appendChild(element);
+
+  makeDraggable(element);
+
+  input.value = "";
+}
+
+function addSticker(symbol) {
+
+  const element = document.createElement("div");
+
+  element.className = "element sticker";
+  element.textContent = symbol;
+
+  element.style.left = "135px";
+  element.style.top = "220px";
+
+  clothingArea.appendChild(element);
+
+  makeDraggable(element);
+}
+
+function makeDraggable(element) {
+
+  let dragging = false;
+  let startX = 0;
+  let startY = 0;
+  let startLeft = 0;
+  let startTop = 0;
+
+  element.addEventListener("pointerdown", function(event) {
+
+    dragging = true;
+
+    startX = event.clientX;
+    startY = event.clientY;
+
+    startLeft = element.offsetLeft;
+    startTop = element.offsetTop;
+
+    element.setPointerCapture(event.pointerId);
+  });
+
+  element.addEventListener("pointermove", function(event) {
+
+    if (!dragging) return;
+
+    const newLeft =
+      startLeft + (event.clientX - startX);
+
+    const newTop =
+      startTop + (event.clientY - startY);
+
+    element.style.left = newLeft + "px";
+    element.style.top = newTop + "px";
+  });
+
+  element.addEventListener("pointerup", function() {
+    dragging = false;
+  });
+
+  element.addEventListener("pointercancel", function() {
+    dragging = false;
+  });
+}
+
+function saveDesign() {
+
+  const design = {
+    garmentColor: garment.style.backgroundColor,
+    garmentClass: garment.className,
+    elements: []
+  };
+
+  document.querySelectorAll(".element").forEach(element => {
+
+    design.elements.push({
+      text: element.textContent,
+      className: element.className,
+      left: element.style.left,
+      top: element.style.top
+    });
+
+  });
+
+  localStorage.setItem(
+    "arveDesign",
+    JSON.stringify(design)
+  );
+
+  statusText.textContent = "✓ Dein Arvé-Design wurde gespeichert.";
+}
+
+function resetDesign() {
+
+  garment.style.backgroundColor = "#f1eee5";
+  garment.className = "garment";
+
+  document.querySelectorAll(".element").forEach(element => {
+    element.remove();
+  });
+
+  statusText.textContent =
+    "Design zurückgesetzt.";
+}
+
+</script>
+
+</body>
+</html>
 
