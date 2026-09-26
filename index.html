@@ -1,452 +1,269 @@
 <!DOCTYPE html>
 <html lang="de">
-  
-<head>
- {
-    --arve-black: #080908;
-    --arve-dark: #101411;
-    --arve-green: #17382d;
-    --arve-green-light: #244d3d;
-    --arve-wine: #641f2b;
-    --arve-cream: #eee6d4;
-    --arve-gold: #b8a16a;
-    --arve-border: rgba(184, 161, 106, 0.35);
-}
 
-body {
-    margin: 0;
-    background:
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arvé</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --arve-black: #080908;
+      --arve-dark: #101411;
+      --arve-green: #17382d;
+      --arve-green-light: #244d3d;
+      --arve-wine: #641f2b;
+      --arve-cream: #eee6d4;
+      --arve-gold: #b8a16a;
+      --arve-border: rgba(184, 161, 106, 0.35);
+    }
+
+    body {
+      margin: 0;
+      background:
         radial-gradient(circle at 50% 0%, #16251e 0%, transparent 45%),
         var(--arve-black);
-    color: var(--arve-cream);
-    font-family: Georgia, "Times New Roman", serif;
-}
+      color: var(--arve-cream);
+      font-family: Georgia, "Times New Roman", serif;
+    }
 
-/* Hauptbereich */
+    header {
+      padding: 22px;
+      text-align: center;
+      border-bottom: 1px solid #303831;
+    }
 
-#app,
-.app,
-.container {
-    background: transparent;
-    color: var(--arve-cream);
-}
+    .logo {
+      font-size: 32px;
+      letter-spacing: 6px;
+      font-weight: bold;
+    }
 
-/* Überschriften */
+    .subtitle {
+      color: #aaa99f;
+      margin-top: 6px;
+    }
 
-h1, h2, h3 {
-    font-family: Georgia, "Times New Roman", serif;
-    letter-spacing: 2px;
-    font-weight: 500;
-}
+    .app {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+    }
 
-/* ARVÉ Logo */
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
 
-.arve-logo,
-.logo {
-    color: var(--arve-cream);
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    text-shadow: 0 0 20px rgba(184,161,106,.15);
-}
+    .panel {
+      background: #121814;
+      border: 1px solid var(--arve-border);
+      border-radius: 16px;
+      padding: 15px;
+    }
 
-/* Design-Fläche */
-
-#canvas {
-    background:
-        radial-gradient(circle at center, rgba(36,77,61,.22), transparent 60%),
-        #0c100e;
-    border: 1px solid var(--arve-border);
-    border-radius: 24px;
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.5),
-        inset 0 0 40px rgba(0,0,0,.25);
-}
-
-/* Kleidungsstück */
-
-#shirt {
-    transition:
-        filter .25s ease,
-        transform .2s ease;
-}
-
-/* Buttons */
-
-button {
-    font-family: Georgia, "Times New Roman", serif;
-    border: 1px solid var(--arve-border);
-    background: #111612;
-    color: var(--arve-cream);
-    border-radius: 14px;
-    padding: 11px 16px;
-    cursor: pointer;
-    transition: .2s ease;
-}
-
-button:hover {
-    background: var(--arve-green);
-    border-color: var(--arve-gold);
-    transform: translateY(-1px);
-}
-
-button:active {
-    transform: scale(.97);
-}
-
-/* Primärer Button */
-
-.primary-button {
-    background: var(--arve-green);
-    border-color: var(--arve-gold);
-}
-
-.primary-button:hover {
-    background: var(--arve-green-light);
-}
-
-/* Toolbar */
-
-.toolbar {
-    background: rgba(8,9,8,.88);
-    border: 1px solid var(--arve-border);
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
-}
-
-/* Werkzeug-Buttons */
-
-.tool-button {
-    background: transparent;
-    border: 1px solid transparent;
-}
-
-.tool-button:hover,
-.tool-button.active {
-    background: rgba(23,56,45,.8);
-    border-color: var(--arve-gold);
-}
-
-/* Design-Elemente */
-
-.design-element {
-    cursor: grab;
-    touch-action: none;
-}
-
-.design-element:active {
-    cursor: grabbing;
-}
-
-/* Auswahl */
-
-.design-element.selected {
-    outline: 1px solid var(--arve-gold);
-    outline-offset: 5px;
-}
-
-/* Handles */
-
-.handle {
-    background: var(--arve-cream);
-    border: 2px solid var(--arve-green);
-    box-shadow: 0 0 10px rgba(184,161,106,.35);
-}
-
-/* Farbbuttons */
-
-.color-button {
-    width: 34px;
-    height: 34px;
-    padding: 0;
-    border-radius: 50%;
-    border: 2px solid rgba(238,230,212,.25);
-}
-
-.color-button:hover {
-    border-color: var(--arve-gold);
-}
-
-/* Weinrot */
-
-.wine {
-    background: var(--arve-wine);
-}
-
-/* Dunkelgrün */
-
-.dark-green {
-    background: var(--arve-green);
-}
-
-/* Schwarz */
-
-.black {
-    background: #050505;
-}
-
-/* Creme */
-
-.cream {
-    background: var(--arve-cream);
-}
-
-/* Gold */
-
-.gold {
-    background: var(--arve-gold);
-}
-
-/* Karten */
-
-.card {
-    background: linear-gradient(
-        145deg,
-        rgba(23,56,45,.45),
-        rgba(8,9,8,.9)
-    );
-    border: 1px solid var(--arve-border);
-    border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(0,0,0,.3);
-}
-
-/* Scrollbar */
-
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--arve-black);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--arve-green);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--arve-gold);
-}
-
-/* Mobile */
-
-@media (max-width: 600px) {
-
-    #canvas {
-        border-radius: 18px;
+    .panel h3 {
+      margin-top: 0;
+      font-size: 15px;
+      letter-spacing: 1px;
+      color: #d8d2c4;
     }
 
     button {
-        padding: 10px 13px;
+      font-family: Georgia, "Times New Roman", serif;
+      background: #1d2720;
+      color: var(--arve-cream);
+      border: 1px solid #465148;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin: 4px;
+      cursor: pointer;
+      transition: 0.2s ease;
     }
 
-    h1 {
-        font-size: 26px;
+    button:hover {
+      background: var(--arve-green);
+      border-color: var(--arve-gold);
+      transform: translateY(-1px);
     }
-}
-</style>
-  
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arvé</title>
 
-<style>
-* {
-  box-sizing: border-box;
-}
+    button:active {
+      transform: scale(0.97);
+    }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0f0d;
-  color: #f1eee5;
-}
+    button.active {
+      background: var(--arve-wine);
+      border-color: #8d4655;
+    }
 
-header {
-  padding: 22px;
-  text-align: center;
-  border-bottom: 1px solid #303831;
-}
+    .colors {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
 
-.logo {
-  font-size: 32px;
-  letter-spacing: 6px;
-  font-weight: bold;
-}
+    .color {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      border: 2px solid #777;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-.subtitle {
-  color: #aaa99f;
-  margin-top: 6px;
-}
+    .color:hover {
+      border-color: var(--arve-gold);
+      transform: scale(1.08);
+    }
 
-.app {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
-}
+    .workspace {
+      min-height: 600px;
+      background:
+        radial-gradient(circle at center, rgba(36,77,61,.22), transparent 60%),
+        #0c100e;
+      border: 1px solid var(--arve-border);
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.5),
+        inset 0 0 40px rgba(0,0,0,.25);
+    }
 
-.controls {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-bottom: 20px;
-}
+    .clothing-area {
+      position: relative;
+      width: 330px;
+      height: 430px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-.panel {
-  background: #121814;
-  border: 1px solid #303831;
-  border-radius: 16px;
-  padding: 15px;
-}
+    .garment {
+      width: 260px;
+      height: 320px;
+      background: #f1eee5;
 
-.panel h3 {
-  margin-top: 0;
-  font-size: 15px;
-  letter-spacing: 1px;
-  color: #d8d2c4;
-}
+      clip-path: polygon(
+        25% 5%,
+        42% 0%,
+        50% 12%,
+        58% 0%,
+        75% 5%,
+        100% 28%,
+        84% 43%,
+        74% 30%,
+        74% 100%,
+        26% 100%,
+        26% 30%,
+        16% 43%,
+        0% 28%
+      );
 
-button {
-  background: #1d2720;
-  color: #f1eee5;
-  border: 1px solid #465148;
-  border-radius: 10px;
-  padding: 10px 14px;
-  margin: 4px;
-  cursor: pointer;
-}
+      position: relative;
+      transition: transform 0.2s ease;
+      transform-origin: center;
+    }
 
-button:hover {
-  background: #29372d;
-}
+    .garment.shirt {
+      height: 350px;
+    }
 
-button.active {
-  background: #5b1f2a;
-  border-color: #8d4655;
-}
+    .garment.pants {
+      width: 240px;
+      height: 350px;
 
-.colors {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
+      clip-path: polygon(
+        15% 0,
+        85% 0,
+        100% 100%,
+        58% 100%,
+        50% 55%,
+        42% 100%,
+        0 100%
+      );
+    }
 
-.color {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  border: 2px solid #777;
-  cursor: pointer;
-}
+    .garment.pattern {
+      background-image:
+        linear-gradient(
+          45deg,
+          rgba(0,0,0,.15) 25%,
+          transparent 25%
+        ),
+        linear-gradient(
+          -45deg,
+          rgba(0,0,0,.15) 25%,
+          transparent 25%
+        );
 
-.workspace {
-  min-height: 600px;
-  background: #171c18;
-  border: 1px solid #303831;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 25px;
-}
+      background-size: 30px 30px;
+    }
 
-.clothing-area {
-  position: relative;
-  width: 330px;
-  height: 430px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    .element {
+      position: absolute;
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+      z-index: 5;
+    }
 
-.garment {
-  width: 260px;
-  height: 320px;
-  background: #f1eee5;
-  clip-path: polygon(
-    25% 5%,
-    42% 0%,
-    50% 12%,
-    58% 0%,
-    75% 5%,
-    100% 28%,
-    84% 43%,
-    74% 30%,
-    74% 100%,
-    26% 100%,
-    26% 30%,
-    16% 43%,
-    0% 28%
-  );
-  position: relative;
-  transition: 0.3s;
-}
+    .element:active {
+      cursor: grabbing;
+    }
 
-.garment.shirt {
-  height: 350px;
-}
+    .design-text {
+      font-size: 25px;
+      font-weight: bold;
+      color: #111;
+      white-space: nowrap;
+    }
 
-.garment.pants {
-  width: 240px;
-  height: 350px;
-  clip-path: polygon(
-    15% 0,
-    85% 0,
-    100% 100%,
-    58% 100%,
-    50% 55%,
-    42% 100%,
-    0 100%
-  );
-}
+    .sticker {
+      font-size: 45px;
+    }
 
-.garment.pattern {
-  background-image:
-    linear-gradient(45deg, rgba(0,0,0,.15) 25%, transparent 25%),
-    linear-gradient(-45deg, rgba(0,0,0,.15) 25%, transparent 25%);
-  background-size: 30px 30px;
-}
+    input {
+      width: 100%;
+      padding: 11px;
+      border-radius: 9px;
+      border: 1px solid #465148;
+      background: #0b0f0d;
+      color: white;
+      margin-bottom: 8px;
+    }
 
-.element {
-  position: absolute;
-  cursor: grab;
-  user-select: none;
-  touch-action: none;
-  z-index: 5;
-}
+    .status {
+      text-align: center;
+      color: #aaa99f;
+      margin-top: 15px;
+    }
 
-.design-text {
-  font-size: 25px;
-  font-weight: bold;
-  color: #111;
-}
+    @media (min-width: 800px) {
+      .controls {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
 
-.sticker {
-  font-size: 45px;
-}
+    @media (max-width: 600px) {
+      .workspace {
+        min-height: 500px;
+        padding: 15px;
+      }
 
-input {
-  width: 100%;
-  padding: 11px;
-  border-radius: 9px;
-  border: 1px solid #465148;
-  background: #0b0f0d;
-  color: white;
-  margin-bottom: 8px;
-}
-
-.status {
-  text-align: center;
-  color: #aaa99f;
-  margin-top: 15px;
-}
-
-@media (min-width: 800px) {
-  .controls {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-</style>
+      .clothing-area {
+        transform: scale(0.9);
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -481,22 +298,28 @@ input {
 
       <div class="colors">
 
-        <div class="color" style="background:#f1eee5"
+        <div class="color"
+             style="background:#f1eee5"
              onclick="changeColor('#f1eee5')"></div>
 
-        <div class="color" style="background:#111111"
+        <div class="color"
+             style="background:#111111"
              onclick="changeColor('#111111')"></div>
 
-        <div class="color" style="background:#173326"
+        <div class="color"
+             style="background:#173326"
              onclick="changeColor('#173326')"></div>
 
-        <div class="color" style="background:#5b1f2a"
+        <div class="color"
+             style="background:#5b1f2a"
              onclick="changeColor('#5b1f2a')"></div>
 
-        <div class="color" style="background:#777777"
+        <div class="color"
+             style="background:#777777"
              onclick="changeColor('#777777')"></div>
 
-        <div class="color" style="background:#c9b58a"
+        <div class="color"
+             style="background:#c9b58a"
              onclick="changeColor('#c9b58a')"></div>
 
       </div>
@@ -509,7 +332,10 @@ input {
     <div class="panel">
       <h3>DESIGN</h3>
 
-      <input id="textInput" placeholder="Text eingeben...">
+      <input
+        id="textInput"
+        placeholder="Text eingeben..."
+      >
 
       <button onclick="addText()">
         Text hinzufügen
@@ -527,6 +353,22 @@ input {
         ◆
       </button>
 
+      <br>
+
+      <button onclick="changeSize(-0.1)">
+        − Kleiner
+      </button>
+
+      <button onclick="changeSize(0.1)">
+        + Größer
+      </button>
+
+      <button onclick="rotateGarment()">
+        ↻ Drehen
+      </button>
+
+      <br>
+
       <button onclick="saveDesign()">
         Design speichern
       </button>
@@ -534,17 +376,6 @@ input {
       <button onclick="resetDesign()">
         Zurücksetzen
       </button>
-      <button onclick="changeSize(-0.1)">
-  − Kleiner
-</button>
-
-<button onclick="changeSize(0.1)">
-  + Größer
-</button>
-
-<button onclick="rotateGarment()">
-  ↻ Drehen
-</button>
     </div>
 
   </div>
@@ -571,6 +402,9 @@ const garment = document.getElementById("garment");
 const clothingArea = document.getElementById("clothingArea");
 const statusText = document.getElementById("status");
 
+let garmentScale = 1;
+let garmentRotation = 0;
+
 function setGarment(type) {
 
   garment.className = "garment";
@@ -583,31 +417,56 @@ function setGarment(type) {
     garment.classList.add("pants");
   }
 
-  document.querySelectorAll(".panel:first-child button")
-    .forEach(button => button.classList.remove("active"));
+  document
+    .querySelectorAll(".panel:first-child button")
+    .forEach(button => {
+      button.classList.remove("active");
+    });
 
-  document.getElementById(type + "Btn").classList.add("active");
+  document
+    .getElementById(type + "Btn")
+    .classList.add("active");
+
+  statusText.textContent =
+    "Kleidungsstück geändert.";
 }
 
 function changeColor(color) {
+
   garment.style.backgroundColor = color;
+
+  statusText.textContent =
+    "Farbe geändert.";
 }
 
 function togglePattern() {
+
   garment.classList.toggle("pattern");
+
+  statusText.textContent =
+    garment.classList.contains("pattern")
+      ? "Muster aktiviert."
+      : "Muster deaktiviert.";
 }
 
 function addText() {
 
-  const input = document.getElementById("textInput");
-  const text = input.value.trim();
+  const input =
+    document.getElementById("textInput");
+
+  const text =
+    input.value.trim();
 
   if (!text) return;
 
-  const element = document.createElement("div");
+  const element =
+    document.createElement("div");
 
-  element.className = "element design-text";
-  element.textContent = text;
+  element.className =
+    "element design-text";
+
+  element.textContent =
+    text;
 
   element.style.left = "120px";
   element.style.top = "180px";
@@ -617,14 +476,21 @@ function addText() {
   makeDraggable(element);
 
   input.value = "";
+
+  statusText.textContent =
+    "Text hinzugefügt.";
 }
 
 function addSticker(symbol) {
 
-  const element = document.createElement("div");
+  const element =
+    document.createElement("div");
 
-  element.className = "element sticker";
-  element.textContent = symbol;
+  element.className =
+    "element sticker";
+
+  element.textContent =
+    symbol;
 
   element.style.left = "135px";
   element.style.top = "220px";
@@ -632,106 +498,179 @@ function addSticker(symbol) {
   clothingArea.appendChild(element);
 
   makeDraggable(element);
+
+  statusText.textContent =
+    "Sticker hinzugefügt.";
 }
 
 function makeDraggable(element) {
 
   let dragging = false;
+
   let startX = 0;
   let startY = 0;
+
   let startLeft = 0;
   let startTop = 0;
 
-  element.addEventListener("pointerdown", function(event) {
+  element.addEventListener(
+    "pointerdown",
+    function(event) {
 
-    dragging = true;
+      dragging = true;
 
-    startX = event.clientX;
-    startY = event.clientY;
+      startX = event.clientX;
+      startY = event.clientY;
 
-    startLeft = element.offsetLeft;
-    startTop = element.offsetTop;
+      startLeft = element.offsetLeft;
+      startTop = element.offsetTop;
 
-    element.setPointerCapture(event.pointerId);
-  });
+      element.setPointerCapture(
+        event.pointerId
+      );
+    }
+  );
 
-  element.addEventListener("pointermove", function(event) {
+  element.addEventListener(
+    "pointermove",
+    function(event) {
 
-    if (!dragging) return;
+      if (!dragging) return;
 
-    const newLeft =
-      startLeft + (event.clientX - startX);
+      const newLeft =
+        startLeft +
+        (event.clientX - startX);
 
-    const newTop =
-      startTop + (event.clientY - startY);
+      const newTop =
+        startTop +
+        (event.clientY - startY);
 
-    element.style.left = newLeft + "px";
-    element.style.top = newTop + "px";
-  });
+      element.style.left =
+        newLeft + "px";
 
-  element.addEventListener("pointerup", function() {
-    dragging = false;
-  });
+      element.style.top =
+        newTop + "px";
+    }
+  );
 
-  element.addEventListener("pointercancel", function() {
-    dragging = false;
-  });
-}let garmentScale = 1;
-let garmentRotation = 0;
+  element.addEventListener(
+    "pointerup",
+    function() {
+
+      dragging = false;
+    }
+  );
+
+  element.addEventListener(
+    "pointercancel",
+    function() {
+
+      dragging = false;
+    }
+  );
+}
 
 function updateGarmentTransform() {
+
   garment.style.transform =
     `scale(${garmentScale}) rotate(${garmentRotation}deg)`;
 }
 
 function changeSize(amount) {
+
   garmentScale += amount;
 
-  if (garmentScale < 0.5) garmentScale = 0.5;
-  if (garmentScale > 1.6) garmentScale = 1.6;
+  if (garmentScale < 0.5) {
+    garmentScale = 0.5;
+  }
+
+  if (garmentScale > 1.6) {
+    garmentScale = 1.6;
+  }
 
   updateGarmentTransform();
+
+  statusText.textContent =
+    "Größe geändert.";
 }
 
 function rotateGarment() {
+
   garmentRotation += 15;
-  updateGarmentTransform()
+
+  updateGarmentTransform();
+
+  statusText.textContent =
+    "Kleidungsstück gedreht.";
+}
 
 function saveDesign() {
 
   const design = {
-    garmentColor: garment.style.backgroundColor,
-    garmentClass: garment.className,
+
+    garmentColor:
+      garment.style.backgroundColor,
+
+    garmentClass:
+      garment.className,
+
+    garmentScale:
+      garmentScale,
+
+    garmentRotation:
+      garmentRotation,
+
     elements: []
   };
 
-  document.querySelectorAll(".element").forEach(element => {
+  document
+    .querySelectorAll(".element")
+    .forEach(element => {
 
-    design.elements.push({
-      text: element.textContent,
-      className: element.className,
-      left: element.style.left,
-      top: element.style.top
+      design.elements.push({
+
+        text:
+          element.textContent,
+
+        className:
+          element.className,
+
+        left:
+          element.style.left,
+
+        top:
+          element.style.top
+      });
+
     });
-
-  });
 
   localStorage.setItem(
     "arveDesign",
     JSON.stringify(design)
   );
 
-  statusText.textContent = "✓ Dein Arvé-Design wurde gespeichert.";
+  statusText.textContent =
+    "✓ Dein Arvé-Design wurde gespeichert.";
 }
 
 function resetDesign() {
 
-  garment.style.backgroundColor = "#f1eee5";
-  garment.className = "garment";
+  garment.style.backgroundColor =
+    "#f1eee5";
 
-  document.querySelectorAll(".element").forEach(element => {
-    element.remove();
-  });
+  garment.className =
+    "garment";
+
+  garmentScale = 1;
+  garmentRotation = 0;
+
+  updateGarmentTransform();
+
+  document
+    .querySelectorAll(".element")
+    .forEach(element => {
+      element.remove();
+    });
 
   statusText.textContent =
     "Design zurückgesetzt.";
@@ -741,4 +680,3 @@ function resetDesign() {
 
 </body>
 </html>
-
