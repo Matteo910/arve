@@ -11,234 +11,241 @@
 }
 
 :root {
-  --black: #080908;
-  --dark: #101411;
-  --green: #17382d;
-  --green-light: #244d3d;
-  --wine: #641f2b;
-  --cream: #eee6d4;
-  --gold: #b8a16a;
-  --border: rgba(184,161,106,.35);
+  --black:#080908;
+  --dark:#101411;
+  --green:#17382d;
+  --green-light:#244d3d;
+  --wine:#641f2b;
+  --cream:#eee6d4;
+  --gold:#b8a16a;
+  --border:rgba(184,161,106,.35);
 }
 
 body {
-  margin: 0;
+  margin:0;
   background:
-    radial-gradient(circle at 50% 0%, #16251e, transparent 45%),
+    radial-gradient(circle at 50% 0%,#16251e,transparent 45%),
     var(--black);
-  color: var(--cream);
-  font-family: Georgia, "Times New Roman", serif;
+  color:var(--cream);
+  font-family:Georgia,"Times New Roman",serif;
 }
 
 header {
-  padding: 22px;
-  text-align: center;
-  border-bottom: 1px solid #303831;
+  padding:22px;
+  text-align:center;
+  border-bottom:1px solid #303831;
 }
 
 .logo {
-  font-size: 32px;
-  letter-spacing: 7px;
-  font-weight: bold;
+  font-size:32px;
+  letter-spacing:7px;
+  font-weight:bold;
 }
 
 .subtitle {
-  color: #aaa99f;
-  margin-top: 6px;
+  color:#aaa99f;
+  margin-top:6px;
 }
 
 .app {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
 }
 
 .controls {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-bottom: 20px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+  margin-bottom:20px;
 }
 
 .panel {
-  background: #121814;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 15px;
+  background:#121814;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:15px;
 }
 
 .panel h3 {
-  margin-top: 0;
-  font-size: 15px;
-  letter-spacing: 1px;
+  margin-top:0;
+  font-size:15px;
+  letter-spacing:1px;
 }
 
 button {
-  font-family: Georgia, "Times New Roman", serif;
-  background: #1d2720;
-  color: var(--cream);
-  border: 1px solid #465148;
-  border-radius: 10px;
-  padding: 10px 14px;
-  margin: 4px;
-  cursor: pointer;
-  transition: .2s;
+  font-family:Georgia,"Times New Roman",serif;
+  background:#1d2720;
+  color:var(--cream);
+  border:1px solid #465148;
+  border-radius:10px;
+  padding:10px 14px;
+  margin:4px;
+  cursor:pointer;
+  transition:.2s;
 }
 
 button:hover {
-  background: var(--green);
-  border-color: var(--gold);
+  background:var(--green);
+  border-color:var(--gold);
 }
 
 button.active {
-  background: var(--wine);
-  border-color: #8d4655;
+  background:var(--wine);
+  border-color:#8d4655;
 }
 
 input {
-  width: 100%;
-  padding: 11px;
-  border-radius: 9px;
-  border: 1px solid #465148;
-  background: #0b0f0d;
-  color: white;
-  margin-bottom: 8px;
+  width:100%;
+  padding:11px;
+  border-radius:9px;
+  border:1px solid #465148;
+  background:#0b0f0d;
+  color:white;
+  margin-bottom:8px;
 }
 
 .colors {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
 }
 
 .color {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  border: 2px solid #777;
-  cursor: pointer;
-}
-
-.color:hover {
-  border-color: var(--gold);
-  transform: scale(1.08);
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  border:2px solid #777;
+  cursor:pointer;
 }
 
 .workspace {
-  min-height: 600px;
+  min-height:600px;
   background:
-    radial-gradient(circle at center, rgba(36,77,61,.22), transparent 60%),
+    radial-gradient(circle at center,rgba(36,77,61,.22),transparent 60%),
     #0c100e;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 25px;
-  overflow: hidden;
+  border:1px solid var(--border);
+  border-radius:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:25px;
+  overflow:hidden;
 }
 
 .clothing-area {
-  position: relative;
-  width: 330px;
-  height: 430px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position:relative;
+  width:360px;
+  height:460px;
 }
 
-.garment {
-  width: 260px;
-  height: 320px;
-  background: var(--cream);
-  clip-path: polygon(
-    25% 5%, 42% 0%, 50% 12%, 58% 0%, 75% 5%,
-    100% 28%, 84% 43%, 74% 30%, 74% 100%,
-    26% 100%, 26% 30%, 16% 43%, 0% 28%
-  );
-  transition: transform .2s ease;
-  transform-origin: center;
+.garment-svg {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:visible;
 }
 
-.garment.shirt {
-  height: 350px;
+.garment-shape {
+  fill:#eee6d4;
+  stroke:rgba(184,161,106,.5);
+  stroke-width:1;
+  transition:fill .2s;
 }
 
-.garment.pants {
-  width: 240px;
-  height: 350px;
-  clip-path: polygon(
-    15% 0, 85% 0, 100% 100%,
-    58% 100%, 50% 55%, 42% 100%, 0 100%
-  );
+.garment-shape.pattern {
+  fill:url(#pattern);
 }
 
-.garment.pattern {
-  background-image:
-    linear-gradient(45deg, rgba(0,0,0,.15) 25%, transparent 25%),
-    linear-gradient(-45deg, rgba(0,0,0,.15) 25%, transparent 25%);
-  background-size: 30px 30px;
+.deform-point {
+  fill:#eee6d4;
+  stroke:#17382d;
+  stroke-width:3;
+  cursor:grab;
+  touch-action:none;
+}
+
+.deform-point:hover {
+  fill:#b8a16a;
+}
+
+.deform-point.active {
+  fill:#b8a16a;
+  stroke:#eee6d4;
+  stroke-width:3;
 }
 
 .element {
-  position: absolute;
-  cursor: grab;
-  user-select: none;
-  touch-action: none;
-  z-index: 5;
-  transform-origin: center;
+  position:absolute;
+  cursor:grab;
+  user-select:none;
+  touch-action:none;
+  z-index:20;
 }
 
 .element:active {
-  cursor: grabbing;
+  cursor:grabbing;
 }
 
 .element.selected {
-  outline: 1px dashed var(--gold);
-  outline-offset: 7px;
+  outline:1px dashed var(--gold);
+  outline-offset:7px;
 }
 
 .design-text {
-  font-size: 25px;
-  font-weight: bold;
-  color: #111;
-  white-space: nowrap;
+  font-size:25px;
+  font-weight:bold;
+  color:#111;
+  white-space:nowrap;
 }
 
 .sticker {
-  font-size: 45px;
+  font-size:45px;
 }
 
 .element-tools {
-  display: none;
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #303831;
+  display:none;
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid #303831;
 }
 
 .element-tools.visible {
-  display: block;
+  display:block;
+}
+
+.deform-tools {
+  display:none;
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid #303831;
+}
+
+.deform-tools.visible {
+  display:block;
 }
 
 .status {
-  text-align: center;
-  color: #aaa99f;
-  margin-top: 15px;
+  text-align:center;
+  color:#aaa99f;
+  margin-top:15px;
 }
 
-@media (min-width: 800px) {
+@media(min-width:800px) {
   .controls {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:repeat(3,1fr);
   }
 }
 
-@media (max-width: 600px) {
+@media(max-width:600px) {
   .workspace {
-    min-height: 500px;
+    min-height:520px;
+    padding:10px;
   }
 
   .clothing-area {
-    transform: scale(.9);
+    transform:scale(.9);
   }
 }
 </style>
@@ -256,6 +263,7 @@ input {
 <div class="controls">
 
 <div class="panel">
+
 <h3>KLEIDUNG</h3>
 
 <button onclick="setGarment('tshirt')" id="tshirtBtn" class="active">
@@ -269,40 +277,55 @@ Hemd
 <button onclick="setGarment('pants')" id="pantsBtn">
 Hose
 </button>
+
 </div>
 
 <div class="panel">
+
 <h3>FARBE</h3>
 
 <div class="colors">
 
-<div class="color" style="background:#f1eee5"
+<div class="color"
+style="background:#f1eee5"
 onclick="changeColor('#f1eee5')"></div>
 
-<div class="color" style="background:#111111"
+<div class="color"
+style="background:#111111"
 onclick="changeColor('#111111')"></div>
 
-<div class="color" style="background:#173326"
+<div class="color"
+style="background:#173326"
 onclick="changeColor('#173326')"></div>
 
-<div class="color" style="background:#5b1f2a"
+<div class="color"
+style="background:#5b1f2a"
 onclick="changeColor('#5b1f2a')"></div>
 
-<div class="color" style="background:#777777"
+<div class="color"
+style="background:#777777"
 onclick="changeColor('#777777')"></div>
 
-<div class="color" style="background:#c9b58a"
+<div class="color"
+style="background:#c9b58a"
 onclick="changeColor('#c9b58a')"></div>
 
 </div>
 
-<button onclick="togglePattern()">Muster</button>
+<button onclick="togglePattern()">
+Muster
+</button>
+
 </div>
 
 <div class="panel">
+
 <h3>DESIGN</h3>
 
-<input id="textInput" placeholder="Text eingeben...">
+<input
+id="textInput"
+placeholder="Text eingeben..."
+>
 
 <button onclick="addText()">
 Text hinzufügen
@@ -312,18 +335,36 @@ Text hinzufügen
 <button onclick="addSticker('✦')">✦</button>
 <button onclick="addSticker('◆')">◆</button>
 
-<div id="elementTools" class="element-tools">
+<br>
 
-<strong>ELEMENT AUSGEWÄHLT</strong>
+<button onclick="toggleDeformation()" id="deformButton">
+🌀 Kleidung verformen
+</button>
+
+<div id="deformTools" class="deform-tools">
+
+<strong>VERFORMEN</strong>
 
 <br>
 
-<button onclick="changeElementSize(-0.1)">
-− Kleiner
+<button onclick="resetDeformation()">
+Form zurücksetzen
 </button>
 
-<button onclick="changeElementSize(0.1)">
-+ Größer
+</div>
+
+<div id="elementTools" class="element-tools">
+
+<strong>ELEMENT</strong>
+
+<br>
+
+<button onclick="changeElementSize(-.1)">
+−
+</button>
+
+<button onclick="changeElementSize(.1)">
++
 </button>
 
 <button onclick="rotateElement(-15)">
@@ -335,7 +376,7 @@ Text hinzufügen
 </button>
 
 <button onclick="deleteElement()">
-🗑 Löschen
+🗑
 </button>
 
 </div>
@@ -347,7 +388,7 @@ Design speichern
 </button>
 
 <button onclick="resetDesign()">
-Zurücksetzen
+Alles zurücksetzen
 </button>
 
 </div>
@@ -358,85 +399,549 @@ Zurücksetzen
 
 <div class="clothing-area" id="clothingArea">
 
-<div class="garment" id="garment"></div>
+<svg
+id="garmentSvg"
+class="garment-svg"
+viewBox="0 0 360 460"
+>
+
+<defs>
+
+<pattern
+id="pattern"
+width="30"
+height="30"
+patternUnits="userSpaceOnUse"
+patternTransform="rotate(45)"
+>
+
+<rect width="30" height="30" fill="#eee6d4"/>
+
+<rect
+x="0"
+y="0"
+width="15"
+height="15"
+fill="#c9b58a"
+opacity=".35"
+/>
+
+</pattern>
+
+</defs>
+
+<polygon
+id="garmentShape"
+class="garment-shape"
+points=""
+/>
+
+<g id="deformPoints"></g>
+
+</svg>
 
 </div>
 
 </div>
 
 <div class="status" id="status">
-Tippe ein Element an, um es zu bearbeiten.
+Drücke „Kleidung verformen“, um die Form zu bearbeiten.
 </div>
 
 </div>
 
 <script>
 
-const garment =
-document.getElementById("garment");
-
 const clothingArea =
 document.getElementById("clothingArea");
+
+const garmentSvg =
+document.getElementById("garmentSvg");
+
+const garmentShape =
+document.getElementById("garmentShape");
+
+const deformPointsGroup =
+document.getElementById("deformPoints");
 
 const statusText =
 document.getElementById("status");
 
+const deformTools =
+document.getElementById("deformTools");
+
+const deformButton =
+document.getElementById("deformButton");
+
 const elementTools =
 document.getElementById("elementTools");
 
-let garmentScale = 1;
-let garmentRotation = 0;
-
 let selectedElement = null;
+
+let deformMode = false;
+
+let garmentType = "tshirt";
+
+let garmentColor = "#eee6d4";
+
+let points = [];
+
+
+/* --------------------------------
+   GRUNDFORMEN
+-------------------------------- */
+
+function getGarmentPoints(type) {
+
+  if (type === "pants") {
+
+    return [
+      [125,55],
+      [235,55],
+      [255,105],
+      [250,185],
+      [225,185],
+      [220,395],
+      [185,395],
+      [180,260],
+      [175,395],
+      [140,395],
+      [135,185],
+      [110,185],
+      [105,105]
+    ];
+
+  }
+
+  if (type === "shirt") {
+
+    return [
+      [120,70],
+      [150,55],
+      [180,80],
+      [210,55],
+      [240,70],
+      [300,140],
+      [270,175],
+      [245,145],
+      [245,400],
+      [115,400],
+      [115,145],
+      [90,175],
+      [60,140]
+    ];
+
+  }
+
+  return [
+    [120,70],
+    [150,55],
+    [180,80],
+    [210,55],
+    [240,70],
+    [300,140],
+    [270,175],
+    [245,145],
+    [245,380],
+    [115,380],
+    [115,145],
+    [90,175],
+    [60,140]
+  ];
+}
+
+
+/* --------------------------------
+   PUNKTE ERZEUGEN
+-------------------------------- */
+
+function createDeformationGrid() {
+
+  deformPointsGroup.innerHTML = "";
+
+  points = [];
+
+  const base =
+    getGarmentPoints(garmentType);
+
+  /*
+    Wir erzeugen zusätzliche Punkte
+    zwischen den Grundpunkten.
+  */
+
+  const minX = Math.min(
+    ...base.map(p => p[0])
+  );
+
+  const maxX = Math.max(
+    ...base.map(p => p[0])
+  );
+
+  const minY = Math.min(
+    ...base.map(p => p[1])
+  );
+
+  const maxY = Math.max(
+    ...base.map(p => p[1])
+  );
+
+  const rows = 7;
+  const columns = 7;
+
+  for (
+    let row = 0;
+    row <= rows;
+    row++
+  ) {
+
+    const y =
+      minY +
+      (maxY - minY) *
+      (row / rows);
+
+    for (
+      let col = 0;
+      col <= columns;
+      col++
+    ) {
+
+      const x =
+        minX +
+        (maxX - minX) *
+        (col / columns);
+
+      /*
+        Nur Punkte innerhalb
+        eines einfachen Bereichs.
+      */
+
+      if (
+        x >= minX &&
+        x <= maxX &&
+        y >= minY &&
+        y <= maxY
+      ) {
+
+        const point = {
+          x:x,
+          y:y,
+          originalX:x,
+          originalY:y
+        };
+
+        points.push(point);
+      }
+    }
+  }
+
+  renderDeformation();
+}
+
+
+/* --------------------------------
+   FORM DARSTELLEN
+-------------------------------- */
+
+function renderDeformation() {
+
+  const pointString =
+    points
+      .map(p => `${p.x},${p.y}`)
+      .join(" ");
+
+  garmentShape.setAttribute(
+    "points",
+    pointString
+  );
+
+  deformPointsGroup.innerHTML = "";
+
+  if (!deformMode) return;
+
+  points.forEach((point,index) => {
+
+    const circle =
+      document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "circle"
+      );
+
+    circle.setAttribute(
+      "cx",
+      point.x
+    );
+
+    circle.setAttribute(
+      "cy",
+      point.y
+    );
+
+    circle.setAttribute(
+      "r",
+      "7"
+    );
+
+    circle.classList.add(
+      "deform-point"
+    );
+
+    circle.dataset.index =
+      index;
+
+    makePointDraggable(
+      circle,
+      index
+    );
+
+    deformPointsGroup.appendChild(
+      circle
+    );
+  });
+}
+
+
+/* --------------------------------
+   PUNKT BEWEGEN
+-------------------------------- */
+
+function makePointDraggable(
+  circle,
+  index
+) {
+
+  let dragging = false;
+
+  circle.addEventListener(
+    "pointerdown",
+    event => {
+
+      event.stopPropagation();
+
+      dragging = true;
+
+      circle.classList.add(
+        "active"
+      );
+
+      circle.setPointerCapture(
+        event.pointerId
+      );
+    }
+  );
+
+  circle.addEventListener(
+    "pointermove",
+    event => {
+
+      if (!dragging) return;
+
+      const rect =
+        garmentSvg.getBoundingClientRect();
+
+      const scaleX =
+        360 / rect.width;
+
+      const scaleY =
+        460 / rect.height;
+
+      let x =
+        (event.clientX - rect.left)
+        * scaleX;
+
+      let y =
+        (event.clientY - rect.top)
+        * scaleY;
+
+      x = Math.max(
+        15,
+        Math.min(345,x)
+      );
+
+      y = Math.max(
+        15,
+        Math.min(445,y)
+      );
+
+      points[index].x = x;
+      points[index].y = y;
+
+      renderDeformation();
+
+      statusText.textContent =
+        "Kleidungsform wird verändert.";
+    }
+  );
+
+  circle.addEventListener(
+    "pointerup",
+    () => {
+
+      dragging = false;
+
+      circle.classList.remove(
+        "active"
+      );
+    }
+  );
+
+  circle.addEventListener(
+    "pointercancel",
+    () => {
+
+      dragging = false;
+    }
+  );
+}
+
+
+/* --------------------------------
+   VERFORMUNG AN / AUS
+-------------------------------- */
+
+function toggleDeformation() {
+
+  deformMode =
+    !deformMode;
+
+  deformTools.classList.toggle(
+    "visible",
+    deformMode
+  );
+
+  deformButton.classList.toggle(
+    "active",
+    deformMode
+  );
+
+  renderDeformation();
+
+  if (deformMode) {
+
+    statusText.textContent =
+      "Ziehe die Punkte mit dem Finger.";
+
+  } else {
+
+    statusText.textContent =
+      "Verformung beendet.";
+  }
+}
+
+
+/* --------------------------------
+   FORM ZURÜCKSETZEN
+-------------------------------- */
+
+function resetDeformation() {
+
+  points.forEach(point => {
+
+    point.x =
+      point.originalX;
+
+    point.y =
+      point.originalY;
+
+  });
+
+  renderDeformation();
+
+  statusText.textContent =
+    "Kleidungsform zurückgesetzt.";
+}
+
+
+/* --------------------------------
+   KLEIDUNG
+-------------------------------- */
 
 function setGarment(type) {
 
-  garment.className = "garment";
-
-  if (type === "shirt") {
-    garment.classList.add("shirt");
-  }
-
-  if (type === "pants") {
-    garment.classList.add("pants");
-  }
+  garmentType =
+    type;
 
   document
-    .querySelectorAll(".panel:first-child button")
+    .querySelectorAll(
+      ".panel:first-child button"
+    )
     .forEach(button =>
-      button.classList.remove("active")
+      button.classList.remove(
+        "active"
+      )
     );
 
   document
-    .getElementById(type + "Btn")
-    .classList.add("active");
+    .getElementById(
+      type + "Btn"
+    )
+    .classList.add(
+      "active"
+    );
+
+  createDeformationGrid();
 
   statusText.textContent =
     "Kleidungsstück geändert.";
 }
 
+
+/* --------------------------------
+   FARBE
+-------------------------------- */
+
 function changeColor(color) {
 
-  garment.style.backgroundColor = color;
+  garmentColor =
+    color;
+
+  garmentShape.style.fill =
+    color;
 
   statusText.textContent =
     "Farbe geändert.";
 }
 
+
+/* --------------------------------
+   MUSTER
+-------------------------------- */
+
 function togglePattern() {
 
-  garment.classList.toggle("pattern");
+  garmentShape.classList.toggle(
+    "pattern"
+  );
 
-  statusText.textContent =
-    garment.classList.contains("pattern")
-      ? "Muster aktiviert."
-      : "Muster deaktiviert.";
+  if (
+    garmentShape.classList.contains(
+      "pattern"
+    )
+  ) {
+
+    statusText.textContent =
+      "Muster aktiviert.";
+
+  } else {
+
+    garmentShape.style.fill =
+      garmentColor;
+
+    statusText.textContent =
+      "Muster deaktiviert.";
+  }
 }
+
+
+/* --------------------------------
+   TEXT
+-------------------------------- */
 
 function addText() {
 
   const input =
-    document.getElementById("textInput");
+    document.getElementById(
+      "textInput"
+    );
 
   const text =
     input.value.trim();
@@ -444,7 +949,9 @@ function addText() {
   if (!text) return;
 
   const element =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   element.className =
     "element design-text";
@@ -452,16 +959,29 @@ function addText() {
   element.textContent =
     text;
 
-  element.style.left = "120px";
-  element.style.top = "180px";
+  element.style.left =
+    "130px";
 
-  element.dataset.scale = "1";
-  element.dataset.rotation = "0";
+  element.style.top =
+    "190px";
 
-  clothingArea.appendChild(element);
+  element.dataset.scale =
+    "1";
 
-  makeDraggable(element);
-  selectElement(element);
+  element.dataset.rotation =
+    "0";
+
+  clothingArea.appendChild(
+    element
+  );
+
+  makeDraggable(
+    element
+  );
+
+  selectElement(
+    element
+  );
 
   input.value = "";
 
@@ -469,10 +989,17 @@ function addText() {
     "Text hinzugefügt.";
 }
 
+
+/* --------------------------------
+   STICKER
+-------------------------------- */
+
 function addSticker(symbol) {
 
   const element =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   element.className =
     "element sticker";
@@ -480,38 +1007,67 @@ function addSticker(symbol) {
   element.textContent =
     symbol;
 
-  element.style.left = "135px";
-  element.style.top = "220px";
+  element.style.left =
+    "145px";
 
-  element.dataset.scale = "1";
-  element.dataset.rotation = "0";
+  element.style.top =
+    "230px";
 
-  clothingArea.appendChild(element);
+  element.dataset.scale =
+    "1";
 
-  makeDraggable(element);
-  selectElement(element);
+  element.dataset.rotation =
+    "0";
+
+  clothingArea.appendChild(
+    element
+  );
+
+  makeDraggable(
+    element
+  );
+
+  selectElement(
+    element
+  );
 
   statusText.textContent =
     "Sticker hinzugefügt.";
 }
 
-function selectElement(element) {
+
+/* --------------------------------
+   ELEMENT AUSWÄHLEN
+-------------------------------- */
+
+function selectElement(
+  element
+) {
 
   if (selectedElement) {
-    selectedElement.classList.remove("selected");
+
+    selectedElement.classList
+      .remove("selected");
   }
 
-  selectedElement = element;
+  selectedElement =
+    element;
 
-  selectedElement.classList.add("selected");
+  selectedElement.classList
+    .add("selected");
 
-  elementTools.classList.add("visible");
-
-  statusText.textContent =
-    "Element ausgewählt.";
+  elementTools.classList
+    .add("visible");
 }
 
-function makeDraggable(element) {
+
+/* --------------------------------
+   ELEMENT VERSCHIEBEN
+-------------------------------- */
+
+function makeDraggable(
+  element
+) {
 
   let dragging = false;
 
@@ -523,19 +1079,27 @@ function makeDraggable(element) {
 
   element.addEventListener(
     "pointerdown",
-    function(event) {
+    event => {
 
       event.stopPropagation();
 
-      selectElement(element);
+      selectElement(
+        element
+      );
 
       dragging = true;
 
-      startX = event.clientX;
-      startY = event.clientY;
+      startX =
+        event.clientX;
 
-      startLeft = element.offsetLeft;
-      startTop = element.offsetTop;
+      startY =
+        event.clientY;
+
+      startLeft =
+        element.offsetLeft;
+
+      startTop =
+        element.offsetTop;
 
       element.setPointerCapture(
         event.pointerId
@@ -545,68 +1109,57 @@ function makeDraggable(element) {
 
   element.addEventListener(
     "pointermove",
-    function(event) {
+    event => {
 
       if (!dragging) return;
 
-      const newLeft =
+      element.style.left =
         startLeft +
         event.clientX -
-        startX;
-
-      const newTop =
-        startTop +
-        event.clientY -
-        startY;
-
-      element.style.left =
-        newLeft + "px";
+        startX +
+        "px";
 
       element.style.top =
-        newTop + "px";
+        startTop +
+        event.clientY -
+        startY +
+        "px";
     }
   );
 
   element.addEventListener(
     "pointerup",
-    function() {
-      dragging = false;
-    }
-  );
+    () => {
 
-  element.addEventListener(
-    "pointercancel",
-    function() {
       dragging = false;
     }
   );
 }
 
-function updateElementTransform(element) {
 
-  const scale =
-    parseFloat(element.dataset.scale || "1");
+/* --------------------------------
+   ELEMENT GRÖSSE
+-------------------------------- */
 
-  const rotation =
-    parseFloat(element.dataset.rotation || "0");
+function changeElementSize(
+  amount
+) {
 
-  element.style.transform =
-    `scale(${scale}) rotate(${rotation}deg)`;
-}
-
-function changeElementSize(amount) {
-
-  if (!selectedElement) return;
+  if (!selectedElement)
+    return;
 
   let scale =
     parseFloat(
-      selectedElement.dataset.scale || "1"
+      selectedElement.dataset.scale
     );
 
   scale += amount;
 
-  if (scale < 0.5) scale = 0.5;
-  if (scale > 3) scale = 3;
+  scale =
+    Math.max(
+      .5,
+      Math.min(3,scale)
+    );
 
   selectedElement.dataset.scale =
     scale;
@@ -616,13 +1169,21 @@ function changeElementSize(amount) {
   );
 }
 
-function rotateElement(amount) {
 
-  if (!selectedElement) return;
+/* --------------------------------
+   ELEMENT DREHEN
+-------------------------------- */
+
+function rotateElement(
+  amount
+) {
+
+  if (!selectedElement)
+    return;
 
   let rotation =
     parseFloat(
-      selectedElement.dataset.rotation || "0"
+      selectedElement.dataset.rotation
     );
 
   rotation += amount;
@@ -635,43 +1196,72 @@ function rotateElement(amount) {
   );
 }
 
+
+/* --------------------------------
+   ELEMENT TRANSFORM
+-------------------------------- */
+
+function updateElementTransform(
+  element
+) {
+
+  const scale =
+    element.dataset.scale;
+
+  const rotation =
+    element.dataset.rotation;
+
+  element.style.transform =
+    `scale(${scale}) rotate(${rotation}deg)`;
+}
+
+
+/* --------------------------------
+   ELEMENT LÖSCHEN
+-------------------------------- */
+
 function deleteElement() {
 
-  if (!selectedElement) return;
+  if (!selectedElement)
+    return;
 
   selectedElement.remove();
 
-  selectedElement = null;
+  selectedElement =
+    null;
 
-  elementTools.classList.remove(
-    "visible"
-  );
+  elementTools.classList
+    .remove("visible");
 
   statusText.textContent =
     "Element gelöscht.";
 }
 
+
+/* --------------------------------
+   SPEICHERN
+-------------------------------- */
+
 function saveDesign() {
 
   const design = {
 
+    garmentType:
+      garmentType,
+
     garmentColor:
-      garment.style.backgroundColor,
+      garmentColor,
 
-    garmentClass:
-      garment.className,
+    deformation:
+      points,
 
-    garmentScale:
-      garmentScale,
-
-    garmentRotation:
-      garmentRotation,
-
-    elements: []
+    elements:[]
   };
 
   document
-    .querySelectorAll(".element")
+    .querySelectorAll(
+      ".element"
+    )
     .forEach(element => {
 
       design.elements.push({
@@ -698,39 +1288,69 @@ function saveDesign() {
 
   localStorage.setItem(
     "arveDesign",
-    JSON.stringify(design)
+    JSON.stringify(
+      design
+    )
   );
 
   statusText.textContent =
     "✓ Arvé-Design gespeichert.";
 }
 
+
+/* --------------------------------
+   RESET
+-------------------------------- */
+
 function resetDesign() {
 
-  garment.style.backgroundColor =
-    "#f1eee5";
+  garmentType =
+    "tshirt";
 
-  garment.className =
-    "garment";
+  garmentColor =
+    "#eee6d4";
 
-  garmentScale = 1;
-  garmentRotation = 0;
+  garmentShape.style.fill =
+    garmentColor;
 
-  selectedElement = null;
-
-  elementTools.classList.remove(
-    "visible"
-  );
+  garmentShape.classList
+    .remove("pattern");
 
   document
-    .querySelectorAll(".element")
+    .querySelectorAll(
+      ".element"
+    )
     .forEach(element =>
       element.remove()
     );
 
+  selectedElement =
+    null;
+
+  elementTools.classList
+    .remove("visible");
+
+  deformMode =
+    false;
+
+  deformTools.classList
+    .remove("visible");
+
+  deformButton.classList
+    .remove("active");
+
+  createDeformationGrid();
+
   statusText.textContent =
-    "Design zurückgesetzt.";
+    "Arvé-Design zurückgesetzt.";
 }
+
+
+/* --------------------------------
+   START
+-------------------------------- */
+
+createDeformationGrid();
 
 </script>
 
