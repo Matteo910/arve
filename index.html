@@ -1,269 +1,247 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arvé</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arvé</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    :root {
-      --arve-black: #080908;
-      --arve-dark: #101411;
-      --arve-green: #17382d;
-      --arve-green-light: #244d3d;
-      --arve-wine: #641f2b;
-      --arve-cream: #eee6d4;
-      --arve-gold: #b8a16a;
-      --arve-border: rgba(184, 161, 106, 0.35);
-    }
+:root {
+  --black: #080908;
+  --dark: #101411;
+  --green: #17382d;
+  --green-light: #244d3d;
+  --wine: #641f2b;
+  --cream: #eee6d4;
+  --gold: #b8a16a;
+  --border: rgba(184,161,106,.35);
+}
 
-    body {
-      margin: 0;
-      background:
-        radial-gradient(circle at 50% 0%, #16251e 0%, transparent 45%),
-        var(--arve-black);
-      color: var(--arve-cream);
-      font-family: Georgia, "Times New Roman", serif;
-    }
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 50% 0%, #16251e, transparent 45%),
+    var(--black);
+  color: var(--cream);
+  font-family: Georgia, "Times New Roman", serif;
+}
 
-    header {
-      padding: 22px;
-      text-align: center;
-      border-bottom: 1px solid #303831;
-    }
+header {
+  padding: 22px;
+  text-align: center;
+  border-bottom: 1px solid #303831;
+}
 
-    .logo {
-      font-size: 32px;
-      letter-spacing: 6px;
-      font-weight: bold;
-    }
+.logo {
+  font-size: 32px;
+  letter-spacing: 7px;
+  font-weight: bold;
+}
 
-    .subtitle {
-      color: #aaa99f;
-      margin-top: 6px;
-    }
+.subtitle {
+  color: #aaa99f;
+  margin-top: 6px;
+}
 
-    .app {
-      max-width: 1100px;
-      margin: auto;
-      padding: 20px;
-    }
+.app {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
 
-    .controls {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
+.controls {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
 
-    .panel {
-      background: #121814;
-      border: 1px solid var(--arve-border);
-      border-radius: 16px;
-      padding: 15px;
-    }
+.panel {
+  background: #121814;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 15px;
+}
 
-    .panel h3 {
-      margin-top: 0;
-      font-size: 15px;
-      letter-spacing: 1px;
-      color: #d8d2c4;
-    }
+.panel h3 {
+  margin-top: 0;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
 
-    button {
-      font-family: Georgia, "Times New Roman", serif;
-      background: #1d2720;
-      color: var(--arve-cream);
-      border: 1px solid #465148;
-      border-radius: 10px;
-      padding: 10px 14px;
-      margin: 4px;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
+button {
+  font-family: Georgia, "Times New Roman", serif;
+  background: #1d2720;
+  color: var(--cream);
+  border: 1px solid #465148;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin: 4px;
+  cursor: pointer;
+  transition: .2s;
+}
 
-    button:hover {
-      background: var(--arve-green);
-      border-color: var(--arve-gold);
-      transform: translateY(-1px);
-    }
+button:hover {
+  background: var(--green);
+  border-color: var(--gold);
+}
 
-    button:active {
-      transform: scale(0.97);
-    }
+button.active {
+  background: var(--wine);
+  border-color: #8d4655;
+}
 
-    button.active {
-      background: var(--arve-wine);
-      border-color: #8d4655;
-    }
+input {
+  width: 100%;
+  padding: 11px;
+  border-radius: 9px;
+  border: 1px solid #465148;
+  background: #0b0f0d;
+  color: white;
+  margin-bottom: 8px;
+}
 
-    .colors {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
+.colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
-    .color {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      border: 2px solid #777;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+.color {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 2px solid #777;
+  cursor: pointer;
+}
 
-    .color:hover {
-      border-color: var(--arve-gold);
-      transform: scale(1.08);
-    }
+.color:hover {
+  border-color: var(--gold);
+  transform: scale(1.08);
+}
 
-    .workspace {
-      min-height: 600px;
-      background:
-        radial-gradient(circle at center, rgba(36,77,61,.22), transparent 60%),
-        #0c100e;
-      border: 1px solid var(--arve-border);
-      border-radius: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 25px;
-      box-shadow:
-        0 20px 60px rgba(0,0,0,.5),
-        inset 0 0 40px rgba(0,0,0,.25);
-    }
+.workspace {
+  min-height: 600px;
+  background:
+    radial-gradient(circle at center, rgba(36,77,61,.22), transparent 60%),
+    #0c100e;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  overflow: hidden;
+}
 
-    .clothing-area {
-      position: relative;
-      width: 330px;
-      height: 430px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+.clothing-area {
+  position: relative;
+  width: 330px;
+  height: 430px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .garment {
-      width: 260px;
-      height: 320px;
-      background: #f1eee5;
+.garment {
+  width: 260px;
+  height: 320px;
+  background: var(--cream);
+  clip-path: polygon(
+    25% 5%, 42% 0%, 50% 12%, 58% 0%, 75% 5%,
+    100% 28%, 84% 43%, 74% 30%, 74% 100%,
+    26% 100%, 26% 30%, 16% 43%, 0% 28%
+  );
+  transition: transform .2s ease;
+  transform-origin: center;
+}
 
-      clip-path: polygon(
-        25% 5%,
-        42% 0%,
-        50% 12%,
-        58% 0%,
-        75% 5%,
-        100% 28%,
-        84% 43%,
-        74% 30%,
-        74% 100%,
-        26% 100%,
-        26% 30%,
-        16% 43%,
-        0% 28%
-      );
+.garment.shirt {
+  height: 350px;
+}
 
-      position: relative;
-      transition: transform 0.2s ease;
-      transform-origin: center;
-    }
+.garment.pants {
+  width: 240px;
+  height: 350px;
+  clip-path: polygon(
+    15% 0, 85% 0, 100% 100%,
+    58% 100%, 50% 55%, 42% 100%, 0 100%
+  );
+}
 
-    .garment.shirt {
-      height: 350px;
-    }
+.garment.pattern {
+  background-image:
+    linear-gradient(45deg, rgba(0,0,0,.15) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(0,0,0,.15) 25%, transparent 25%);
+  background-size: 30px 30px;
+}
 
-    .garment.pants {
-      width: 240px;
-      height: 350px;
+.element {
+  position: absolute;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  z-index: 5;
+  transform-origin: center;
+}
 
-      clip-path: polygon(
-        15% 0,
-        85% 0,
-        100% 100%,
-        58% 100%,
-        50% 55%,
-        42% 100%,
-        0 100%
-      );
-    }
+.element:active {
+  cursor: grabbing;
+}
 
-    .garment.pattern {
-      background-image:
-        linear-gradient(
-          45deg,
-          rgba(0,0,0,.15) 25%,
-          transparent 25%
-        ),
-        linear-gradient(
-          -45deg,
-          rgba(0,0,0,.15) 25%,
-          transparent 25%
-        );
+.element.selected {
+  outline: 1px dashed var(--gold);
+  outline-offset: 7px;
+}
 
-      background-size: 30px 30px;
-    }
+.design-text {
+  font-size: 25px;
+  font-weight: bold;
+  color: #111;
+  white-space: nowrap;
+}
 
-    .element {
-      position: absolute;
-      cursor: grab;
-      user-select: none;
-      touch-action: none;
-      z-index: 5;
-    }
+.sticker {
+  font-size: 45px;
+}
 
-    .element:active {
-      cursor: grabbing;
-    }
+.element-tools {
+  display: none;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #303831;
+}
 
-    .design-text {
-      font-size: 25px;
-      font-weight: bold;
-      color: #111;
-      white-space: nowrap;
-    }
+.element-tools.visible {
+  display: block;
+}
 
-    .sticker {
-      font-size: 45px;
-    }
+.status {
+  text-align: center;
+  color: #aaa99f;
+  margin-top: 15px;
+}
 
-    input {
-      width: 100%;
-      padding: 11px;
-      border-radius: 9px;
-      border: 1px solid #465148;
-      background: #0b0f0d;
-      color: white;
-      margin-bottom: 8px;
-    }
+@media (min-width: 800px) {
+  .controls {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 
-    .status {
-      text-align: center;
-      color: #aaa99f;
-      margin-top: 15px;
-    }
+@media (max-width: 600px) {
+  .workspace {
+    min-height: 500px;
+  }
 
-    @media (min-width: 800px) {
-      .controls {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .workspace {
-        min-height: 500px;
-        padding: 15px;
-      }
-
-      .clothing-area {
-        transform: scale(0.9);
-      }
-    }
-  </style>
+  .clothing-area {
+    transform: scale(.9);
+  }
+}
+</style>
 </head>
 
 <body>
@@ -275,135 +253,141 @@
 
 <div class="app">
 
-  <div class="controls">
+<div class="controls">
 
-    <div class="panel">
-      <h3>KLEIDUNG</h3>
+<div class="panel">
+<h3>KLEIDUNG</h3>
 
-      <button onclick="setGarment('tshirt')" id="tshirtBtn" class="active">
-        T-Shirt
-      </button>
+<button onclick="setGarment('tshirt')" id="tshirtBtn" class="active">
+T-Shirt
+</button>
 
-      <button onclick="setGarment('shirt')" id="shirtBtn">
-        Hemd
-      </button>
+<button onclick="setGarment('shirt')" id="shirtBtn">
+Hemd
+</button>
 
-      <button onclick="setGarment('pants')" id="pantsBtn">
-        Hose
-      </button>
-    </div>
+<button onclick="setGarment('pants')" id="pantsBtn">
+Hose
+</button>
+</div>
 
-    <div class="panel">
-      <h3>FARBE</h3>
+<div class="panel">
+<h3>FARBE</h3>
 
-      <div class="colors">
+<div class="colors">
 
-        <div class="color"
-             style="background:#f1eee5"
-             onclick="changeColor('#f1eee5')"></div>
+<div class="color" style="background:#f1eee5"
+onclick="changeColor('#f1eee5')"></div>
 
-        <div class="color"
-             style="background:#111111"
-             onclick="changeColor('#111111')"></div>
+<div class="color" style="background:#111111"
+onclick="changeColor('#111111')"></div>
 
-        <div class="color"
-             style="background:#173326"
-             onclick="changeColor('#173326')"></div>
+<div class="color" style="background:#173326"
+onclick="changeColor('#173326')"></div>
 
-        <div class="color"
-             style="background:#5b1f2a"
-             onclick="changeColor('#5b1f2a')"></div>
+<div class="color" style="background:#5b1f2a"
+onclick="changeColor('#5b1f2a')"></div>
 
-        <div class="color"
-             style="background:#777777"
-             onclick="changeColor('#777777')"></div>
+<div class="color" style="background:#777777"
+onclick="changeColor('#777777')"></div>
 
-        <div class="color"
-             style="background:#c9b58a"
-             onclick="changeColor('#c9b58a')"></div>
+<div class="color" style="background:#c9b58a"
+onclick="changeColor('#c9b58a')"></div>
 
-      </div>
+</div>
 
-      <button onclick="togglePattern()">
-        Muster
-      </button>
-    </div>
+<button onclick="togglePattern()">Muster</button>
+</div>
 
-    <div class="panel">
-      <h3>DESIGN</h3>
+<div class="panel">
+<h3>DESIGN</h3>
 
-      <input
-        id="textInput"
-        placeholder="Text eingeben..."
-      >
+<input id="textInput" placeholder="Text eingeben...">
 
-      <button onclick="addText()">
-        Text hinzufügen
-      </button>
+<button onclick="addText()">
+Text hinzufügen
+</button>
 
-      <button onclick="addSticker('★')">
-        ★
-      </button>
+<button onclick="addSticker('★')">★</button>
+<button onclick="addSticker('✦')">✦</button>
+<button onclick="addSticker('◆')">◆</button>
 
-      <button onclick="addSticker('✦')">
-        ✦
-      </button>
+<div id="elementTools" class="element-tools">
 
-      <button onclick="addSticker('◆')">
-        ◆
-      </button>
+<strong>ELEMENT AUSGEWÄHLT</strong>
 
-      <br>
+<br>
 
-      <button onclick="changeSize(-0.1)">
-        − Kleiner
-      </button>
+<button onclick="changeElementSize(-0.1)">
+− Kleiner
+</button>
 
-      <button onclick="changeSize(0.1)">
-        + Größer
-      </button>
+<button onclick="changeElementSize(0.1)">
++ Größer
+</button>
 
-      <button onclick="rotateGarment()">
-        ↻ Drehen
-      </button>
+<button onclick="rotateElement(-15)">
+↺
+</button>
 
-      <br>
+<button onclick="rotateElement(15)">
+↻
+</button>
 
-      <button onclick="saveDesign()">
-        Design speichern
-      </button>
+<button onclick="deleteElement()">
+🗑 Löschen
+</button>
 
-      <button onclick="resetDesign()">
-        Zurücksetzen
-      </button>
-    </div>
+</div>
 
-  </div>
+<br>
 
-  <div class="workspace">
+<button onclick="saveDesign()">
+Design speichern
+</button>
 
-    <div class="clothing-area" id="clothingArea">
+<button onclick="resetDesign()">
+Zurücksetzen
+</button>
 
-      <div class="garment" id="garment"></div>
+</div>
 
-    </div>
+</div>
 
-  </div>
+<div class="workspace">
 
-  <div class="status" id="status">
-    Elemente kannst du mit dem Finger verschieben.
-  </div>
+<div class="clothing-area" id="clothingArea">
+
+<div class="garment" id="garment"></div>
+
+</div>
+
+</div>
+
+<div class="status" id="status">
+Tippe ein Element an, um es zu bearbeiten.
+</div>
 
 </div>
 
 <script>
 
-const garment = document.getElementById("garment");
-const clothingArea = document.getElementById("clothingArea");
-const statusText = document.getElementById("status");
+const garment =
+document.getElementById("garment");
+
+const clothingArea =
+document.getElementById("clothingArea");
+
+const statusText =
+document.getElementById("status");
+
+const elementTools =
+document.getElementById("elementTools");
 
 let garmentScale = 1;
 let garmentRotation = 0;
+
+let selectedElement = null;
 
 function setGarment(type) {
 
@@ -419,9 +403,9 @@ function setGarment(type) {
 
   document
     .querySelectorAll(".panel:first-child button")
-    .forEach(button => {
-      button.classList.remove("active");
-    });
+    .forEach(button =>
+      button.classList.remove("active")
+    );
 
   document
     .getElementById(type + "Btn")
@@ -471,9 +455,13 @@ function addText() {
   element.style.left = "120px";
   element.style.top = "180px";
 
+  element.dataset.scale = "1";
+  element.dataset.rotation = "0";
+
   clothingArea.appendChild(element);
 
   makeDraggable(element);
+  selectElement(element);
 
   input.value = "";
 
@@ -495,12 +483,32 @@ function addSticker(symbol) {
   element.style.left = "135px";
   element.style.top = "220px";
 
+  element.dataset.scale = "1";
+  element.dataset.rotation = "0";
+
   clothingArea.appendChild(element);
 
   makeDraggable(element);
+  selectElement(element);
 
   statusText.textContent =
     "Sticker hinzugefügt.";
+}
+
+function selectElement(element) {
+
+  if (selectedElement) {
+    selectedElement.classList.remove("selected");
+  }
+
+  selectedElement = element;
+
+  selectedElement.classList.add("selected");
+
+  elementTools.classList.add("visible");
+
+  statusText.textContent =
+    "Element ausgewählt.";
 }
 
 function makeDraggable(element) {
@@ -516,6 +524,10 @@ function makeDraggable(element) {
   element.addEventListener(
     "pointerdown",
     function(event) {
+
+      event.stopPropagation();
+
+      selectElement(element);
 
       dragging = true;
 
@@ -539,11 +551,13 @@ function makeDraggable(element) {
 
       const newLeft =
         startLeft +
-        (event.clientX - startX);
+        event.clientX -
+        startX;
 
       const newTop =
         startTop +
-        (event.clientY - startY);
+        event.clientY -
+        startY;
 
       element.style.left =
         newLeft + "px";
@@ -556,7 +570,6 @@ function makeDraggable(element) {
   element.addEventListener(
     "pointerup",
     function() {
-
       dragging = false;
     }
   );
@@ -564,44 +577,78 @@ function makeDraggable(element) {
   element.addEventListener(
     "pointercancel",
     function() {
-
       dragging = false;
     }
   );
 }
 
-function updateGarmentTransform() {
+function updateElementTransform(element) {
 
-  garment.style.transform =
-    `scale(${garmentScale}) rotate(${garmentRotation}deg)`;
+  const scale =
+    parseFloat(element.dataset.scale || "1");
+
+  const rotation =
+    parseFloat(element.dataset.rotation || "0");
+
+  element.style.transform =
+    `scale(${scale}) rotate(${rotation}deg)`;
 }
 
-function changeSize(amount) {
+function changeElementSize(amount) {
 
-  garmentScale += amount;
+  if (!selectedElement) return;
 
-  if (garmentScale < 0.5) {
-    garmentScale = 0.5;
-  }
+  let scale =
+    parseFloat(
+      selectedElement.dataset.scale || "1"
+    );
 
-  if (garmentScale > 1.6) {
-    garmentScale = 1.6;
-  }
+  scale += amount;
 
-  updateGarmentTransform();
+  if (scale < 0.5) scale = 0.5;
+  if (scale > 3) scale = 3;
 
-  statusText.textContent =
-    "Größe geändert.";
+  selectedElement.dataset.scale =
+    scale;
+
+  updateElementTransform(
+    selectedElement
+  );
 }
 
-function rotateGarment() {
+function rotateElement(amount) {
 
-  garmentRotation += 15;
+  if (!selectedElement) return;
 
-  updateGarmentTransform();
+  let rotation =
+    parseFloat(
+      selectedElement.dataset.rotation || "0"
+    );
+
+  rotation += amount;
+
+  selectedElement.dataset.rotation =
+    rotation;
+
+  updateElementTransform(
+    selectedElement
+  );
+}
+
+function deleteElement() {
+
+  if (!selectedElement) return;
+
+  selectedElement.remove();
+
+  selectedElement = null;
+
+  elementTools.classList.remove(
+    "visible"
+  );
 
   statusText.textContent =
-    "Kleidungsstück gedreht.";
+    "Element gelöscht.";
 }
 
 function saveDesign() {
@@ -639,9 +686,14 @@ function saveDesign() {
           element.style.left,
 
         top:
-          element.style.top
-      });
+          element.style.top,
 
+        scale:
+          element.dataset.scale,
+
+        rotation:
+          element.dataset.rotation
+      });
     });
 
   localStorage.setItem(
@@ -650,7 +702,7 @@ function saveDesign() {
   );
 
   statusText.textContent =
-    "✓ Dein Arvé-Design wurde gespeichert.";
+    "✓ Arvé-Design gespeichert.";
 }
 
 function resetDesign() {
@@ -664,13 +716,17 @@ function resetDesign() {
   garmentScale = 1;
   garmentRotation = 0;
 
-  updateGarmentTransform();
+  selectedElement = null;
+
+  elementTools.classList.remove(
+    "visible"
+  );
 
   document
     .querySelectorAll(".element")
-    .forEach(element => {
-      element.remove();
-    });
+    .forEach(element =>
+      element.remove()
+    );
 
   statusText.textContent =
     "Design zurückgesetzt.";
