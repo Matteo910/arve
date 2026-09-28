@@ -122,13 +122,18 @@ input {
 .workspace {
   min-height:600px;
   background:
-    radial-gradient(circle at center,rgba(36,77,61,.22),transparent 60%),
+    radial-gradient(circle at center,
+      rgba(36,77,61,.25),
+      transparent 60%),
     #0c100e;
+
   border:1px solid var(--border);
   border-radius:20px;
+
   display:flex;
   justify-content:center;
   align-items:center;
+
   padding:25px;
   overflow:hidden;
 }
@@ -149,14 +154,44 @@ input {
 
 .garment-shape {
   fill:#eee6d4;
-  stroke:rgba(184,161,106,.5);
+  stroke:rgba(184,161,106,.75);
   stroke-width:1.5;
   stroke-linejoin:round;
-  transition:fill .2s;
+  filter:url(#clothShadow);
+  transition:fill .25s;
 }
 
 .garment-shape.pattern {
   fill:url(#pattern);
+}
+
+.detail {
+  pointer-events:none;
+  fill:none;
+  stroke:rgba(40,35,28,.28);
+  stroke-width:2;
+  stroke-linecap:round;
+}
+
+.detail-light {
+  pointer-events:none;
+  fill:none;
+  stroke:rgba(255,255,255,.18);
+  stroke-width:1.5;
+}
+
+.collar {
+  pointer-events:none;
+  fill:none;
+  stroke:rgba(40,35,28,.38);
+  stroke-width:2;
+}
+
+.button-detail {
+  pointer-events:none;
+  fill:#b8a16a;
+  stroke:#3b3325;
+  stroke-width:1;
 }
 
 .deform-point {
@@ -230,6 +265,7 @@ input {
 }
 
 @media(max-width:600px) {
+
   .workspace {
     min-height:520px;
     padding:10px;
@@ -253,7 +289,6 @@ input {
 
 <div class="controls">
 
-<!-- KLEIDUNG -->
 <div class="panel">
 
 <h3>KLEIDUNG</h3>
@@ -273,7 +308,6 @@ Hose
 </div>
 
 
-<!-- FARBE -->
 <div class="panel">
 
 <h3>FARBE</h3>
@@ -313,7 +347,6 @@ Muster
 </div>
 
 
-<!-- DESIGN -->
 <div class="panel">
 
 <h3>DESIGN</h3>
@@ -323,7 +356,7 @@ id="textInput"
 placeholder="Text eingeben..."
 >
 
-<button onclick="addText">
+<button onclick="addText()">
 Text hinzufügen
 </button>
 
@@ -356,11 +389,9 @@ Form zurücksetzen
 <br>
 
 <button onclick="changeElementSize(-.1)">−</button>
-
 <button onclick="changeElementSize(.1)">+</button>
 
 <button onclick="rotateElement(-15)">↺</button>
-
 <button onclick="rotateElement(15)">↻</button>
 
 <button onclick="deleteElement()">🗑</button>
@@ -382,8 +413,6 @@ Alles zurücksetzen
 </div>
 
 
-<!-- ARBEITSFLÄCHE -->
-
 <div class="workspace">
 
 <div class="clothing-area" id="clothingArea">
@@ -395,6 +424,23 @@ viewBox="0 0 360 460"
 >
 
 <defs>
+
+<filter id="clothShadow"
+x="-30%"
+y="-30%"
+width="160%"
+height="160%">
+
+<feDropShadow
+dx="0"
+dy="5"
+stdDeviation="5"
+flood-color="#000000"
+flood-opacity=".35"
+/>
+
+</filter>
+
 
 <pattern
 id="pattern"
@@ -411,8 +457,6 @@ fill="#eee6d4"
 />
 
 <rect
-x="0"
-y="0"
 width="15"
 height="15"
 fill="#c9b58a"
@@ -423,11 +467,22 @@ opacity=".35"
 
 </defs>
 
-<polygon
+
+<!-- KLEIDUNGSFORM -->
+
+<path
 id="garmentShape"
 class="garment-shape"
-points=""
+d=""
 />
+
+
+<!-- DETAILS -->
+
+<g id="garmentDetails"></g>
+
+
+<!-- VERFORMUNG -->
 
 <g id="deformPoints"></g>
 
@@ -455,6 +510,9 @@ document.getElementById("garmentSvg");
 const garmentShape =
 document.getElementById("garmentShape");
 
+const garmentDetails =
+document.getElementById("garmentDetails");
+
 const deformPointsGroup =
 document.getElementById("deformPoints");
 
@@ -471,92 +529,263 @@ const elementTools =
 document.getElementById("elementTools");
 
 let selectedElement = null;
+
 let deformMode = false;
+
 let garmentType = "tshirt";
+
 let garmentColor = "#eee6d4";
+
 let points = [];
 
 
 /* =================================
-   KLEIDUNGSFORMEN
+   GRUNDFORM
 ================================= */
 
 function getGarmentPoints(type) {
 
-  /* ---------- HOSE ---------- */
-
-  if (type === "pants") {
+  if(type === "pants") {
 
     return [
 
-      [115,70],
-      [175,70],
-      [180,210],
-      [175,390],
-      [135,390],
-      [130,250],
-      [125,390],
-      [85,390],
-      [80,210]
+      [105,65],
+      [175,65],
+      [180,205],
+      [175,400],
+      [135,400],
+      [128,250],
+      [120,400],
+      [80,400],
+      [75,205]
 
     ];
   }
 
 
-  /* ---------- HEMD ---------- */
-
-  if (type === "shirt") {
+  if(type === "shirt") {
 
     return [
 
-      [115,70],
-      [145,55],
+      [112,70],
+      [145,52],
       [180,82],
-      [215,55],
-      [245,70],
+      [215,52],
+      [248,70],
 
       [305,135],
-      [275,175],
+      [274,178],
       [245,150],
 
       [245,400],
       [115,400],
 
       [115,150],
-      [85,175],
+      [86,178],
       [55,135]
 
     ];
   }
 
 
-  /* ---------- T-SHIRT ---------- */
-
   return [
 
-    [120,75],
-    [150,58],
+    [120,74],
+    [150,57],
     [180,82],
-    [210,58],
-    [240,75],
+    [210,57],
+    [240,74],
 
-    [295,135],
-    [268,175],
-    [240,150],
+    [298,136],
+    [270,176],
+    [242,150],
 
-    [240,375],
-    [120,375],
+    [242,378],
+    [118,378],
 
-    [120,150],
-    [92,175],
-    [65,135]
+    [118,150],
+    [90,176],
+    [62,136]
 
   ];
 }
 
 
 /* =================================
-   VERFORMUNGSPUNKTE
+   FORM ALS SVG PFAD
+================================= */
+
+function createGarmentPath() {
+
+  const p = points;
+
+  if(!p.length) return "";
+
+  let d =
+    `M ${p[0].x} ${p[0].y}`;
+
+  for(let i=1;i<p.length;i++) {
+
+    d +=
+      ` L ${p[i].x} ${p[i].y}`;
+  }
+
+  d += " Z";
+
+  return d;
+}
+
+
+/* =================================
+   DETAILS
+================================= */
+
+function renderGarmentDetails() {
+
+  garmentDetails.innerHTML = "";
+
+  if(garmentType === "tshirt") {
+
+    garmentDetails.innerHTML = `
+
+      <path
+        class="collar"
+        d="M150 58 Q180 96 210 58"
+      />
+
+      <path
+        class="detail"
+        d="M120 74 L90 136"
+      />
+
+      <path
+        class="detail"
+        d="M240 74 L270 136"
+      />
+
+      <path
+        class="detail-light"
+        d="M130 365 L230 365"
+      />
+
+    `;
+  }
+
+
+  if(garmentType === "shirt") {
+
+    garmentDetails.innerHTML = `
+
+      <path
+        class="collar"
+        d="M145 52 L160 92 L180 82 L200 92 L215 52"
+      />
+
+      <path
+        class="detail"
+        d="M180 82 L180 400"
+      />
+
+      <path
+        class="detail"
+        d="M115 150 L86 178"
+      />
+
+      <path
+        class="detail"
+        d="M245 150 L274 178"
+      />
+
+      <circle
+        class="button-detail"
+        cx="180"
+        cy="125"
+        r="4"
+      />
+
+      <circle
+        class="button-detail"
+        cx="180"
+        cy="165"
+        r="4"
+      />
+
+      <circle
+        class="button-detail"
+        cx="180"
+        cy="205"
+        r="4"
+      />
+
+      <circle
+        class="button-detail"
+        cx="180"
+        cy="245"
+        r="4"
+      />
+
+      <circle
+        class="button-detail"
+        cx="180"
+        cy="285"
+        r="4"
+      />
+
+    `;
+  }
+
+
+  if(garmentType === "pants") {
+
+    garmentDetails.innerHTML = `
+
+      <path
+        class="detail"
+        d="M105 65 Q140 80 175 65"
+      />
+
+      <path
+        class="detail"
+        d="M175 65 Q180 85 180 110"
+      />
+
+      <path
+        class="detail"
+        d="M105 88 L175 88"
+      />
+
+      <path
+        class="detail"
+        d="M175 110 Q150 130 128 110"
+      />
+
+      <path
+        class="detail"
+        d="M128 110 L120 400"
+      />
+
+      <path
+        class="detail"
+        d="M180 110 L175 400"
+      />
+
+      <path
+        class="detail-light"
+        d="M85 385 L120 385"
+      />
+
+      <path
+        class="detail-light"
+        d="M140 385 L175 385"
+      />
+
+    `;
+  }
+}
+
+
+/* =================================
+   PUNKTE
 ================================= */
 
 function createDeformationGrid() {
@@ -578,28 +807,28 @@ function createDeformationGrid() {
     }));
 
   renderDeformation();
+
 }
 
 
 /* =================================
-   FORM RENDERN
+   RENDERN
 ================================= */
 
 function renderDeformation() {
 
-  const pointString =
-    points
-      .map(p => `${p.x},${p.y}`)
-      .join(" ");
-
   garmentShape.setAttribute(
-    "points",
-    pointString
+    "d",
+    createGarmentPath()
   );
+
+  renderGarmentDetails();
 
   deformPointsGroup.innerHTML = "";
 
-  if (!deformMode) return;
+  if(!deformMode)
+    return;
+
 
   points.forEach((point,index) => {
 
@@ -641,11 +870,12 @@ function renderDeformation() {
     );
 
   });
+
 }
 
 
 /* =================================
-   VERFORMUNG
+   PUNKT BEWEGEN
 ================================= */
 
 function makePointDraggable(
@@ -654,6 +884,7 @@ function makePointDraggable(
 ) {
 
   let dragging = false;
+
 
   circle.addEventListener(
     "pointerdown",
@@ -679,7 +910,8 @@ function makePointDraggable(
     "pointermove",
     event => {
 
-      if (!dragging) return;
+      if(!dragging)
+        return;
 
       const rect =
         garmentSvg.getBoundingClientRect();
@@ -690,6 +922,7 @@ function makePointDraggable(
       const scaleY =
         460 / rect.height;
 
+
       let x =
         (event.clientX - rect.left)
         * scaleX;
@@ -697,6 +930,7 @@ function makePointDraggable(
       let y =
         (event.clientY - rect.top)
         * scaleY;
+
 
       x =
         Math.max(
@@ -709,6 +943,7 @@ function makePointDraggable(
           10,
           Math.min(450,y)
         );
+
 
       points[index].x = x;
       points[index].y = y;
@@ -739,7 +974,7 @@ function makePointDraggable(
 
 
 /* =================================
-   VERFORMUNG AN/AUS
+   VERFORMUNG
 ================================= */
 
 function toggleDeformation() {
@@ -759,10 +994,12 @@ function toggleDeformation() {
 
   renderDeformation();
 
+
   statusText.textContent =
     deformMode
       ? "Ziehe die Punkte mit dem Finger."
       : "Verformung beendet.";
+
 }
 
 
@@ -786,6 +1023,7 @@ function resetDeformation() {
 
   statusText.textContent =
     "Kleidungsform zurückgesetzt.";
+
 }
 
 
@@ -798,17 +1036,17 @@ function setGarment(type) {
   garmentType =
     type;
 
+
   document
     .querySelectorAll(
       ".panel:first-child button"
     )
-    .forEach(button => {
-
+    .forEach(button =>
       button.classList.remove(
         "active"
-      );
+      )
+    );
 
-    });
 
   document
     .getElementById(
@@ -818,10 +1056,13 @@ function setGarment(type) {
       "active"
     );
 
+
   createDeformationGrid();
+
 
   statusText.textContent =
     "Kleidungsstück geändert.";
+
 }
 
 
@@ -843,6 +1084,7 @@ function changeColor(color) {
 
   statusText.textContent =
     "Farbe geändert.";
+
 }
 
 
@@ -856,7 +1098,8 @@ function togglePattern() {
     "pattern"
   );
 
-  if (
+
+  if(
     garmentShape.classList.contains(
       "pattern"
     )
@@ -874,6 +1117,7 @@ function togglePattern() {
       "Muster deaktiviert.";
 
   }
+
 }
 
 
@@ -891,12 +1135,15 @@ function addText() {
   const text =
     input.value.trim();
 
-  if (!text) return;
+  if(!text)
+    return;
+
 
   const element =
     document.createElement(
       "div"
     );
+
 
   element.className =
     "element design-text";
@@ -916,9 +1163,11 @@ function addText() {
   element.dataset.rotation =
     "0";
 
+
   clothingArea.appendChild(
     element
   );
+
 
   makeDraggable(
     element
@@ -928,10 +1177,12 @@ function addText() {
     element
   );
 
+
   input.value = "";
 
   statusText.textContent =
     "Text hinzugefügt.";
+
 }
 
 
@@ -964,9 +1215,11 @@ function addSticker(symbol) {
   element.dataset.rotation =
     "0";
 
+
   clothingArea.appendChild(
     element
   );
+
 
   makeDraggable(
     element
@@ -976,8 +1229,10 @@ function addSticker(symbol) {
     element
   );
 
+
   statusText.textContent =
     "Sticker hinzugefügt.";
+
 }
 
 
@@ -987,21 +1242,25 @@ function addSticker(symbol) {
 
 function selectElement(element) {
 
-  if (selectedElement) {
+  if(selectedElement) {
 
     selectedElement.classList
       .remove("selected");
 
   }
 
+
   selectedElement =
     element;
+
 
   selectedElement.classList
     .add("selected");
 
+
   elementTools.classList
     .add("visible");
+
 }
 
 
@@ -1044,6 +1303,7 @@ function makeDraggable(element) {
       startTop =
         element.offsetTop;
 
+
       element.setPointerCapture(
         event.pointerId
       );
@@ -1056,13 +1316,16 @@ function makeDraggable(element) {
     "pointermove",
     event => {
 
-      if (!dragging) return;
+      if(!dragging)
+        return;
+
 
       element.style.left =
         startLeft +
         event.clientX -
         startX +
         "px";
+
 
       element.style.top =
         startTop +
@@ -1082,6 +1345,7 @@ function makeDraggable(element) {
 
     }
   );
+
 }
 
 
@@ -1091,15 +1355,18 @@ function makeDraggable(element) {
 
 function changeElementSize(amount) {
 
-  if (!selectedElement)
+  if(!selectedElement)
     return;
+
 
   let scale =
     parseFloat(
       selectedElement.dataset.scale
     );
 
+
   scale += amount;
+
 
   scale =
     Math.max(
@@ -1107,12 +1374,15 @@ function changeElementSize(amount) {
       Math.min(3,scale)
     );
 
+
   selectedElement.dataset.scale =
     scale;
+
 
   updateElementTransform(
     selectedElement
   );
+
 }
 
 
@@ -1122,22 +1392,27 @@ function changeElementSize(amount) {
 
 function rotateElement(amount) {
 
-  if (!selectedElement)
+  if(!selectedElement)
     return;
+
 
   let rotation =
     parseFloat(
       selectedElement.dataset.rotation
     );
 
+
   rotation += amount;
+
 
   selectedElement.dataset.rotation =
     rotation;
 
+
   updateElementTransform(
     selectedElement
   );
+
 }
 
 
@@ -1147,14 +1422,10 @@ function rotateElement(amount) {
 
 function updateElementTransform(element) {
 
-  const scale =
-    element.dataset.scale;
-
-  const rotation =
-    element.dataset.rotation;
-
   element.style.transform =
-    `scale(${scale}) rotate(${rotation}deg)`;
+    `scale(${element.dataset.scale})
+     rotate(${element.dataset.rotation}deg)`;
+
 }
 
 
@@ -1164,19 +1435,23 @@ function updateElementTransform(element) {
 
 function deleteElement() {
 
-  if (!selectedElement)
+  if(!selectedElement)
     return;
+
 
   selectedElement.remove();
 
   selectedElement =
     null;
 
+
   elementTools.classList
     .remove("visible");
 
+
   statusText.textContent =
     "Element gelöscht.";
+
 }
 
 
@@ -1235,17 +1510,20 @@ function saveDesign() {
 
   localStorage.setItem(
     "arveDesign",
-    JSON.stringify(design)
+    JSON.stringify(
+      design
+    )
   );
 
 
   statusText.textContent =
     "✓ Arvé-Design gespeichert.";
+
 }
 
 
 /* =================================
-   ALLES ZURÜCKSETZEN
+   RESET
 ================================= */
 
 function resetDesign() {
@@ -1256,8 +1534,10 @@ function resetDesign() {
   garmentColor =
     "#eee6d4";
 
+
   garmentShape.style.fill =
     garmentColor;
+
 
   garmentShape.classList
     .remove("pattern");
@@ -1275,6 +1555,7 @@ function resetDesign() {
   selectedElement =
     null;
 
+
   elementTools.classList
     .remove("visible");
 
@@ -1282,8 +1563,10 @@ function resetDesign() {
   deformMode =
     false;
 
+
   deformTools.classList
     .remove("visible");
+
 
   deformButton.classList
     .remove("active");
@@ -1299,6 +1582,7 @@ function resetDesign() {
       )
     );
 
+
   document
     .getElementById(
       "tshirtBtn"
@@ -1310,8 +1594,10 @@ function resetDesign() {
 
   createDeformationGrid();
 
+
   statusText.textContent =
     "Arvé-Design zurückgesetzt.";
+
 }
 
 
