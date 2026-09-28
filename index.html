@@ -6,11 +6,9 @@
 <title>Arvé</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+*{box-sizing:border-box}
 
-:root {
+:root{
   --black:#080908;
   --dark:#101411;
   --green:#17382d;
@@ -21,7 +19,7 @@
   --border:rgba(184,161,106,.35);
 }
 
-body {
+body{
   margin:0;
   background:
     radial-gradient(circle at 50% 0%,#16251e,transparent 45%),
@@ -30,50 +28,50 @@ body {
   font-family:Georgia,"Times New Roman",serif;
 }
 
-header {
+header{
   padding:22px;
   text-align:center;
   border-bottom:1px solid #303831;
 }
 
-.logo {
+.logo{
   font-size:32px;
   letter-spacing:7px;
   font-weight:bold;
 }
 
-.subtitle {
+.subtitle{
   color:#aaa99f;
   margin-top:6px;
 }
 
-.app {
+.app{
   max-width:1100px;
   margin:auto;
   padding:20px;
 }
 
-.controls {
+.controls{
   display:grid;
   grid-template-columns:1fr;
   gap:12px;
   margin-bottom:20px;
 }
 
-.panel {
+.panel{
   background:#121814;
   border:1px solid var(--border);
   border-radius:16px;
   padding:15px;
 }
 
-.panel h3 {
+.panel h3{
   margin-top:0;
   font-size:15px;
   letter-spacing:1px;
 }
 
-button {
+button{
   font-family:Georgia,"Times New Roman",serif;
   background:#1d2720;
   color:var(--cream);
@@ -82,20 +80,19 @@ button {
   padding:10px 14px;
   margin:4px;
   cursor:pointer;
-  transition:.2s;
 }
 
-button:hover {
+button:hover{
   background:var(--green);
   border-color:var(--gold);
 }
 
-button.active {
+button.active{
   background:var(--wine);
   border-color:#8d4655;
 }
 
-input {
+input{
   width:100%;
   padding:11px;
   border-radius:9px;
@@ -105,13 +102,13 @@ input {
   margin-bottom:8px;
 }
 
-.colors {
+.colors{
   display:flex;
   flex-wrap:wrap;
   gap:8px;
 }
 
-.color {
+.color{
   width:35px;
   height:35px;
   border-radius:50%;
@@ -119,12 +116,12 @@ input {
   cursor:pointer;
 }
 
-.workspace {
+.workspace{
   min-height:600px;
   background:
     radial-gradient(circle at center,
-      rgba(36,77,61,.25),
-      transparent 60%),
+    rgba(36,77,61,.25),
+    transparent 60%),
     #0c100e;
 
   border:1px solid var(--border);
@@ -138,13 +135,13 @@ input {
   overflow:hidden;
 }
 
-.clothing-area {
+.clothing-area{
   position:relative;
   width:360px;
   height:460px;
 }
 
-.garment-svg {
+.garment-svg{
   position:absolute;
   inset:0;
   width:100%;
@@ -152,49 +149,45 @@ input {
   overflow:visible;
 }
 
-.garment-shape {
-  fill:#eee6d4;
+.garment-shape{
+  fill:var(--cream);
   stroke:rgba(184,161,106,.75);
   stroke-width:1.5;
-  stroke-linejoin:round;
-  filter:url(#clothShadow);
-  transition:fill .25s;
+  filter:url(#shadow);
 }
 
-.garment-shape.pattern {
+.garment-shape.pattern{
   fill:url(#pattern);
 }
 
-.detail {
-  pointer-events:none;
+.detail{
   fill:none;
-  stroke:rgba(40,35,28,.28);
+  stroke:rgba(35,30,24,.38);
   stroke-width:2;
   stroke-linecap:round;
+  pointer-events:none;
 }
 
-.detail-light {
-  pointer-events:none;
+.highlight{
   fill:none;
-  stroke:rgba(255,255,255,.18);
-  stroke-width:1.5;
-}
-
-.collar {
-  pointer-events:none;
-  fill:none;
-  stroke:rgba(40,35,28,.38);
+  stroke:rgba(255,255,255,.16);
   stroke-width:2;
+  pointer-events:none;
 }
 
-.button-detail {
-  pointer-events:none;
-  fill:#b8a16a;
+.button-detail{
+  fill:var(--gold);
   stroke:#3b3325;
   stroke-width:1;
 }
 
-.deform-point {
+.net-line{
+  stroke:rgba(184,161,106,.25);
+  stroke-width:1;
+  pointer-events:none;
+}
+
+.deform-point{
   fill:#eee6d4;
   stroke:#17382d;
   stroke-width:3;
@@ -202,16 +195,16 @@ input {
   touch-action:none;
 }
 
-.deform-point:hover {
+.deform-point:hover{
   fill:#b8a16a;
 }
 
-.deform-point.active {
+.deform-point.active{
   fill:#b8a16a;
   stroke:#eee6d4;
 }
 
-.element {
+.element{
   position:absolute;
   cursor:grab;
   user-select:none;
@@ -219,28 +212,28 @@ input {
   z-index:20;
 }
 
-.element:active {
+.element:active{
   cursor:grabbing;
 }
 
-.element.selected {
+.element.selected{
   outline:1px dashed var(--gold);
   outline-offset:7px;
 }
 
-.design-text {
+.design-text{
   font-size:25px;
   font-weight:bold;
   color:#111;
   white-space:nowrap;
 }
 
-.sticker {
+.sticker{
   font-size:45px;
 }
 
 .element-tools,
-.deform-tools {
+.deform-tools{
   display:none;
   margin-top:10px;
   padding-top:10px;
@@ -248,30 +241,29 @@ input {
 }
 
 .element-tools.visible,
-.deform-tools.visible {
+.deform-tools.visible{
   display:block;
 }
 
-.status {
+.status{
   text-align:center;
   color:#aaa99f;
   margin-top:15px;
 }
 
-@media(min-width:800px) {
-  .controls {
+@media(min-width:800px){
+  .controls{
     grid-template-columns:repeat(3,1fr);
   }
 }
 
-@media(max-width:600px) {
-
-  .workspace {
+@media(max-width:600px){
+  .workspace{
     min-height:520px;
     padding:10px;
   }
 
-  .clothing-area {
+  .clothing-area{
     transform:scale(.9);
   }
 }
@@ -290,7 +282,6 @@ input {
 <div class="controls">
 
 <div class="panel">
-
 <h3>KLEIDUNG</h3>
 
 <button onclick="setGarment('tshirt')" id="tshirtBtn" class="active">
@@ -304,12 +295,10 @@ Hemd
 <button onclick="setGarment('pants')" id="pantsBtn">
 Hose
 </button>
-
 </div>
 
 
 <div class="panel">
-
 <h3>FARBE</h3>
 
 <div class="colors">
@@ -340,21 +329,14 @@ onclick="changeColor('#c9b58a')"></div>
 
 </div>
 
-<button onclick="togglePattern()">
-Muster
-</button>
-
+<button onclick="togglePattern()">Muster</button>
 </div>
 
 
 <div class="panel">
-
 <h3>DESIGN</h3>
 
-<input
-id="textInput"
-placeholder="Text eingeben..."
->
+<input id="textInput" placeholder="Text eingeben...">
 
 <button onclick="addText()">
 Text hinzufügen
@@ -409,7 +391,6 @@ Alles zurücksetzen
 </button>
 
 </div>
-
 </div>
 
 
@@ -425,7 +406,7 @@ viewBox="0 0 360 460"
 
 <defs>
 
-<filter id="clothShadow"
+<filter id="shadow"
 x="-30%"
 y="-30%"
 width="160%"
@@ -433,14 +414,13 @@ height="160%">
 
 <feDropShadow
 dx="0"
-dy="5"
-stdDeviation="5"
-flood-color="#000000"
-flood-opacity=".35"
+dy="6"
+stdDeviation="6"
+flood-color="#000"
+flood-opacity=".4"
 />
 
 </filter>
-
 
 <pattern
 id="pattern"
@@ -467,29 +447,21 @@ opacity=".35"
 
 </defs>
 
-
-<!-- KLEIDUNGSFORM -->
-
 <path
 id="garmentShape"
 class="garment-shape"
 d=""
-/>
-
-
-<!-- DETAILS -->
+></path>
 
 <g id="garmentDetails"></g>
 
-
-<!-- VERFORMUNG -->
+<g id="deformationNet"></g>
 
 <g id="deformPoints"></g>
 
 </svg>
 
 </div>
-
 </div>
 
 <div class="status" id="status">
@@ -500,9 +472,6 @@ Drücke „Kleidung verformen“, um die Form zu bearbeiten.
 
 
 <script>
-
-const clothingArea =
-document.getElementById("clothingArea");
 
 const garmentSvg =
 document.getElementById("garmentSvg");
@@ -516,6 +485,12 @@ document.getElementById("garmentDetails");
 const deformPointsGroup =
 document.getElementById("deformPoints");
 
+const deformationNet =
+document.getElementById("deformationNet");
+
+const clothingArea =
+document.getElementById("clothingArea");
+
 const statusText =
 document.getElementById("status");
 
@@ -528,157 +503,248 @@ document.getElementById("deformButton");
 const elementTools =
 document.getElementById("elementTools");
 
-let selectedElement = null;
+let garmentType="tshirt";
+let garmentColor="#eee6d4";
+let deformMode=false;
 
-let deformMode = false;
+let selectedElement=null;
 
-let garmentType = "tshirt";
-
-let garmentColor = "#eee6d4";
-
-let points = [];
+let nodes=[];
+let rows=0;
+let cols=0;
 
 
-/* =================================
-   GRUNDFORM
-================================= */
+/* =========================================
+   KLEIDUNGS-GEOMETRIE
+========================================= */
 
-function getGarmentPoints(type) {
+const garmentData={
 
-  if(type === "pants") {
+tshirt:{
+rows:6,
+cols:5,
+
+points:[
+[105,85],[140,65],[180,82],[220,65],[255,85],
+[295,135],[265,175],[240,150],[240,375],[120,375],
+[120,150],[95,175],[65,135]
+]
+},
+
+shirt:{
+rows:6,
+cols:5,
+
+points:[
+[105,78],[145,55],[180,82],[215,55],[255,78],
+[305,135],[275,180],[245,150],[245,400],[115,400],
+[115,150],[85,180],[55,135]
+]
+},
+
+pants:{
+rows:7,
+cols:5,
+
+points:[
+[105,65],[180,65],[255,65],
+[250,130],[220,210],[218,400],
+[180,400],[142,400],[140,210],
+[110,130]
+]
+}
+
+};
+
+
+/* =========================================
+   AUSSENFORM
+========================================= */
+
+function getOutline(){
+
+  if(garmentType==="tshirt"){
 
     return [
-
-      [105,65],
-      [175,65],
-      [180,205],
-      [175,400],
-      [135,400],
-      [128,250],
-      [120,400],
-      [80,400],
-      [75,205]
-
+      [105,85],
+      [140,65],
+      [180,82],
+      [220,65],
+      [255,85],
+      [295,135],
+      [265,175],
+      [240,150],
+      [240,375],
+      [120,375],
+      [120,150],
+      [95,175],
+      [65,135]
     ];
+
   }
 
 
-  if(type === "shirt") {
+  if(garmentType==="shirt"){
 
     return [
-
-      [112,70],
-      [145,52],
+      [105,78],
+      [145,55],
       [180,82],
-      [215,52],
-      [248,70],
-
+      [215,55],
+      [255,78],
       [305,135],
-      [274,178],
+      [275,180],
       [245,150],
-
       [245,400],
       [115,400],
-
       [115,150],
-      [86,178],
+      [85,180],
       [55,135]
-
     ];
+
   }
 
 
   return [
-
-    [120,74],
-    [150,57],
-    [180,82],
-    [210,57],
-    [240,74],
-
-    [298,136],
-    [270,176],
-    [242,150],
-
-    [242,378],
-    [118,378],
-
-    [118,150],
-    [90,176],
-    [62,136]
-
+    [105,65],
+    [180,65],
+    [255,65],
+    [250,130],
+    [220,210],
+    [218,400],
+    [180,400],
+    [142,400],
+    [140,210],
+    [110,130]
   ];
 }
 
 
-/* =================================
-   FORM ALS SVG PFAD
-================================= */
+/* =========================================
+   NETZ ERSTELLEN
+========================================= */
 
-function createGarmentPath() {
+function createDeformationMesh(){
 
-  const p = points;
+  nodes=[];
 
-  if(!p.length) return "";
+  const outline=getOutline();
 
-  let d =
-    `M ${p[0].x} ${p[0].y}`;
+  rows =
+    garmentType==="pants" ? 8 : 7;
 
-  for(let i=1;i<p.length;i++) {
+  cols=7;
 
-    d +=
-      ` L ${p[i].x} ${p[i].y}`;
+  let minX=55;
+  let maxX=305;
+
+  let minY=55;
+  let maxY=400;
+
+  for(let r=0;r<rows;r++){
+
+    const y=
+      minY+
+      (maxY-minY)*
+      (r/(rows-1));
+
+    for(let c=0;c<cols;c++){
+
+      const x=
+        minX+
+        (maxX-minX)*
+        (c/(cols-1));
+
+      nodes.push({
+
+        x:x,
+        y:y,
+
+        originalX:x,
+        originalY:y
+
+      });
+
+    }
   }
 
-  d += " Z";
+  renderEverything();
+}
+
+
+/* =========================================
+   FORM AUS NETZ
+========================================= */
+
+function createGarmentPath(){
+
+  const outline=getOutline();
+
+  let d=
+    `M ${outline[0][0]} ${outline[0][1]}`;
+
+  for(let i=1;i<outline.length;i++){
+
+    d+=
+      ` L ${outline[i][0]} ${outline[i][1]}`;
+  }
+
+  d+=" Z";
 
   return d;
 }
 
 
-/* =================================
-   DETAILS
-================================= */
+/* =========================================
+   KLEIDUNGSDETAILS
+========================================= */
 
-function renderGarmentDetails() {
+function renderGarmentDetails(){
 
-  garmentDetails.innerHTML = "";
+  garmentDetails.innerHTML="";
 
-  if(garmentType === "tshirt") {
 
-    garmentDetails.innerHTML = `
+  if(garmentType==="tshirt"){
+
+    garmentDetails.innerHTML=`
 
       <path
-        class="collar"
-        d="M150 58 Q180 96 210 58"
+        class="detail"
+        d="M140 66 Q180 105 220 66"
+      />
+
+      <path
+        class="highlight"
+        d="M108 91 Q180 112 252 91"
       />
 
       <path
         class="detail"
-        d="M120 74 L90 136"
+        d="M95 175 L120 150"
       />
 
       <path
         class="detail"
-        d="M240 74 L270 136"
+        d="M265 175 L240 150"
       />
 
       <path
-        class="detail-light"
-        d="M130 365 L230 365"
+        class="highlight"
+        d="M128 365 L232 365"
       />
 
     `;
+
   }
 
 
-  if(garmentType === "shirt") {
+  if(garmentType==="shirt"){
 
-    garmentDetails.innerHTML = `
+    garmentDetails.innerHTML=`
 
       <path
-        class="collar"
-        d="M145 52 L160 92 L180 82 L200 92 L215 52"
+        class="detail"
+        d="M145 55 L160 95 L180 82 L200 95 L215 55"
       />
 
       <path
@@ -688,179 +754,191 @@ function renderGarmentDetails() {
 
       <path
         class="detail"
-        d="M115 150 L86 178"
+        d="M85 180 L115 150"
       />
 
       <path
         class="detail"
-        d="M245 150 L274 178"
+        d="M275 180 L245 150"
       />
 
-      <circle
-        class="button-detail"
-        cx="180"
-        cy="125"
-        r="4"
-      />
+      <circle class="button-detail"
+        cx="180" cy="125" r="4"/>
 
-      <circle
-        class="button-detail"
-        cx="180"
-        cy="165"
-        r="4"
-      />
+      <circle class="button-detail"
+        cx="180" cy="165" r="4"/>
 
-      <circle
-        class="button-detail"
-        cx="180"
-        cy="205"
-        r="4"
-      />
+      <circle class="button-detail"
+        cx="180" cy="205" r="4"/>
 
-      <circle
-        class="button-detail"
-        cx="180"
-        cy="245"
-        r="4"
-      />
+      <circle class="button-detail"
+        cx="180" cy="245" r="4"/>
 
-      <circle
-        class="button-detail"
-        cx="180"
-        cy="285"
-        r="4"
+      <circle class="button-detail"
+        cx="180" cy="285" r="4"/>
+
+      <path
+        class="highlight"
+        d="M125 385 L235 385"
       />
 
     `;
+
   }
 
 
-  if(garmentType === "pants") {
+  if(garmentType==="pants"){
 
-    garmentDetails.innerHTML = `
-
-      <path
-        class="detail"
-        d="M105 65 Q140 80 175 65"
-      />
+    garmentDetails.innerHTML=`
 
       <path
         class="detail"
-        d="M175 65 Q180 85 180 110"
+        d="M105 65 Q180 85 255 65"
       />
 
       <path
         class="detail"
-        d="M105 88 L175 88"
+        d="M110 92 L250 92"
       />
 
       <path
         class="detail"
-        d="M175 110 Q150 130 128 110"
+        d="M180 92 L180 400"
       />
 
       <path
         class="detail"
-        d="M128 110 L120 400"
+        d="M180 115 Q155 135 140 125"
       />
 
       <path
         class="detail"
-        d="M180 110 L175 400"
+        d="M180 115 Q205 135 220 125"
       />
 
       <path
-        class="detail-light"
-        d="M85 385 L120 385"
+        class="highlight"
+        d="M150 390 L175 390"
       />
 
       <path
-        class="detail-light"
-        d="M140 385 L175 385"
+        class="highlight"
+        d="M185 390 L210 390"
       />
 
     `;
+
   }
+
 }
 
 
-/* =================================
+/* =========================================
+   VERFORMUNGSNETZ
+========================================= */
+
+function renderMesh(){
+
+  deformationNet.innerHTML="";
+
+  if(!deformMode)
+    return;
+
+  for(let r=0;r<rows;r++){
+
+    for(let c=0;c<cols;c++){
+
+      const index=
+        r*cols+c;
+
+      const node=
+        nodes[index];
+
+
+      if(c<cols-1){
+
+        const right=
+          nodes[index+1];
+
+        const line=
+          document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+          );
+
+        line.setAttribute("x1",node.x);
+        line.setAttribute("y1",node.y);
+        line.setAttribute("x2",right.x);
+        line.setAttribute("y2",right.y);
+
+        line.classList.add("net-line");
+
+        deformationNet.appendChild(line);
+
+      }
+
+
+      if(r<rows-1){
+
+        const down=
+          nodes[index+cols];
+
+        const line=
+          document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+          );
+
+        line.setAttribute("x1",node.x);
+        line.setAttribute("y1",node.y);
+        line.setAttribute("x2",down.x);
+        line.setAttribute("y2",down.y);
+
+        line.classList.add("net-line");
+
+        deformationNet.appendChild(line);
+
+      }
+
+    }
+
+  }
+
+}
+
+
+/* =========================================
    PUNKTE
-================================= */
+========================================= */
 
-function createDeformationGrid() {
+function renderDeformationPoints(){
 
-  deformPointsGroup.innerHTML = "";
-
-  const base =
-    getGarmentPoints(garmentType);
-
-  points =
-    base.map(p => ({
-
-      x:p[0],
-      y:p[1],
-
-      originalX:p[0],
-      originalY:p[1]
-
-    }));
-
-  renderDeformation();
-
-}
-
-
-/* =================================
-   RENDERN
-================================= */
-
-function renderDeformation() {
-
-  garmentShape.setAttribute(
-    "d",
-    createGarmentPath()
-  );
-
-  renderGarmentDetails();
-
-  deformPointsGroup.innerHTML = "";
+  deformPointsGroup.innerHTML="";
 
   if(!deformMode)
     return;
 
 
-  points.forEach((point,index) => {
+  nodes.forEach((node,index)=>{
 
-    const circle =
+    const circle=
       document.createElementNS(
         "http://www.w3.org/2000/svg",
         "circle"
       );
 
-    circle.setAttribute(
-      "cx",
-      point.x
-    );
+    circle.setAttribute("cx",node.x);
+    circle.setAttribute("cy",node.y);
 
-    circle.setAttribute(
-      "cy",
-      point.y
-    );
-
-    circle.setAttribute(
-      "r",
-      "7"
-    );
+    circle.setAttribute("r","6");
 
     circle.classList.add(
       "deform-point"
     );
 
-    circle.dataset.index =
-      index;
+    circle.dataset.index=index;
 
-    makePointDraggable(
+    makeNodeDraggable(
       circle,
       index
     );
@@ -874,29 +952,43 @@ function renderDeformation() {
 }
 
 
-/* =================================
+/* =========================================
+   ALLES RENDERN
+========================================= */
+
+function renderEverything(){
+
+  garmentShape.setAttribute(
+    "d",
+    createGarmentPath()
+  );
+
+  renderGarmentDetails();
+
+  renderMesh();
+
+  renderDeformationPoints();
+
+}
+
+
+/* =========================================
    PUNKT BEWEGEN
-================================= */
+========================================= */
 
-function makePointDraggable(
-  circle,
-  index
-) {
+function makeNodeDraggable(circle,index){
 
-  let dragging = false;
-
+  let dragging=false;
 
   circle.addEventListener(
     "pointerdown",
-    event => {
+    event=>{
 
       event.stopPropagation();
 
-      dragging = true;
+      dragging=true;
 
-      circle.classList.add(
-        "active"
-      );
+      circle.classList.add("active");
 
       circle.setPointerCapture(
         event.pointerId
@@ -908,50 +1000,68 @@ function makePointDraggable(
 
   circle.addEventListener(
     "pointermove",
-    event => {
+    event=>{
 
       if(!dragging)
         return;
 
-      const rect =
+
+      const rect=
         garmentSvg.getBoundingClientRect();
 
-      const scaleX =
-        360 / rect.width;
 
-      const scaleY =
-        460 / rect.height;
+      const scaleX=
+        360/rect.width;
 
-
-      let x =
-        (event.clientX - rect.left)
-        * scaleX;
-
-      let y =
-        (event.clientY - rect.top)
-        * scaleY;
+      const scaleY=
+        460/rect.height;
 
 
-      x =
-        Math.max(
-          10,
-          Math.min(350,x)
-        );
+      let x=
+        (event.clientX-rect.left)
+        *scaleX;
 
-      y =
-        Math.max(
-          10,
-          Math.min(450,y)
-        );
+      let y=
+        (event.clientY-rect.top)
+        *scaleY;
 
 
-      points[index].x = x;
-      points[index].y = y;
+      x=Math.max(
+        15,
+        Math.min(345,x)
+      );
 
-      renderDeformation();
+      y=Math.max(
+        20,
+        Math.min(440,y)
+      );
 
-      statusText.textContent =
-        "Kleidungsform wird verändert.";
+
+      nodes[index].x=x;
+      nodes[index].y=y;
+
+
+      garmentShape.setAttribute(
+        "d",
+        createGarmentPath()
+      );
+
+      renderMesh();
+
+
+      circle.setAttribute(
+        "cx",
+        x
+      );
+
+      circle.setAttribute(
+        "cy",
+        y
+      );
+
+
+      statusText.textContent=
+        "Form wird frei verändert.";
 
     }
   );
@@ -959,28 +1069,24 @@ function makePointDraggable(
 
   circle.addEventListener(
     "pointerup",
-    () => {
-
-      dragging = false;
-
+    ()=>{
+      dragging=false;
       circle.classList.remove(
         "active"
       );
-
     }
   );
 
 }
 
 
-/* =================================
-   VERFORMUNG
-================================= */
+/* =========================================
+   VERFORMUNG AN/AUS
+========================================= */
 
-function toggleDeformation() {
+function toggleDeformation(){
 
-  deformMode =
-    !deformMode;
+  deformMode=!deformMode;
 
   deformTools.classList.toggle(
     "visible",
@@ -992,182 +1098,153 @@ function toggleDeformation() {
     deformMode
   );
 
-  renderDeformation();
+
+  renderEverything();
 
 
-  statusText.textContent =
+  statusText.textContent=
     deformMode
-      ? "Ziehe die Punkte mit dem Finger."
-      : "Verformung beendet.";
+      ?"Ziehe die vielen Punkte mit dem Finger."
+      :"Verformung beendet.";
 
 }
 
 
-/* =================================
-   RESET FORM
-================================= */
+/* =========================================
+   FORM ZURÜCKSETZEN
+========================================= */
 
-function resetDeformation() {
+function resetDeformation(){
 
-  points.forEach(point => {
+  nodes.forEach(node=>{
 
-    point.x =
-      point.originalX;
+    node.x=
+      node.originalX;
 
-    point.y =
-      point.originalY;
+    node.y=
+      node.originalY;
 
   });
 
-  renderDeformation();
 
-  statusText.textContent =
-    "Kleidungsform zurückgesetzt.";
+  renderEverything();
+
+
+  statusText.textContent=
+    "Form zurückgesetzt.";
 
 }
 
 
-/* =================================
+/* =========================================
    KLEIDUNG WECHSELN
-================================= */
+========================================= */
 
-function setGarment(type) {
+function setGarment(type){
 
-  garmentType =
-    type;
-
+  garmentType=type;
 
   document
     .querySelectorAll(
       ".panel:first-child button"
     )
-    .forEach(button =>
-      button.classList.remove(
-        "active"
-      )
+    .forEach(button=>
+      button.classList.remove("active")
     );
 
 
   document
     .getElementById(
-      type + "Btn"
+      type+"Btn"
     )
-    .classList.add(
-      "active"
-    );
+    .classList.add("active");
 
 
-  createDeformationGrid();
+  createDeformationMesh();
 
 
-  statusText.textContent =
+  statusText.textContent=
     "Kleidungsstück geändert.";
 
 }
 
 
-/* =================================
+/* =========================================
    FARBE
-================================= */
+========================================= */
 
-function changeColor(color) {
+function changeColor(color){
 
-  garmentColor =
-    color;
+  garmentColor=color;
 
   garmentShape.classList.remove(
     "pattern"
   );
 
-  garmentShape.style.fill =
-    color;
+  garmentShape.style.fill=color;
 
-  statusText.textContent =
+  statusText.textContent=
     "Farbe geändert.";
 
 }
 
 
-/* =================================
+/* =========================================
    MUSTER
-================================= */
+========================================= */
 
-function togglePattern() {
+function togglePattern(){
 
   garmentShape.classList.toggle(
     "pattern"
   );
 
 
-  if(
-    garmentShape.classList.contains(
-      "pattern"
-    )
-  ) {
-
-    statusText.textContent =
-      "Muster aktiviert.";
-
-  } else {
-
-    garmentShape.style.fill =
-      garmentColor;
-
-    statusText.textContent =
-      "Muster deaktiviert.";
-
-  }
+  statusText.textContent=
+    garmentShape.classList.contains("pattern")
+      ?"Muster aktiviert."
+      :"Muster deaktiviert.";
 
 }
 
 
-/* =================================
+/* =========================================
    TEXT
-================================= */
+========================================= */
 
-function addText() {
+function addText(){
 
-  const input =
+  const input=
     document.getElementById(
       "textInput"
     );
 
-  const text =
+  const text=
     input.value.trim();
 
   if(!text)
     return;
 
 
-  const element =
-    document.createElement(
-      "div"
-    );
+  const element=
+    document.createElement("div");
 
 
-  element.className =
+  element.className=
     "element design-text";
 
-  element.textContent =
-    text;
+  element.textContent=text;
 
-  element.style.left =
-    "130px";
+  element.style.left="130px";
+  element.style.top="190px";
 
-  element.style.top =
-    "190px";
-
-  element.dataset.scale =
-    "1";
-
-  element.dataset.rotation =
-    "0";
+  element.dataset.scale="1";
+  element.dataset.rotation="0";
 
 
   clothingArea.appendChild(
     element
   );
-
 
   makeDraggable(
     element
@@ -1178,48 +1255,46 @@ function addText() {
   );
 
 
-  input.value = "";
+  input.value="";
 
-  statusText.textContent =
+  statusText.textContent=
     "Text hinzugefügt.";
 
 }
 
 
-/* =================================
+/* =========================================
    STICKER
-================================= */
+========================================= */
 
-function addSticker(symbol) {
+function addSticker(symbol){
 
-  const element =
-    document.createElement(
-      "div"
-    );
+  const element=
+    document.createElement("div");
 
-  element.className =
+
+  element.className=
     "element sticker";
 
-  element.textContent =
+  element.textContent=
     symbol;
 
-  element.style.left =
+  element.style.left=
     "145px";
 
-  element.style.top =
+  element.style.top=
     "230px";
 
-  element.dataset.scale =
+  element.dataset.scale=
     "1";
 
-  element.dataset.rotation =
+  element.dataset.rotation=
     "0";
 
 
   clothingArea.appendChild(
     element
   );
-
 
   makeDraggable(
     element
@@ -1230,19 +1305,19 @@ function addSticker(symbol) {
   );
 
 
-  statusText.textContent =
+  statusText.textContent=
     "Sticker hinzugefügt.";
 
 }
 
 
-/* =================================
+/* =========================================
    ELEMENT AUSWÄHLEN
-================================= */
+========================================= */
 
-function selectElement(element) {
+function selectElement(element){
 
-  if(selectedElement) {
+  if(selectedElement){
 
     selectedElement.classList
       .remove("selected");
@@ -1250,13 +1325,10 @@ function selectElement(element) {
   }
 
 
-  selectedElement =
-    element;
-
+  selectedElement=element;
 
   selectedElement.classList
     .add("selected");
-
 
   elementTools.classList
     .add("visible");
@@ -1264,45 +1336,36 @@ function selectElement(element) {
 }
 
 
-/* =================================
+/* =========================================
    ELEMENT VERSCHIEBEN
-================================= */
+========================================= */
 
-function makeDraggable(element) {
+function makeDraggable(element){
 
-  let dragging = false;
+  let dragging=false;
 
-  let startX = 0;
-  let startY = 0;
+  let startX=0;
+  let startY=0;
 
-  let startLeft = 0;
-  let startTop = 0;
+  let startLeft=0;
+  let startTop=0;
 
 
   element.addEventListener(
     "pointerdown",
-    event => {
+    event=>{
 
       event.stopPropagation();
 
-      selectElement(
-        element
-      );
+      selectElement(element);
 
-      dragging = true;
+      dragging=true;
 
-      startX =
-        event.clientX;
+      startX=event.clientX;
+      startY=event.clientY;
 
-      startY =
-        event.clientY;
-
-      startLeft =
-        element.offsetLeft;
-
-      startTop =
-        element.offsetTop;
-
+      startLeft=element.offsetLeft;
+      startTop=element.offsetTop;
 
       element.setPointerCapture(
         event.pointerId
@@ -1314,23 +1377,23 @@ function makeDraggable(element) {
 
   element.addEventListener(
     "pointermove",
-    event => {
+    event=>{
 
       if(!dragging)
         return;
 
 
-      element.style.left =
-        startLeft +
-        event.clientX -
-        startX +
+      element.style.left=
+        startLeft+
+        event.clientX-
+        startX+
         "px";
 
 
-      element.style.top =
-        startTop +
-        event.clientY -
-        startY +
+      element.style.top=
+        startTop+
+        event.clientY-
+        startY+
         "px";
 
     }
@@ -1339,43 +1402,39 @@ function makeDraggable(element) {
 
   element.addEventListener(
     "pointerup",
-    () => {
-
-      dragging = false;
-
+    ()=>{
+      dragging=false;
     }
   );
 
 }
 
 
-/* =================================
+/* =========================================
    ELEMENT GRÖSSE
-================================= */
+========================================= */
 
-function changeElementSize(amount) {
+function changeElementSize(amount){
 
   if(!selectedElement)
     return;
 
 
-  let scale =
+  let scale=
     parseFloat(
       selectedElement.dataset.scale
     );
 
 
-  scale += amount;
+  scale+=amount;
+
+  scale=Math.max(
+    .5,
+    Math.min(3,scale)
+  );
 
 
-  scale =
-    Math.max(
-      .5,
-      Math.min(3,scale)
-    );
-
-
-  selectedElement.dataset.scale =
+  selectedElement.dataset.scale=
     scale;
 
 
@@ -1386,26 +1445,25 @@ function changeElementSize(amount) {
 }
 
 
-/* =================================
-   ELEMENT DREHEN
-================================= */
+/* =========================================
+   DREHEN
+========================================= */
 
-function rotateElement(amount) {
+function rotateElement(amount){
 
   if(!selectedElement)
     return;
 
 
-  let rotation =
+  let rotation=
     parseFloat(
       selectedElement.dataset.rotation
     );
 
 
-  rotation += amount;
+  rotation+=amount;
 
-
-  selectedElement.dataset.rotation =
+  selectedElement.dataset.rotation=
     rotation;
 
 
@@ -1416,24 +1474,24 @@ function rotateElement(amount) {
 }
 
 
-/* =================================
+/* =========================================
    TRANSFORM
-================================= */
+========================================= */
 
-function updateElementTransform(element) {
+function updateElementTransform(element){
 
-  element.style.transform =
+  element.style.transform=
     `scale(${element.dataset.scale})
      rotate(${element.dataset.rotation}deg)`;
 
 }
 
 
-/* =================================
-   ELEMENT LÖSCHEN
-================================= */
+/* =========================================
+   LÖSCHEN
+========================================= */
 
-function deleteElement() {
+function deleteElement(){
 
   if(!selectedElement)
     return;
@@ -1441,27 +1499,25 @@ function deleteElement() {
 
   selectedElement.remove();
 
-  selectedElement =
-    null;
-
+  selectedElement=null;
 
   elementTools.classList
     .remove("visible");
 
 
-  statusText.textContent =
+  statusText.textContent=
     "Element gelöscht.";
 
 }
 
 
-/* =================================
+/* =========================================
    SPEICHERN
-================================= */
+========================================= */
 
-function saveDesign() {
+function saveDesign(){
 
-  const design = {
+  const design={
 
     garmentType:
       garmentType,
@@ -1469,8 +1525,8 @@ function saveDesign() {
     garmentColor:
       garmentColor,
 
-    deformation:
-      points,
+    nodes:
+      nodes,
 
     elements:[]
 
@@ -1478,10 +1534,8 @@ function saveDesign() {
 
 
   document
-    .querySelectorAll(
-      ".element"
-    )
-    .forEach(element => {
+    .querySelectorAll(".element")
+    .forEach(element=>{
 
       design.elements.push({
 
@@ -1510,63 +1564,50 @@ function saveDesign() {
 
   localStorage.setItem(
     "arveDesign",
-    JSON.stringify(
-      design
-    )
+    JSON.stringify(design)
   );
 
 
-  statusText.textContent =
+  statusText.textContent=
     "✓ Arvé-Design gespeichert.";
 
 }
 
 
-/* =================================
+/* =========================================
    RESET
-================================= */
+========================================= */
 
-function resetDesign() {
+function resetDesign(){
 
-  garmentType =
-    "tshirt";
+  garmentType="tshirt";
 
-  garmentColor =
-    "#eee6d4";
+  garmentColor="#eee6d4";
 
-
-  garmentShape.style.fill =
+  garmentShape.style.fill=
     garmentColor;
-
 
   garmentShape.classList
     .remove("pattern");
 
 
   document
-    .querySelectorAll(
-      ".element"
-    )
-    .forEach(element =>
+    .querySelectorAll(".element")
+    .forEach(element=>
       element.remove()
     );
 
 
-  selectedElement =
-    null;
-
+  selectedElement=null;
 
   elementTools.classList
     .remove("visible");
 
 
-  deformMode =
-    false;
-
+  deformMode=false;
 
   deformTools.classList
     .remove("visible");
-
 
   deformButton.classList
     .remove("active");
@@ -1576,36 +1617,30 @@ function resetDesign() {
     .querySelectorAll(
       ".panel:first-child button"
     )
-    .forEach(button =>
-      button.classList.remove(
-        "active"
-      )
+    .forEach(button=>
+      button.classList.remove("active")
     );
 
 
   document
-    .getElementById(
-      "tshirtBtn"
-    )
-    .classList.add(
-      "active"
-    );
+    .getElementById("tshirtBtn")
+    .classList.add("active");
 
 
-  createDeformationGrid();
+  createDeformationMesh();
 
 
-  statusText.textContent =
+  statusText.textContent=
     "Arvé-Design zurückgesetzt.";
 
 }
 
 
-/* =================================
+/* =========================================
    START
-================================= */
+========================================= */
 
-createDeformationGrid();
+createDeformationMesh();
 
 </script>
 
