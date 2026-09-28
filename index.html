@@ -150,7 +150,8 @@ input {
 .garment-shape {
   fill:#eee6d4;
   stroke:rgba(184,161,106,.5);
-  stroke-width:1;
+  stroke-width:1.5;
+  stroke-linejoin:round;
   transition:fill .2s;
 }
 
@@ -173,7 +174,6 @@ input {
 .deform-point.active {
   fill:#b8a16a;
   stroke:#eee6d4;
-  stroke-width:3;
 }
 
 .element {
@@ -204,17 +204,7 @@ input {
   font-size:45px;
 }
 
-.element-tools {
-  display:none;
-  margin-top:10px;
-  padding-top:10px;
-  border-top:1px solid #303831;
-}
-
-.element-tools.visible {
-  display:block;
-}
-
+.element-tools,
 .deform-tools {
   display:none;
   margin-top:10px;
@@ -222,6 +212,7 @@ input {
   border-top:1px solid #303831;
 }
 
+.element-tools.visible,
 .deform-tools.visible {
   display:block;
 }
@@ -262,6 +253,7 @@ input {
 
 <div class="controls">
 
+<!-- KLEIDUNG -->
 <div class="panel">
 
 <h3>KLEIDUNG</h3>
@@ -280,6 +272,8 @@ Hose
 
 </div>
 
+
+<!-- FARBE -->
 <div class="panel">
 
 <h3>FARBE</h3>
@@ -318,6 +312,8 @@ Muster
 
 </div>
 
+
+<!-- DESIGN -->
 <div class="panel">
 
 <h3>DESIGN</h3>
@@ -327,7 +323,7 @@ id="textInput"
 placeholder="Text eingeben..."
 >
 
-<button onclick="addText()">
+<button onclick="addText">
 Text hinzufügen
 </button>
 
@@ -359,25 +355,15 @@ Form zurücksetzen
 
 <br>
 
-<button onclick="changeElementSize(-.1)">
-−
-</button>
+<button onclick="changeElementSize(-.1)">−</button>
 
-<button onclick="changeElementSize(.1)">
-+
-</button>
+<button onclick="changeElementSize(.1)">+</button>
 
-<button onclick="rotateElement(-15)">
-↺
-</button>
+<button onclick="rotateElement(-15)">↺</button>
 
-<button onclick="rotateElement(15)">
-↻
-</button>
+<button onclick="rotateElement(15)">↻</button>
 
-<button onclick="deleteElement()">
-🗑
-</button>
+<button onclick="deleteElement()">🗑</button>
 
 </div>
 
@@ -394,6 +380,9 @@ Alles zurücksetzen
 </div>
 
 </div>
+
+
+<!-- ARBEITSFLÄCHE -->
 
 <div class="workspace">
 
@@ -415,7 +404,11 @@ patternUnits="userSpaceOnUse"
 patternTransform="rotate(45)"
 >
 
-<rect width="30" height="30" fill="#eee6d4"/>
+<rect
+width="30"
+height="30"
+fill="#eee6d4"
+/>
 
 <rect
 x="0"
@@ -450,6 +443,7 @@ Drücke „Kleidung verformen“, um die Form zu bearbeiten.
 
 </div>
 
+
 <script>
 
 const clothingArea =
@@ -477,170 +471,119 @@ const elementTools =
 document.getElementById("elementTools");
 
 let selectedElement = null;
-
 let deformMode = false;
-
 let garmentType = "tshirt";
-
 let garmentColor = "#eee6d4";
-
 let points = [];
 
 
-/* --------------------------------
-   GRUNDFORMEN
--------------------------------- */
+/* =================================
+   KLEIDUNGSFORMEN
+================================= */
 
 function getGarmentPoints(type) {
+
+  /* ---------- HOSE ---------- */
 
   if (type === "pants") {
 
     return [
-      [125,55],
-      [235,55],
-      [255,105],
-      [250,185],
-      [225,185],
-      [220,395],
-      [185,395],
-      [180,260],
-      [175,395],
-      [140,395],
-      [135,185],
-      [110,185],
-      [105,105]
-    ];
 
+      [115,70],
+      [175,70],
+      [180,210],
+      [175,390],
+      [135,390],
+      [130,250],
+      [125,390],
+      [85,390],
+      [80,210]
+
+    ];
   }
+
+
+  /* ---------- HEMD ---------- */
 
   if (type === "shirt") {
 
     return [
-      [120,70],
-      [150,55],
-      [180,80],
-      [210,55],
-      [240,70],
-      [300,140],
-      [270,175],
-      [245,145],
+
+      [115,70],
+      [145,55],
+      [180,82],
+      [215,55],
+      [245,70],
+
+      [305,135],
+      [275,175],
+      [245,150],
+
       [245,400],
       [115,400],
-      [115,145],
-      [90,175],
-      [60,140]
-    ];
 
+      [115,150],
+      [85,175],
+      [55,135]
+
+    ];
   }
 
+
+  /* ---------- T-SHIRT ---------- */
+
   return [
-    [120,70],
-    [150,55],
-    [180,80],
-    [210,55],
-    [240,70],
-    [300,140],
-    [270,175],
-    [245,145],
-    [245,380],
-    [115,380],
-    [115,145],
-    [90,175],
-    [60,140]
+
+    [120,75],
+    [150,58],
+    [180,82],
+    [210,58],
+    [240,75],
+
+    [295,135],
+    [268,175],
+    [240,150],
+
+    [240,375],
+    [120,375],
+
+    [120,150],
+    [92,175],
+    [65,135]
+
   ];
 }
 
 
-/* --------------------------------
-   PUNKTE ERZEUGEN
--------------------------------- */
+/* =================================
+   VERFORMUNGSPUNKTE
+================================= */
 
 function createDeformationGrid() {
 
   deformPointsGroup.innerHTML = "";
 
-  points = [];
-
   const base =
     getGarmentPoints(garmentType);
 
-  /*
-    Wir erzeugen zusätzliche Punkte
-    zwischen den Grundpunkten.
-  */
+  points =
+    base.map(p => ({
 
-  const minX = Math.min(
-    ...base.map(p => p[0])
-  );
+      x:p[0],
+      y:p[1],
 
-  const maxX = Math.max(
-    ...base.map(p => p[0])
-  );
+      originalX:p[0],
+      originalY:p[1]
 
-  const minY = Math.min(
-    ...base.map(p => p[1])
-  );
-
-  const maxY = Math.max(
-    ...base.map(p => p[1])
-  );
-
-  const rows = 7;
-  const columns = 7;
-
-  for (
-    let row = 0;
-    row <= rows;
-    row++
-  ) {
-
-    const y =
-      minY +
-      (maxY - minY) *
-      (row / rows);
-
-    for (
-      let col = 0;
-      col <= columns;
-      col++
-    ) {
-
-      const x =
-        minX +
-        (maxX - minX) *
-        (col / columns);
-
-      /*
-        Nur Punkte innerhalb
-        eines einfachen Bereichs.
-      */
-
-      if (
-        x >= minX &&
-        x <= maxX &&
-        y >= minY &&
-        y <= maxY
-      ) {
-
-        const point = {
-          x:x,
-          y:y,
-          originalX:x,
-          originalY:y
-        };
-
-        points.push(point);
-      }
-    }
-  }
+    }));
 
   renderDeformation();
 }
 
 
-/* --------------------------------
-   FORM DARSTELLEN
--------------------------------- */
+/* =================================
+   FORM RENDERN
+================================= */
 
 function renderDeformation() {
 
@@ -696,13 +639,14 @@ function renderDeformation() {
     deformPointsGroup.appendChild(
       circle
     );
+
   });
 }
 
 
-/* --------------------------------
-   PUNKT BEWEGEN
--------------------------------- */
+/* =================================
+   VERFORMUNG
+================================= */
 
 function makePointDraggable(
   circle,
@@ -726,8 +670,10 @@ function makePointDraggable(
       circle.setPointerCapture(
         event.pointerId
       );
+
     }
   );
+
 
   circle.addEventListener(
     "pointermove",
@@ -752,15 +698,17 @@ function makePointDraggable(
         (event.clientY - rect.top)
         * scaleY;
 
-      x = Math.max(
-        15,
-        Math.min(345,x)
-      );
+      x =
+        Math.max(
+          10,
+          Math.min(350,x)
+        );
 
-      y = Math.max(
-        15,
-        Math.min(445,y)
-      );
+      y =
+        Math.max(
+          10,
+          Math.min(450,y)
+        );
 
       points[index].x = x;
       points[index].y = y;
@@ -769,8 +717,10 @@ function makePointDraggable(
 
       statusText.textContent =
         "Kleidungsform wird verändert.";
+
     }
   );
+
 
   circle.addEventListener(
     "pointerup",
@@ -781,22 +731,16 @@ function makePointDraggable(
       circle.classList.remove(
         "active"
       );
+
     }
   );
 
-  circle.addEventListener(
-    "pointercancel",
-    () => {
-
-      dragging = false;
-    }
-  );
 }
 
 
-/* --------------------------------
-   VERFORMUNG AN / AUS
--------------------------------- */
+/* =================================
+   VERFORMUNG AN/AUS
+================================= */
 
 function toggleDeformation() {
 
@@ -815,22 +759,16 @@ function toggleDeformation() {
 
   renderDeformation();
 
-  if (deformMode) {
-
-    statusText.textContent =
-      "Ziehe die Punkte mit dem Finger.";
-
-  } else {
-
-    statusText.textContent =
-      "Verformung beendet.";
-  }
+  statusText.textContent =
+    deformMode
+      ? "Ziehe die Punkte mit dem Finger."
+      : "Verformung beendet.";
 }
 
 
-/* --------------------------------
-   FORM ZURÜCKSETZEN
--------------------------------- */
+/* =================================
+   RESET FORM
+================================= */
 
 function resetDeformation() {
 
@@ -851,9 +789,9 @@ function resetDeformation() {
 }
 
 
-/* --------------------------------
-   KLEIDUNG
--------------------------------- */
+/* =================================
+   KLEIDUNG WECHSELN
+================================= */
 
 function setGarment(type) {
 
@@ -864,11 +802,13 @@ function setGarment(type) {
     .querySelectorAll(
       ".panel:first-child button"
     )
-    .forEach(button =>
+    .forEach(button => {
+
       button.classList.remove(
         "active"
-      )
-    );
+      );
+
+    });
 
   document
     .getElementById(
@@ -885,14 +825,18 @@ function setGarment(type) {
 }
 
 
-/* --------------------------------
+/* =================================
    FARBE
--------------------------------- */
+================================= */
 
 function changeColor(color) {
 
   garmentColor =
     color;
+
+  garmentShape.classList.remove(
+    "pattern"
+  );
 
   garmentShape.style.fill =
     color;
@@ -902,9 +846,9 @@ function changeColor(color) {
 }
 
 
-/* --------------------------------
+/* =================================
    MUSTER
--------------------------------- */
+================================= */
 
 function togglePattern() {
 
@@ -928,13 +872,14 @@ function togglePattern() {
 
     statusText.textContent =
       "Muster deaktiviert.";
+
   }
 }
 
 
-/* --------------------------------
+/* =================================
    TEXT
--------------------------------- */
+================================= */
 
 function addText() {
 
@@ -990,9 +935,9 @@ function addText() {
 }
 
 
-/* --------------------------------
+/* =================================
    STICKER
--------------------------------- */
+================================= */
 
 function addSticker(symbol) {
 
@@ -1036,18 +981,17 @@ function addSticker(symbol) {
 }
 
 
-/* --------------------------------
+/* =================================
    ELEMENT AUSWÄHLEN
--------------------------------- */
+================================= */
 
-function selectElement(
-  element
-) {
+function selectElement(element) {
 
   if (selectedElement) {
 
     selectedElement.classList
       .remove("selected");
+
   }
 
   selectedElement =
@@ -1061,13 +1005,11 @@ function selectElement(
 }
 
 
-/* --------------------------------
+/* =================================
    ELEMENT VERSCHIEBEN
--------------------------------- */
+================================= */
 
-function makeDraggable(
-  element
-) {
+function makeDraggable(element) {
 
   let dragging = false;
 
@@ -1076,6 +1018,7 @@ function makeDraggable(
 
   let startLeft = 0;
   let startTop = 0;
+
 
   element.addEventListener(
     "pointerdown",
@@ -1104,8 +1047,10 @@ function makeDraggable(
       element.setPointerCapture(
         event.pointerId
       );
+
     }
   );
+
 
   element.addEventListener(
     "pointermove",
@@ -1124,26 +1069,27 @@ function makeDraggable(
         event.clientY -
         startY +
         "px";
+
     }
   );
+
 
   element.addEventListener(
     "pointerup",
     () => {
 
       dragging = false;
+
     }
   );
 }
 
 
-/* --------------------------------
+/* =================================
    ELEMENT GRÖSSE
--------------------------------- */
+================================= */
 
-function changeElementSize(
-  amount
-) {
+function changeElementSize(amount) {
 
   if (!selectedElement)
     return;
@@ -1170,13 +1116,11 @@ function changeElementSize(
 }
 
 
-/* --------------------------------
+/* =================================
    ELEMENT DREHEN
--------------------------------- */
+================================= */
 
-function rotateElement(
-  amount
-) {
+function rotateElement(amount) {
 
   if (!selectedElement)
     return;
@@ -1197,13 +1141,11 @@ function rotateElement(
 }
 
 
-/* --------------------------------
-   ELEMENT TRANSFORM
--------------------------------- */
+/* =================================
+   TRANSFORM
+================================= */
 
-function updateElementTransform(
-  element
-) {
+function updateElementTransform(element) {
 
   const scale =
     element.dataset.scale;
@@ -1216,9 +1158,9 @@ function updateElementTransform(
 }
 
 
-/* --------------------------------
+/* =================================
    ELEMENT LÖSCHEN
--------------------------------- */
+================================= */
 
 function deleteElement() {
 
@@ -1238,9 +1180,9 @@ function deleteElement() {
 }
 
 
-/* --------------------------------
+/* =================================
    SPEICHERN
--------------------------------- */
+================================= */
 
 function saveDesign() {
 
@@ -1256,7 +1198,9 @@ function saveDesign() {
       points,
 
     elements:[]
+
   };
+
 
   document
     .querySelectorAll(
@@ -1283,24 +1227,26 @@ function saveDesign() {
 
         rotation:
           element.dataset.rotation
+
       });
+
     });
+
 
   localStorage.setItem(
     "arveDesign",
-    JSON.stringify(
-      design
-    )
+    JSON.stringify(design)
   );
+
 
   statusText.textContent =
     "✓ Arvé-Design gespeichert.";
 }
 
 
-/* --------------------------------
-   RESET
--------------------------------- */
+/* =================================
+   ALLES ZURÜCKSETZEN
+================================= */
 
 function resetDesign() {
 
@@ -1316,6 +1262,7 @@ function resetDesign() {
   garmentShape.classList
     .remove("pattern");
 
+
   document
     .querySelectorAll(
       ".element"
@@ -1324,11 +1271,13 @@ function resetDesign() {
       element.remove()
     );
 
+
   selectedElement =
     null;
 
   elementTools.classList
     .remove("visible");
+
 
   deformMode =
     false;
@@ -1339,6 +1288,26 @@ function resetDesign() {
   deformButton.classList
     .remove("active");
 
+
+  document
+    .querySelectorAll(
+      ".panel:first-child button"
+    )
+    .forEach(button =>
+      button.classList.remove(
+        "active"
+      )
+    );
+
+  document
+    .getElementById(
+      "tshirtBtn"
+    )
+    .classList.add(
+      "active"
+    );
+
+
   createDeformationGrid();
 
   statusText.textContent =
@@ -1346,9 +1315,9 @@ function resetDesign() {
 }
 
 
-/* --------------------------------
+/* =================================
    START
--------------------------------- */
+================================= */
 
 createDeformationGrid();
 
