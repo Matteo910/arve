@@ -2,7 +2,9 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>Arvé</title>
 
 <style>
@@ -22,15 +24,20 @@
   --border:rgba(184,161,106,.35);
 }
 
-body{
+html,body{
   margin:0;
+  min-height:100%;
+}
+
+body{
   min-height:100vh;
   background:
-    radial-gradient(circle at 50% 0%,#16251e 0%,transparent 45%),
+    radial-gradient(circle at 50% 0%,#1b3027 0%,transparent 43%),
     var(--black);
   color:var(--cream);
   font-family:Georgia,"Times New Roman",serif;
   overflow-x:hidden;
+  touch-action:pan-y;
 }
 
 button,
@@ -42,17 +49,16 @@ header{
   padding:22px 18px 16px;
   text-align:center;
   border-bottom:1px solid var(--border);
-  background:rgba(8,9,8,.88);
+  background:rgba(8,9,8,.90);
   backdrop-filter:blur(14px);
   position:sticky;
   top:0;
-  z-index:20;
+  z-index:50;
 }
 
 .logo{
   font-size:31px;
   letter-spacing:7px;
-  color:var(--cream);
   font-weight:bold;
 }
 
@@ -70,15 +76,16 @@ header{
   padding:18px;
 }
 
-.toolbar{
+.toolbar,
+.style-bar{
   display:flex;
   gap:8px;
   overflow-x:auto;
-  padding-bottom:8px;
   scrollbar-width:none;
 }
 
-.toolbar::-webkit-scrollbar{
+.toolbar::-webkit-scrollbar,
+.style-bar::-webkit-scrollbar{
   display:none;
 }
 
@@ -99,23 +106,15 @@ header{
   border-radius:9px;
 }
 
-.tool-btn:hover,
-.tool-btn.active{
+.tool-btn.active,
+.tool-btn:hover{
   background:var(--green);
   border-color:var(--gold);
 }
 
 .style-bar{
-  display:flex;
-  gap:7px;
-  overflow-x:auto;
-  scrollbar-width:none;
-  margin-bottom:12px;
+  margin:10px 0 14px;
   padding:2px 0 7px;
-}
-
-.style-bar::-webkit-scrollbar{
-  display:none;
 }
 
 .style-btn{
@@ -147,24 +146,24 @@ header{
 
 .canvas-card,
 .panel{
-  background:rgba(16,20,17,.9);
+  background:rgba(16,20,17,.92);
   border:1px solid var(--border);
   border-radius:18px;
   box-shadow:0 18px 50px rgba(0,0,0,.35);
 }
 
 .canvas-card{
-  min-height:620px;
+  min-height:650px;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:22px;
+  padding:20px;
   position:relative;
   overflow:hidden;
 }
 
 .canvas{
-  width:min(100%,480px);
+  width:min(100%,500px);
   aspect-ratio:4/5;
   position:relative;
   display:flex;
@@ -173,52 +172,173 @@ header{
 }
 
 .garment-wrap{
-  width:82%;
-  height:88%;
+  width:90%;
+  height:94%;
   position:relative;
   transform-origin:center;
+  touch-action:none;
 }
 
 #garmentSvg{
   width:100%;
   height:100%;
   overflow:visible;
+  touch-action:none;
+  user-select:none;
 }
 
 #garmentPath{
-  fill:#eee6d4;
   stroke:#111;
-  stroke-width:2;
+  stroke-width:2.2;
   vector-effect:non-scaling-stroke;
 }
 
-.garment-detail{
+.fabric-light{
+  fill:url(#fabricGradient);
   pointer-events:none;
+  opacity:.75;
+}
+
+.fabric-shadow{
   fill:none;
-  stroke:rgba(20,20,20,.38);
+  stroke:rgba(0,0,0,.16);
+  stroke-width:7;
+  vector-effect:non-scaling-stroke;
+  pointer-events:none;
+}
+
+.seam{
+  fill:none;
+  stroke:rgba(15,15,15,.38);
   stroke-width:1.5;
   vector-effect:non-scaling-stroke;
-}
-
-.garment-detail-light{
   pointer-events:none;
-  fill:none;
-  stroke:rgba(255,255,255,.28);
-  stroke-width:1;
-  vector-effect:non-scaling-stroke;
 }
 
-.deform-point{
+.stitch{
+  fill:none;
+  stroke:rgba(20,20,20,.40);
+  stroke-width:1.1;
+  stroke-dasharray:3 3;
+  vector-effect:non-scaling-stroke;
+  pointer-events:none;
+}
+
+.fold{
+  fill:none;
+  stroke:rgba(20,20,20,.18);
+  stroke-width:2;
+  vector-effect:non-scaling-stroke;
+  pointer-events:none;
+}
+
+.fold-light{
+  fill:none;
+  stroke:rgba(255,255,255,.12);
+  stroke-width:2;
+  vector-effect:non-scaling-stroke;
+  pointer-events:none;
+}
+
+.collar{
+  fill:rgba(255,255,255,.05);
+  stroke:rgba(20,20,20,.43);
+  stroke-width:1.6;
+  vector-effect:non-scaling-stroke;
+  pointer-events:none;
+}
+
+.pocket{
+  fill:rgba(255,255,255,.025);
+  stroke:rgba(20,20,20,.42);
+  stroke-width:1.6;
+  vector-effect:non-scaling-stroke;
+  pointer-events:none;
+}
+
+.button-detail{
+  fill:#171717;
+  stroke:rgba(255,255,255,.25);
+  stroke-width:1;
+  pointer-events:none;
+}
+
+.mesh-point{
   fill:var(--gold);
   stroke:#080908;
-  stroke-width:2;
-  r:7;
-  cursor:grab;
-  touch-action:none;
+  stroke-width:1.2;
+  opacity:0;
+  pointer-events:none;
 }
 
-.deform-point:active{
-  cursor:grabbing;
+.show-mesh .mesh-point{
+  opacity:.72;
+}
+
+.mesh-line{
+  fill:none;
+  stroke:rgba(184,161,106,.25);
+  stroke-width:.8;
+  opacity:0;
+  pointer-events:none;
+}
+
+.show-mesh .mesh-line{
+  opacity:1;
+}
+
+#patternGroup{
+  pointer-events:none;
+  opacity:.20;
+  mix-blend-mode:multiply;
+}
+
+.pattern-dot{
+  fill:#111;
+}
+
+.pattern-line{
+  stroke:#111;
+  stroke-width:2;
+}
+
+.pattern-grid{
+  stroke:#111;
+  stroke-width:1.2;
+}
+
+#designText{
+  position:absolute;
+  left:50%;
+  top:48%;
+  transform:translate(-50%,-50%);
+  color:#111;
+  font-size:26px;
+  font-weight:bold;
+  pointer-events:none;
+  text-align:center;
+  white-space:nowrap;
+  z-index:10;
+}
+
+#sticker{
+  position:absolute;
+  left:50%;
+  top:58%;
+  transform:translate(-50%,-50%);
+  font-size:42px;
+  pointer-events:none;
+  z-index:11;
+}
+
+.hint{
+  position:absolute;
+  bottom:12px;
+  left:50%;
+  transform:translateX(-50%);
+  color:rgba(238,230,212,.55);
+  font-size:11px;
+  white-space:nowrap;
 }
 
 .panel{
@@ -305,101 +425,8 @@ input[type="range"]{
   background:#0c100d;
 }
 
-#designText{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  color:#111;
-  font-size:26px;
-  font-weight:bold;
-  pointer-events:none;
-  text-align:center;
-  white-space:nowrap;
-}
-
-.sticker{
-  position:absolute;
-  font-size:42px;
-  left:50%;
-  top:55%;
-  transform:translate(-50%,-50%);
-  pointer-events:none;
-}
-
-.pattern-overlay{
-  position:absolute;
-  inset:5%;
-  border-radius:20px;
-  pointer-events:none;
-  opacity:.22;
-  mix-blend-mode:multiply;
-}
-
-.pattern-dots{
-  background-image:radial-gradient(#111 2px,transparent 2px);
-  background-size:15px 15px;
-}
-
-.pattern-lines{
-  background-image:repeating-linear-gradient(
-    45deg,
-    #111 0,
-    #111 2px,
-    transparent 2px,
-    transparent 13px
-  );
-}
-
-.pattern-grid{
-  background-image:
-    linear-gradient(#111 1px,transparent 1px),
-    linear-gradient(90deg,#111 1px,transparent 1px);
-  background-size:18px 18px;
-}
-
-.hint{
-  position:absolute;
-  bottom:13px;
-  left:50%;
-  transform:translateX(-50%);
-  color:rgba(238,230,212,.5);
-  font-size:11px;
-  white-space:nowrap;
-}
-
-/* HOSEN */
-.pants-pocket{
-  fill:none;
-  stroke:rgba(20,20,20,.5);
-  stroke-width:2;
-  vector-effect:non-scaling-stroke;
-  pointer-events:none;
-}
-
-.pants-seam{
-  fill:none;
-  stroke:rgba(20,20,20,.35);
-  stroke-width:1.6;
-  stroke-dasharray:5 4;
-  vector-effect:non-scaling-stroke;
-  pointer-events:none;
-}
-
-.pants-waist{
-  fill:none;
-  stroke:rgba(20,20,20,.55);
-  stroke-width:2;
-  vector-effect:non-scaling-stroke;
-  pointer-events:none;
-}
-
-.pants-belt-loop{
-  fill:none;
-  stroke:rgba(20,20,20,.45);
-  stroke-width:3;
-  vector-effect:non-scaling-stroke;
-  pointer-events:none;
+.touching #garmentSvg{
+  cursor:grabbing;
 }
 </style>
 </head>
@@ -415,24 +442,21 @@ input[type="range"]{
 
   <div class="toolbar">
 
-    <button
-      class="tool-btn active"
-      id="shirtButton"
-      onclick="selectGarment('shirt',this)">
+    <button class="tool-btn active"
+            id="shirtButton"
+            onclick="selectGarment('shirt',this)">
       T-Shirt
     </button>
 
-    <button
-      class="tool-btn"
-      id="formalButton"
-      onclick="selectGarment('formal',this)">
+    <button class="tool-btn"
+            id="formalButton"
+            onclick="selectGarment('formal',this)">
       Hemd
     </button>
 
-    <button
-      class="tool-btn"
-      id="pantsButton"
-      onclick="selectGarment('pants',this)">
+    <button class="tool-btn"
+            id="pantsButton"
+            onclick="selectGarment('pants',this)">
       Hose
     </button>
 
@@ -444,265 +468,389 @@ input[type="range"]{
 
     <div class="canvas-card">
 
-      <div class="canvas" id="canvas">
+      <div class="canvas">
 
-        <div class="garment-wrap">
+        <div class="garment-wrap" id="garmentWrap">
 
-          <svg
-            id="garmentSvg"
-            viewBox="0 0 400 540"
-            preserveAspectRatio="xMidYMid meet">
+          <svg id="garmentSvg"
+               viewBox="0 0 400 540"
+               preserveAspectRatio="xMidYMid meet">
+
+            <defs>
+
+              <linearGradient id="fabricGradient"
+                              x1="0"
+                              y1="0"
+                              x2="1"
+                              y2="1">
+
+                <stop offset="0%"
+                      stop-color="#ffffff"
+                      stop-opacity=".20"/>
+
+                <stop offset="42%"
+                      stop-color="#ffffff"
+                      stop-opacity="0"/>
+
+                <stop offset="100%"
+                      stop-color="#000000"
+                      stop-opacity=".20"/>
+
+              </linearGradient>
+
+              <clipPath id="garmentClip">
+                <path id="clipShape"></path>
+              </clipPath>
+
+            </defs>
 
             <path id="garmentPath"></path>
 
-            <g id="garmentDetails"></g>
+            <path id="fabricLight"
+                  class="fabric-light"></path>
 
-            <path
-              id="fabricLight"
-              fill="rgba(255,255,255,.08)"
-              opacity=".35">
-            </path>
+            <g id="patternGroup"
+               clip-path="url(#garmentClip)">
+            </g>
 
-            <g id="deformPoints"></g>
+            <g id="detailsGroup"></g>
+
+            <g id="foldGroup"></g>
+
+            <g id="meshLines"></g>
+
+            <g id="meshPoints"></g>
 
           </svg>
 
         </div>
 
-        <div
-          class="pattern-overlay"
-          id="patternOverlay">
-        </div>
-
         <div id="designText"></div>
-
-        <div
-          class="sticker"
-          id="sticker">
-        </div>
+        <div id="sticker"></div>
 
       </div>
 
       <div class="hint">
-        Ziehe die goldenen Punkte, um die Form zu verändern
+        Finger auf den Stoff legen und ziehen
       </div>
 
     </div>
+
 
     <div class="panel">
 
       <h2>Arvé Studio</h2>
 
+
       <div class="section">
 
-        <div class="section-title">Farbe</div>
+        <div class="section-title">
+          Kleidungsstück
+        </div>
 
         <div class="options">
 
-          <button
-            class="option"
-            onclick="setColor('#eee6d4')">
+          <button class="option"
+                  onclick="selectGarment('shirt',
+                  document.getElementById('shirtButton'))">
+            T-Shirt
+          </button>
+
+          <button class="option"
+                  onclick="selectGarment('formal',
+                  document.getElementById('formalButton'))">
+            Hemd
+          </button>
+
+          <button class="option"
+                  onclick="selectGarment('pants',
+                  document.getElementById('pantsButton'))">
+            Hose
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="section">
+
+        <div class="section-title">
+          Farbe
+        </div>
+
+        <div class="options">
+
+          <button class="option"
+                  onclick="setColor('#eee6d4')">
             Cream
           </button>
 
-          <button
-            class="option"
-            onclick="setColor('#111311')">
+          <button class="option"
+                  onclick="setColor('#111311')">
             Black
           </button>
 
-          <button
-            class="option"
-            onclick="setColor('#17382d')">
+          <button class="option"
+                  onclick="setColor('#17382d')">
             Green
           </button>
 
-          <button
-            class="option"
-            onclick="setColor('#641f2b')">
+          <button class="option"
+                  onclick="setColor('#641f2b')">
             Wine
           </button>
 
-          <input
-            type="color"
-            id="colorPicker"
-            value="#eee6d4"
-            onchange="setColor(this.value)">
+          <input type="color"
+                 id="colorPicker"
+                 value="#eee6d4"
+                 onchange="setColor(this.value)">
 
         </div>
+
       </div>
+
 
       <div class="section">
 
-        <div class="section-title">Muster</div>
+        <div class="section-title">
+          Muster
+        </div>
 
         <div class="options">
 
-          <button
-            class="option"
-            onclick="setPattern('none')">
+          <button class="option"
+                  onclick="setPattern('none')">
             Clean
           </button>
 
-          <button
-            class="option"
-            onclick="setPattern('dots')">
+          <button class="option"
+                  onclick="setPattern('dots')">
             Dots
           </button>
 
-          <button
-            class="option"
-            onclick="setPattern('lines')">
+          <button class="option"
+                  onclick="setPattern('lines')">
             Lines
           </button>
 
-          <button
-            class="option"
-            onclick="setPattern('grid')">
+          <button class="option"
+                  onclick="setPattern('grid')">
             Grid
           </button>
 
         </div>
-      </div>
-
-      <div class="section">
-
-        <div class="section-title">Text</div>
-
-        <input
-          class="text-input"
-          id="textInput"
-          placeholder="Dein Text..."
-          oninput="updateText()">
 
       </div>
 
+
       <div class="section">
 
-        <div class="section-title">Sticker</div>
+        <div class="section-title">
+          Text
+        </div>
+
+        <input class="text-input"
+               id="textInput"
+               placeholder="Dein Text..."
+               oninput="updateText()">
+
+      </div>
+
+
+      <div class="section">
+
+        <div class="section-title">
+          Sticker
+        </div>
 
         <div class="options">
 
-          <button
-            class="option"
-            onclick="setSticker('★')">
+          <button class="option"
+                  onclick="setSticker('★')">
             ★
           </button>
 
-          <button
-            class="option"
-            onclick="setSticker('✦')">
+          <button class="option"
+                  onclick="setSticker('✦')">
             ✦
           </button>
 
-          <button
-            class="option"
-            onclick="setSticker('♛')">
+          <button class="option"
+                  onclick="setSticker('♛')">
             ♛
           </button>
 
-          <button
-            class="option"
-            onclick="setSticker('')">
+          <button class="option"
+                  onclick="setSticker('')">
             ×
           </button>
 
         </div>
-      </div>
-
-      <div class="section">
-
-        <div class="section-title">Größe</div>
-
-        <input
-          type="range"
-          min="70"
-          max="120"
-          value="100"
-          oninput="resizeGarment(this.value)">
 
       </div>
 
+
       <div class="section">
 
-        <div class="section-title">Projekt</div>
+        <div class="section-title">
+          Verformung
+        </div>
+
+        <div class="options">
+
+          <button class="option"
+                  onclick="toggleMesh()">
+            Mesh anzeigen
+          </button>
+
+          <button class="option"
+                  onclick="resetShape()">
+            Form zurücksetzen
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="section">
+
+        <div class="section-title">
+          Verformungsstärke
+        </div>
+
+        <input type="range"
+               id="strengthSlider"
+               min="40"
+               max="150"
+               value="85">
+
+      </div>
+
+
+      <div class="section">
+
+        <div class="section-title">
+          Größe
+        </div>
+
+        <input type="range"
+               min="70"
+               max="120"
+               value="100"
+               oninput="resizeGarment(this.value)">
+
+      </div>
+
+
+      <div class="section">
+
+        <div class="section-title">
+          Projekt
+        </div>
 
         <div class="action-row">
 
-          <button
-            class="action"
-            onclick="saveDesign()">
+          <button class="action"
+                  onclick="saveDesign()">
             Speichern
           </button>
 
-          <button
-            class="action secondary"
-            onclick="loadDesign()">
+          <button class="action secondary"
+                  onclick="loadDesign()">
             Laden
           </button>
 
-          <button
-            class="action secondary"
-            onclick="resetDesign()">
+          <button class="action secondary"
+                  onclick="resetDesign()">
             Reset
           </button>
 
         </div>
+
       </div>
 
     </div>
+
   </div>
+
 </div>
+
 
 <script>
 
-/* =====================================================
+/* =========================================================
    ARVÉ CLOTHING ENGINE
-===================================================== */
+========================================================= */
+
+const svg =
+  document.getElementById("garmentSvg");
 
 const garmentPath =
   document.getElementById("garmentPath");
 
-const garmentDetails =
-  document.getElementById("garmentDetails");
-
-const deformPointsGroup =
-  document.getElementById("deformPoints");
+const clipShape =
+  document.getElementById("clipShape");
 
 const fabricLight =
   document.getElementById("fabricLight");
 
+const detailsGroup =
+  document.getElementById("detailsGroup");
+
+const foldGroup =
+  document.getElementById("foldGroup");
+
+const meshLines =
+  document.getElementById("meshLines");
+
+const meshPointsGroup =
+  document.getElementById("meshPoints");
+
+const patternGroup =
+  document.getElementById("patternGroup");
+
 const styleBar =
   document.getElementById("styleBar");
 
-let currentGarment = "shirt";
-let currentStyle = "classic";
-let currentColor = "#eee6d4";
-let currentPattern = "none";
-let currentSticker = "";
-let currentText = "";
-let garmentScale = 1;
-
-let points = [];
-let draggingPoint = null;
+const garmentWrap =
+  document.getElementById("garmentWrap");
 
 
-/* =====================================================
-   SCHNITTE
-===================================================== */
+let currentGarment="shirt";
+let currentStyle="classic";
+let currentColor="#eee6d4";
+let currentPattern="none";
+let currentSticker="";
+let currentText="";
+let garmentScale=1;
 
-const styleNames = {
+let boundaryPoints=[];
+let mesh=[];
+
+let dragging=false;
+let lastPointer=null;
+
+
+/* =========================================================
+   STYLES
+========================================================= */
+
+const styleNames={
 
   shirt:{
     classic:"Classic",
     oversized:"Oversized",
-    cropped:"Cropped"
+    cropped:"Cropped",
+    boxy:"Boxy"
   },
 
   formal:{
     classic:"Classic",
     oversized:"Oversized",
-    relaxed:"Relaxed"
+    relaxed:"Relaxed",
+    slim:"Slim"
   },
 
   pants:{
@@ -715,280 +863,170 @@ const styleNames = {
 };
 
 
-/* =====================================================
-   T-SHIRTS
-===================================================== */
+/* =========================================================
+   BASISFORMEN
+========================================================= */
 
-const shirtStyles = {
+const shirtStyles={
 
-  classic:[
-    {x:145,y:75},
-    {x:105,y:95},
-    {x:55,y:145},
-    {x:90,y:195},
-    {x:125,y:170},
-    {x:125,y:455},
-    {x:275,y:455},
-    {x:275,y:170},
-    {x:310,y:195},
-    {x:345,y:145},
-    {x:295,y:95},
-    {x:255,y:75},
-    {x:230,y:105},
-    {x:170,y:105}
-  ],
+classic:[
+ {x:150,y:48},{x:125,y:57},{x:104,y:72},
+ {x:58,y:125},{x:48,y:150},{x:70,y:190},
+ {x:108,y:168},{x:112,y:218},{x:116,y:430},
+ {x:135,y:455},{x:265,y:455},{x:284,y:430},
+ {x:288,y:218},{x:292,y:168},{x:330,y:190},
+ {x:352,y:150},{x:342,y:125},{x:296,y:72},
+ {x:275,y:57},{x:250,y:48},{x:225,y:74},
+ {x:200,y:92},{x:175,y:74}
+],
 
-  oversized:[
-    {x:140,y:70},
-    {x:92,y:88},
-    {x:35,y:145},
-    {x:75,y:215},
-    {x:120,y:180},
-    {x:110,y:475},
-    {x:290,y:475},
-    {x:280,y:180},
-    {x:325,y:215},
-    {x:365,y:145},
-    {x:308,y:88},
-    {x:260,y:70},
-    {x:228,y:105},
-    {x:172,y:105}
-  ],
+oversized:[
+ {x:148,y:44},{x:118,y:52},{x:88,y:70},
+ {x:35,y:125},{x:30,y:153},{x:62,y:215},
+ {x:108,y:180},{x:104,y:225},{x:96,y:455},
+ {x:120,y:480},{x:280,y:480},{x:304,y:455},
+ {x:296,y:225},{x:292,y:180},{x:338,y:215},
+ {x:370,y:153},{x:365,y:125},{x:312,y:70},
+ {x:282,y:52},{x:252,y:44},{x:226,y:76},
+ {x:200,y:98},{x:174,y:76}
+],
 
-  cropped:[
-    {x:145,y:70},
-    {x:105,y:92},
-    {x:58,y:140},
-    {x:88,y:185},
-    {x:125,y:160},
-    {x:125,y:330},
-    {x:275,y:330},
-    {x:275,y:160},
-    {x:312,y:185},
-    {x:342,y:140},
-    {x:295,y:92},
-    {x:255,y:70},
-    {x:228,y:102},
-    {x:172,y:102}
-  ]
+cropped:[
+ {x:150,y:48},{x:125,y:57},{x:104,y:72},
+ {x:58,y:125},{x:50,y:150},{x:72,y:188},
+ {x:110,y:164},{x:116,y:195},{x:122,y:330},
+ {x:142,y:345},{x:258,y:345},{x:278,y:330},
+ {x:284,y:195},{x:290,y:164},{x:328,y:188},
+ {x:350,y:150},{x:342,y:125},{x:296,y:72},
+ {x:275,y:57},{x:250,y:48},{x:225,y:74},
+ {x:200,y:92},{x:175,y:74}
+],
+
+boxy:[
+ {x:145,y:45},{x:112,y:55},{x:75,y:82},
+ {x:42,y:125},{x:45,y:185},{x:88,y:205},
+ {x:112,y:175},{x:112,y:420},{x:128,y:448},
+ {x:272,y:448},{x:288,y:420},{x:288,y:175},
+ {x:312,y:205},{x:355,y:185},{x:358,y:125},
+ {x:325,y:82},{x:288,y:55},{x:255,y:45},
+ {x:228,y:75},{x:200,y:95},{x:172,y:75}
+]
 
 };
 
 
-/* =====================================================
-   HEMDEN
-===================================================== */
+const formalStyles={
 
-const formalStyles = {
+classic:[
+ {x:150,y:45},{x:120,y:58},{x:98,y:72},
+ {x:55,y:125},{x:48,y:165},{x:76,y:205},
+ {x:112,y:176},{x:115,y:440},{x:132,y:460},
+ {x:268,y:460},{x:285,y:440},{x:288,y:176},
+ {x:324,y:205},{x:352,y:165},{x:345,y:125},
+ {x:302,y:72},{x:280,y:58},{x:250,y:45},
+ {x:225,y:72},{x:200,y:92},{x:175,y:72}
+],
 
-  classic:[
-    {x:150,y:65},
-    {x:108,y:88},
-    {x:60,y:140},
-    {x:82,y:190},
-    {x:125,y:160},
-    {x:125,y:455},
-    {x:275,y:455},
-    {x:275,y:160},
-    {x:318,y:190},
-    {x:340,y:140},
-    {x:292,y:88},
-    {x:250,y:65},
-    {x:225,y:95},
-    {x:175,y:95}
-  ],
+oversized:[
+ {x:145,y:43},{x:112,y:52},{x:82,y:70},
+ {x:38,y:120},{x:32,y:165},{x:65,y:218},
+ {x:110,y:180},{x:105,y:455},{x:125,y:482},
+ {x:275,y:482},{x:295,y:455},{x:290,y:180},
+ {x:335,y:218},{x:368,y:165},{x:362,y:120},
+ {x:318,y:70},{x:288,y:52},{x:255,y:43},
+ {x:226,y:75},{x:200,y:100},{x:174,y:75}
+],
 
-  oversized:[
-    {x:145,y:62},
-    {x:95,y:82},
-    {x:42,y:135},
-    {x:70,y:205},
-    {x:118,y:170},
-    {x:108,y:475},
-    {x:292,y:475},
-    {x:282,y:170},
-    {x:330,y:205},
-    {x:358,y:135},
-    {x:305,y:82},
-    {x:255,y:62},
-    {x:225,y:96},
-    {x:175,y:96}
-  ],
+relaxed:[
+ {x:148,y:45},{x:118,y:56},{x:92,y:74},
+ {x:52,y:125},{x:48,y:170},{x:75,y:207},
+ {x:112,y:176},{x:114,y:450},{x:132,y:468},
+ {x:268,y:468},{x:286,y:450},{x:288,y:176},
+ {x:325,y:207},{x:352,y:170},{x:348,y:125},
+ {x:308,y:74},{x:282,y:56},{x:252,y:45},
+ {x:225,y:75},{x:200,y:96},{x:175,y:75}
+],
 
-  relaxed:[
-    {x:148,y:65},
-    {x:100,y:86},
-    {x:50,y:142},
-    {x:78,y:200},
-    {x:120,y:168},
-    {x:118,y:455},
-    {x:282,y:455},
-    {x:280,y:168},
-    {x:322,y:200},
-    {x:350,y:142},
-    {x:300,y:86},
-    {x:252,y:65},
-    {x:225,y:100},
-    {x:175,y:100}
-  ]
+slim:[
+ {x:153,y:46},{x:128,y:56},{x:108,y:72},
+ {x:70,y:122},{x:65,y:158},{x:86,y:190},
+ {x:116,y:166},{x:125,y:440},{x:140,y:455},
+ {x:260,y:455},{x:275,y:440},{x:284,y:166},
+ {x:314,y:190},{x:335,y:158},{x:330,y:122},
+ {x:292,y:72},{x:272,y:56},{x:247,y:46},
+ {x:224,y:74},{x:200,y:91},{x:176,y:74}
+]
 
 };
 
 
-/* =====================================================
-   HOSEN
-===================================================== */
+const pantsStyles={
 
-const pantsStyles = {
+straight:[
+ {x:105,y:52},{x:145,y:45},{x:180,y:47},
+ {x:220,y:47},{x:255,y:45},{x:295,y:52},
+ {x:302,y:105},{x:298,y:170},{x:292,y:240},
+ {x:285,y:310},{x:280,y:370},{x:288,y:462},
+ {x:235,y:470},{x:216,y:465},{x:210,y:405},
+ {x:207,y:340},{x:204,y:285},{x:196,y:265},
+ {x:188,y:285},{x:193,y:340},{x:190,y:405},
+ {x:184,y:465},{x:165,y:470},{x:112,y:462},
+ {x:120,y:370},{x:115,y:310},{x:108,y:240},
+ {x:102,y:170},{x:98,y:105}
+],
 
-  straight:[
-    {x:108,y:55},
-    {x:145,y:48},
-    {x:180,y:50},
-    {x:220,y:50},
-    {x:255,y:48},
-    {x:292,y:55},
-    {x:300,y:105},
-    {x:295,y:155},
-    {x:288,y:205},
-    {x:280,y:255},
-    {x:270,y:310},
-    {x:275,y:370},
-    {x:285,y:455},
-    {x:235,y:465},
-    {x:220,y:465},
-    {x:210,y:410},
-    {x:208,y:350},
-    {x:205,y:300},
-    {x:195,y:265},
-    {x:185,y:300},
-    {x:192,y:350},
-    {x:190,y:410},
-    {x:180,y:465},
-    {x:165,y:465},
-    {x:115,y:455},
-    {x:125,y:370},
-    {x:130,y:310},
-    {x:120,y:255},
-    {x:112,y:205},
-    {x:105,y:155},
-    {x:100,y:105}
-  ],
+baggy:[
+ {x:98,y:50},{x:142,y:43},{x:180,y:46},
+ {x:220,y:46},{x:258,y:43},{x:302,y:50},
+ {x:318,y:110},{x:320,y:180},{x:316,y:245},
+ {x:312,y:315},{x:320,y:380},{x:332,y:470},
+ {x:250,y:480},{x:220,y:475},{x:212,y:410},
+ {x:208,y:340},{x:204,y:285},{x:196,y:265},
+ {x:184,y:285},{x:190,y:340},{x:188,y:410},
+ {x:180,y:475},{x:150,y:480},{x:68,y:470},
+ {x:80,y:380},{x:88,y:315},{x:84,y:245},
+ {x:80,y:180},{x:82,y:110}
+],
 
-  baggy:[
-    {x:100,y:52},
-    {x:145,y:45},
-    {x:180,y:48},
-    {x:220,y:48},
-    {x:255,y:45},
-    {x:300,y:52},
-    {x:318,y:110},
-    {x:315,y:170},
-    {x:308,y:230},
-    {x:305,y:290},
-    {x:315,y:350},
-    {x:325,y:420},
-    {x:330,y:470},
-    {x:255,y:478},
-    {x:225,y:475},
-    {x:215,y:420},
-    {x:212,y:350},
-    {x:208,y:300},
-    {x:195,y:265},
-    {x:182,y:300},
-    {x:188,y:350},
-    {x:185,y:420},
-    {x:175,y:475},
-    {x:145,y:478},
-    {x:70,y:470},
-    {x:75,y:420},
-    {x:85,y:350},
-    {x:95,y:290},
-    {x:92,y:230},
-    {x:85,y:170},
-    {x:82,y:110}
-  ],
+wide:[
+ {x:95,y:50},{x:140,y:43},{x:180,y:46},
+ {x:220,y:46},{x:260,y:43},{x:305,y:50},
+ {x:322,y:110},{x:330,y:190},{x:335,y:270},
+ {x:342,y:350},{x:352,y:470},{x:270,y:480},
+ {x:220,y:475},{x:212,y:410},{x:208,y:340},
+ {x:204,y:285},{x:196,y:265},{x:184,y:285},
+ {x:190,y:340},{x:188,y:410},{x:180,y:475},
+ {x:130,y:480},{x:48,y:470},{x:58,y:350},
+ {x:65,y:270},{x:70,y:190},{x:78,y:110}
+],
 
-  wide:[
-    {x:98,y:52},
-    {x:145,y:45},
-    {x:180,y:48},
-    {x:220,y:48},
-    {x:255,y:45},
-    {x:302,y:52},
-    {x:320,y:110},
-    {x:325,y:180},
-    {x:330,y:250},
-    {x:335,y:320},
-    {x:345,y:390},
-    {x:350,y:470},
-    {x:270,y:478},
-    {x:225,y:475},
-    {x:215,y:420},
-    {x:212,y:350},
-    {x:208,y:300},
-    {x:195,y:265},
-    {x:182,y:300},
-    {x:188,y:350},
-    {x:185,y:420},
-    {x:175,y:475},
-    {x:130,y:478},
-    {x:50,y:470},
-    {x:55,y:390},
-    {x:65,y:320},
-    {x:70,y:250},
-    {x:75,y:180},
-    {x:80,y:110}
-  ],
-
-  cargo:[
-    {x:105,y:52},
-    {x:145,y:46},
-    {x:180,y:48},
-    {x:220,y:48},
-    {x:255,y:46},
-    {x:295,y:52},
-    {x:305,y:110},
-    {x:302,y:175},
-    {x:300,y:235},
-    {x:298,y:300},
-    {x:300,y:360},
-    {x:310,y:425},
-    {x:315,y:470},
-    {x:250,y:475},
-    {x:220,y:472},
-    {x:210,y:415},
-    {x:208,y:350},
-    {x:205,y:300},
-    {x:195,y:265},
-    {x:185,y:300},
-    {x:192,y:350},
-    {x:190,y:415},
-    {x:180,y:472},
-    {x:150,y:475},
-    {x:85,y:470},
-    {x:90,y:425},
-    {x:100,y:360},
-    {x:102,y:300},
-    {x:100,y:235},
-    {x:98,y:175},
-    {x:95,y:110}
-  ]
+cargo:[
+ {x:103,y:50},{x:143,y:44},{x:180,y:46},
+ {x:220,y:46},{x:257,y:44},{x:297,y:50},
+ {x:307,y:110},{x:305,y:180},{x:302,y:250},
+ {x:300,y:320},{x:304,y:390},{x:314,y:470},
+ {x:252,y:478},{x:220,y:474},{x:212,y:410},
+ {x:208,y:340},{x:204,y:285},{x:196,y:265},
+ {x:184,y:285},{x:190,y:340},{x:188,y:410},
+ {x:180,y:474},{x:148,y:478},{x:86,y:470},
+ {x:96,y:390},{x:100,y:320},{x:98,y:250},
+ {x:95,y:180},{x:93,y:110}
+]
 
 };
 
 
-/* =====================================================
-   SCHNITT-DATEN LADEN
-===================================================== */
+/* =========================================================
+   BASISFORM AUSWÄHLEN
+========================================================= */
 
 function getStylePoints(){
 
-  if(currentGarment === "shirt"){
+  if(currentGarment==="shirt"){
     return shirtStyles[currentStyle];
   }
 
-  if(currentGarment === "formal"){
+  if(currentGarment==="formal"){
     return formalStyles[currentStyle];
   }
 
@@ -996,296 +1034,127 @@ function getStylePoints(){
 }
 
 
-/* =====================================================
-   KLEIDUNGSART AUSWÄHLEN
-===================================================== */
+/* =========================================================
+   MESH AUFBAU
+========================================================= */
 
-function selectGarment(type,button){
+function buildMesh(){
 
-  currentGarment = type;
+  const base=getStylePoints();
 
-  const buttons =
-    document.querySelectorAll(".tool-btn");
+  boundaryPoints=
+    base.map(p=>({...p}));
 
-  buttons.forEach(btn=>{
-    btn.classList.remove("active");
-  });
+  mesh=[];
 
-  if(button){
-    button.classList.add("active");
+  const minX=Math.min(...base.map(p=>p.x));
+  const maxX=Math.max(...base.map(p=>p.x));
+  const minY=Math.min(...base.map(p=>p.y));
+  const maxY=Math.max(...base.map(p=>p.y));
+
+  /*
+    Dichtes internes Mesh.
+    Mehr Punkte = weichere Verformung.
+  */
+
+  const columns=15;
+  const rows=21;
+
+  for(let row=0;row<=rows;row++){
+
+    const y=
+      minY+
+      (maxY-minY)*(row/rows);
+
+    for(let col=0;col<=columns;col++){
+
+      const x=
+        minX+
+        (maxX-minX)*(col/columns);
+
+      mesh.push({
+        x:x,
+        y:y,
+        ox:x,
+        oy:y,
+        inside:isInsidePolygon(x,y,base)
+      });
+    }
   }
 
-  const availableStyles =
-    Object.keys(styleNames[type]);
+  /*
+    Randpunkte zusätzlich als echte Kleidungsform.
+  */
 
-  if(!availableStyles.includes(currentStyle)){
-    currentStyle = availableStyles[0];
-  }
+  base.forEach((p,index)=>{
 
-  renderStyleButtons();
-
-  points =
-    getStylePoints().map(point=>({...point}));
-
-  drawGarment();
-}
-
-
-/* =====================================================
-   SCHNITT AUSWÄHLEN
-===================================================== */
-
-function selectStyle(style){
-
-  currentStyle = style;
-
-  points =
-    getStylePoints().map(point=>({...point}));
-
-  renderStyleButtons();
-  drawGarment();
-}
-
-
-/* =====================================================
-   SCHNITT-BUTTONS
-===================================================== */
-
-function renderStyleButtons(){
-
-  styleBar.innerHTML = "";
-
-  const styles =
-    styleNames[currentGarment];
-
-  Object.keys(styles).forEach(style=>{
-
-    const button =
-      document.createElement("button");
-
-    button.className =
-      "style-btn" +
-      (style === currentStyle ? " active" : "");
-
-    button.textContent =
-      styles[style];
-
-    button.onclick =
-      ()=>selectStyle(style);
-
-    styleBar.appendChild(button);
-  });
-}
-
-
-/* =====================================================
-   GLATTER SVG-PFAD
-===================================================== */
-
-function createPath(pointArray){
-
-  if(!pointArray.length){
-    return "";
-  }
-
-  let d =
-    `M ${pointArray[0].x} ${pointArray[0].y}`;
-
-  for(let i=1;i<pointArray.length;i++){
-
-    const current =
-      pointArray[i];
-
-    const next =
-      pointArray[(i+1)%pointArray.length];
-
-    const midX =
-      (current.x + next.x) / 2;
-
-    const midY =
-      (current.y + next.y) / 2;
-
-    d +=
-      ` Q ${current.x} ${current.y} ${midX} ${midY}`;
-  }
-
-  const first =
-    pointArray[0];
-
-  const second =
-    pointArray[1];
-
-  d +=
-    ` Q ${first.x} ${first.y} ${(first.x+second.x)/2} ${(first.y+second.y)/2}`;
-
-  d += " Z";
-
-  return d;
-}
-
-
-/* =====================================================
-   KLEIDUNGSSTÜCK ZEICHNEN
-===================================================== */
-
-function drawGarment(){
-
-  const path =
-    createPath(points);
-
-  garmentPath.setAttribute("d",path);
-
-  fabricLight.setAttribute("d",path);
-
-  drawDetails();
-  drawPoints();
-
-  garmentPath.style.fill =
-    currentColor;
-
-  updatePatternShape();
-  updateText();
-}
-
-
-/* =====================================================
-   DETAILS
-===================================================== */
-
-function drawDetails(){
-
-  garmentDetails.innerHTML = "";
-
-  if(currentGarment === "pants"){
-
-    addDetail(
-      "M 108 78 Q 200 92 292 78",
-      "pants-waist"
-    );
-
-    addDetail(
-      "M 195 88 C 194 150 198 215 195 265",
-      "pants-seam"
-    );
-
-    addDetail(
-      "M 118 105 Q 145 122 160 145",
-      "pants-pocket"
-    );
-
-    addDetail(
-      "M 282 105 Q 255 122 240 145",
-      "pants-pocket"
-    );
-
-    addDetail(
-      "M 195 270 C 188 330 185 400 175 465",
-      "pants-seam"
-    );
-
-    addDetail(
-      "M 200 270 C 207 330 212 400 225 465",
-      "pants-seam"
-    );
-
-    [
-      [135,58,135,82],
-      [165,52,165,78],
-      [200,52,200,80],
-      [235,52,235,78],
-      [265,58,265,82]
-    ].forEach(loop=>{
-
-      addDetail(
-        `M ${loop[0]} ${loop[1]} L ${loop[2]} ${loop[3]}`,
-        "pants-belt-loop"
-      );
-
+    mesh.push({
+      x:p.x,
+      y:p.y,
+      ox:p.x,
+      oy:p.y,
+      boundary:true,
+      boundaryIndex:index,
+      inside:true
     });
 
-    if(currentStyle === "cargo"){
+  });
 
-      addDetail(
-        "M 105 220 Q 125 210 145 220 L 145 275 Q 125 285 105 275 Z",
-        "pants-pocket"
+  renderMesh();
+}
+
+
+/* =========================================================
+   POINT-IN-POLYGON
+========================================================= */
+
+function isInsidePolygon(x,y,polygon){
+
+  let inside=false;
+
+  for(
+    let i=0,j=polygon.length-1;
+    i<polygon.length;
+    j=i++
+  ){
+
+    const xi=polygon[i].x;
+    const yi=polygon[i].y;
+
+    const xj=polygon[j].x;
+    const yj=polygon[j].y;
+
+    const intersect=
+      ((yi>y)!==(yj>y)) &&
+      (
+        x <
+        (xj-xi)*(y-yi)/(yj-yi)+xi
       );
 
-      addDetail(
-        "M 255 220 Q 275 210 295 220 L 295 275 Q 275 285 255 275 Z",
-        "pants-pocket"
-      );
-    }
-
-  }else{
-
-    addDetail(
-      "M 145 75 Q 200 120 255 75",
-      "garment-detail"
-    );
-
-    addDetail(
-      "M 105 100 Q 125 125 125 165",
-      "garment-detail"
-    );
-
-    addDetail(
-      "M 295 100 Q 275 125 275 165",
-      "garment-detail"
-    );
-
-    if(currentGarment === "formal"){
-
-      addDetail(
-        "M 200 105 L 200 450",
-        "garment-detail"
-      );
-
-      addDetail(
-        "M 175 95 L 200 130 L 225 95",
-        "garment-detail"
-      );
+    if(intersect){
+      inside=!inside;
     }
   }
+
+  return inside;
 }
 
 
-/* =====================================================
-   DETAIL HELPER
-===================================================== */
+/* =========================================================
+   MESH RENDER
+========================================================= */
 
-function addDetail(pathData,className){
+function renderMesh(){
 
-  const path =
-    document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "path"
-    );
+  meshLines.innerHTML="";
+  meshPointsGroup.innerHTML="";
 
-  path.setAttribute(
-    "d",
-    pathData
-  );
+  const visibleMesh=
+    mesh.filter(p=>p.inside);
 
-  path.setAttribute(
-    "class",
-    className
-  );
+  visibleMesh.forEach(point=>{
 
-  garmentDetails.appendChild(path);
-}
-
-
-/* =====================================================
-   VERFORMUNGSPUNKTE
-===================================================== */
-
-function drawPoints(){
-
-  deformPointsGroup.innerHTML = "";
-
-  points.forEach((point,index)=>{
-
-    const circle =
+    const circle=
       document.createElementNS(
         "http://www.w3.org/2000/svg",
         "circle"
@@ -1302,266 +1171,861 @@ function drawPoints(){
     );
 
     circle.setAttribute(
+      "r",
+      point.boundary ? 5 : 3
+    );
+
+    circle.setAttribute(
       "class",
-      "deform-point"
+      "mesh-point"
     );
 
-    circle.dataset.index =
-      index;
+    meshPointsGroup.appendChild(circle);
 
-    circle.addEventListener(
-      "pointerdown",
-      startDrag
-    );
-
-    deformPointsGroup.appendChild(circle);
   });
 }
 
 
-/* =====================================================
-   TOUCH / MAUS START
-===================================================== */
+/* =========================================================
+   FORM AUS MESH BERECHNEN
+========================================================= */
+
+function getCurrentBoundary(){
+
+  const base=getStylePoints();
+
+  return base.map((basePoint,index)=>{
+
+    const boundary=
+      mesh.find(
+        p=>
+          p.boundary &&
+          p.boundaryIndex===index
+      );
+
+    if(boundary){
+
+      return {
+        x:boundary.x,
+        y:boundary.y
+      };
+    }
+
+    return {
+      x:basePoint.x,
+      y:basePoint.y
+    };
+
+  });
+}
+
+
+/* =========================================================
+   GLATTER PATH
+========================================================= */
+
+function createPath(arr){
+
+  if(!arr.length){
+    return "";
+  }
+
+  let d=
+    `M ${arr[0].x} ${arr[0].y}`;
+
+  for(let i=1;i<arr.length;i++){
+
+    const current=arr[i];
+
+    const next=
+      arr[(i+1)%arr.length];
+
+    const midX=
+      (current.x+next.x)/2;
+
+    const midY=
+      (current.y+next.y)/2;
+
+    d+=
+      ` Q ${current.x} ${current.y}
+      ${midX} ${midY}`;
+  }
+
+  const first=arr[0];
+  const second=arr[1];
+
+  d+=
+    ` Q ${first.x} ${first.y}
+    ${(first.x+second.x)/2}
+    ${(first.y+second.y)/2} Z`;
+
+  return d;
+}
+
+
+/* =========================================================
+   HAUPT-RENDER
+========================================================= */
+
+function drawGarment(){
+
+  const boundary=
+    getCurrentBoundary();
+
+  const path=
+    createPath(boundary);
+
+  garmentPath.setAttribute("d",path);
+  clipShape.setAttribute("d",path);
+  fabricLight.setAttribute("d",path);
+
+  garmentPath.style.fill=
+    currentColor;
+
+  drawDetails();
+  drawFolds();
+  drawPattern();
+  renderMesh();
+  updateText();
+}
+
+
+/* =========================================================
+   REALISTISCHE DETAILS
+========================================================= */
+
+function drawDetails(){
+
+  detailsGroup.innerHTML="";
+
+  if(currentGarment==="pants"){
+
+    addPath(
+      "M 105 65 Q 200 82 295 65",
+      "seam"
+    );
+
+    addPath(
+      "M 118 100 Q 142 118 160 145",
+      "seam"
+    );
+
+    addPath(
+      "M 282 100 Q 258 118 240 145",
+      "seam"
+    );
+
+    addPath(
+      "M 200 78 C 194 150 198 215 196 265",
+      "seam"
+    );
+
+    addPath(
+      "M 196 265 C 188 330 184 405 175 470",
+      "seam"
+    );
+
+    addPath(
+      "M 204 265 C 212 330 216 405 225 470",
+      "seam"
+    );
+
+    if(currentStyle==="cargo"){
+
+      addPath(
+        "M 94 215 Q 120 204 145 215 L 145 275 Q 120 287 94 275 Z",
+        "pocket"
+      );
+
+      addPath(
+        "M 255 215 Q 280 204 306 215 L 306 275 Q 280 287 255 275 Z",
+        "pocket"
+      );
+
+    }
+
+    return;
+  }
+
+
+  addPath(
+    "M 150 48 Q 174 76 200 92 Q 226 76 250 48",
+    "seam"
+  );
+
+  addPath(
+    "M 108 75 Q 122 110 115 170",
+    "seam"
+  );
+
+  addPath(
+    "M 292 75 Q 278 110 285 170",
+    "seam"
+  );
+
+
+  if(currentGarment==="shirt"){
+
+    addPath(
+      "M 168 66 Q 200 105 232 66",
+      "collar"
+    );
+
+    addPath(
+      "M 173 67 Q 200 96 227 67",
+      "seam"
+    );
+
+    addPath(
+      "M 125 420 Q 200 438 275 420",
+      "stitch"
+    );
+
+  }else{
+
+    addPath(
+      "M 175 67 L 200 105 L 225 67",
+      "collar"
+    );
+
+    addPath(
+      "M 200 105 L 200 455",
+      "seam"
+    );
+
+    addPath(
+      "M 116 255 Q 142 245 166 255 L 166 320 Q 142 330 116 320 Z",
+      "pocket"
+    );
+
+    for(let y=145;y<=405;y+=52){
+      addButton(200,y);
+    }
+
+  }
+}
+
+
+/* =========================================================
+   FALTEN
+========================================================= */
+
+function drawFolds(){
+
+  foldGroup.innerHTML="";
+
+  if(currentGarment==="pants"){
+
+    [
+      "M 135 125 Q 155 165 145 210",
+      "M 265 125 Q 245 165 255 210",
+      "M 120 325 Q 145 350 135 400",
+      "M 280 325 Q 255 350 265 400"
+    ].forEach(d=>addFold(d));
+
+  }else{
+
+    [
+      "M 135 165 Q 150 205 145 250",
+      "M 265 165 Q 250 205 255 250",
+      "M 160 112 Q 150 150 160 190",
+      "M 240 112 Q 250 150 240 190",
+      "M 155 350 Q 170 375 165 410",
+      "M 245 350 Q 230 375 235 410"
+    ].forEach(d=>addFold(d));
+
+  }
+}
+
+
+/* =========================================================
+   SVG HELFER
+========================================================= */
+
+function addPath(d,className){
+
+  const p=
+    document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "path"
+    );
+
+  p.setAttribute("d",d);
+  p.setAttribute("class",className);
+
+  detailsGroup.appendChild(p);
+}
+
+
+function addFold(d){
+
+  const p=
+    document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "path"
+    );
+
+  p.setAttribute("d",d);
+  p.setAttribute("class","fold");
+
+  foldGroup.appendChild(p);
+}
+
+
+function addButton(x,y){
+
+  const c=
+    document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "circle"
+    );
+
+  c.setAttribute("cx",x);
+  c.setAttribute("cy",y);
+  c.setAttribute("r",4);
+  c.setAttribute("class","button-detail");
+
+  detailsGroup.appendChild(c);
+}
+
+
+/* =========================================================
+   ECHTE FINGER-VERFORMUNG
+========================================================= */
+
+svg.addEventListener(
+  "pointerdown",
+  startDrag
+);
+
+window.addEventListener(
+  "pointermove",
+  moveDrag,
+  {passive:false}
+);
+
+window.addEventListener(
+  "pointerup",
+  stopDrag
+);
+
+window.addEventListener(
+  "pointercancel",
+  stopDrag
+);
+
 
 function startDrag(event){
 
-  event.preventDefault();
+  const pos=
+    getSVGPoint(event);
 
-  draggingPoint =
-    Number(event.currentTarget.dataset.index);
+  if(!isInsideGarment(
+    pos.x,
+    pos.y,
+    getCurrentBoundary()
+  )){
+    return;
+  }
+
+  dragging=true;
+  lastPointer=pos;
+
+  document.body.classList.add("touching");
 
   try{
-    event.currentTarget.setPointerCapture(
+    svg.setPointerCapture(
       event.pointerId
     );
   }catch(e){}
 
-  window.addEventListener(
-    "pointermove",
-    dragPoint
-  );
-
-  window.addEventListener(
-    "pointerup",
-    stopDrag
-  );
-
-  window.addEventListener(
-    "pointercancel",
-    stopDrag
-  );
+  event.preventDefault();
 }
 
 
-/* =====================================================
-   PUNKT BEWEGEN
-===================================================== */
+function moveDrag(event){
 
-function dragPoint(event){
-
-  if(draggingPoint === null){
+  if(!dragging || !lastPointer){
     return;
   }
 
-  const svg =
-    document.getElementById("garmentSvg");
+  event.preventDefault();
 
-  const rect =
-    svg.getBoundingClientRect();
+  const pos=
+    getSVGPoint(event);
 
-  const scaleX =
-    400 / rect.width;
+  const dx=
+    pos.x-lastPointer.x;
 
-  const scaleY =
-    540 / rect.height;
+  const dy=
+    pos.y-lastPointer.y;
 
-  let x =
-    (event.clientX - rect.left) * scaleX;
+  if(
+    Math.abs(dx)+Math.abs(dy)
+    <0.25
+  ){
+    return;
+  }
 
-  let y =
-    (event.clientY - rect.top) * scaleY;
+  deformMesh(
+    lastPointer.x,
+    lastPointer.y,
+    dx,
+    dy
+  );
 
-  x =
-    Math.max(
-      20,
-      Math.min(380,x)
-    );
+  lastPointer=pos;
+}
 
-  y =
-    Math.max(
-      20,
-      Math.min(520,y)
-    );
 
-  points[draggingPoint].x = x;
-  points[draggingPoint].y = y;
+function stopDrag(){
+
+  dragging=false;
+  lastPointer=null;
+
+  document.body.classList.remove("touching");
+}
+
+
+/* =========================================================
+   WEICHE MESH-DEFORMATION
+========================================================= */
+
+function deformMesh(cx,cy,dx,dy){
+
+  const strength=
+    Number(
+      document.getElementById(
+        "strengthSlider"
+      ).value
+    )/100;
+
+  const radius=
+    58+
+    strength*58;
+
+  mesh.forEach(point=>{
+
+    if(!point.inside){
+      return;
+    }
+
+    const distance=
+      Math.hypot(
+        point.x-cx,
+        point.y-cy
+      );
+
+    if(distance>radius){
+      return;
+    }
+
+    let influence=
+      1-(distance/radius);
+
+    /*
+      Smoothes Stoffbewegung.
+    */
+
+    influence=
+      influence*influence*
+      (3-2*influence);
+
+    /*
+      Randpunkte dürfen stärker
+      reagieren, damit Ärmel,
+      Hosenbeine und Seiten gut
+      verändert werden können.
+    */
+
+    if(point.boundary){
+      influence*=1.18;
+    }
+
+    point.x+=
+      dx*influence;
+
+    point.y+=
+      dy*influence;
+
+  });
+
+  /*
+    Sicherheitsgrenzen.
+    */
+
+  mesh.forEach(point=>{
+
+    point.x=
+      Math.max(
+        -80,
+        Math.min(
+          480,
+          point.x
+        )
+      );
+
+    point.y=
+      Math.max(
+        -60,
+        Math.min(
+          600,
+          point.y
+        )
+      );
+
+  });
 
   drawGarment();
 }
 
 
-/* =====================================================
-   DRAG ENDE
-===================================================== */
+/* =========================================================
+   SVG KOORDINATEN
+========================================================= */
 
-function stopDrag(){
+function getSVGPoint(event){
 
-  draggingPoint = null;
+  const rect=
+    svg.getBoundingClientRect();
 
-  window.removeEventListener(
-    "pointermove",
-    dragPoint
-  );
+  return {
 
-  window.removeEventListener(
-    "pointerup",
-    stopDrag
-  );
+    x:
+      (event.clientX-rect.left)
+      *400/rect.width,
 
-  window.removeEventListener(
-    "pointercancel",
-    stopDrag
+    y:
+      (event.clientY-rect.top)
+      *540/rect.height
+
+  };
+}
+
+
+/* =========================================================
+   FORM-INNENBEREICH
+========================================================= */
+
+function isInsideGarment(
+  x,
+  y,
+  polygon
+){
+
+  return isInsidePolygon(
+    x,
+    y,
+    polygon
   );
 }
 
 
-/* =====================================================
+/* =========================================================
+   MESH ANZEIGEN
+========================================================= */
+
+function toggleMesh(){
+
+  garmentWrap.classList.toggle(
+    "show-mesh"
+  );
+}
+
+
+/* =========================================================
+   GARMENT AUSWÄHLEN
+========================================================= */
+
+function selectGarment(type,button){
+
+  currentGarment=type;
+
+  document.querySelectorAll(
+    ".tool-btn"
+  ).forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
+  if(button){
+    button.classList.add("active");
+  }
+
+  const styles=
+    Object.keys(
+      styleNames[type]
+    );
+
+  if(!styles.includes(currentStyle)){
+    currentStyle=styles[0];
+  }
+
+  renderStyleButtons();
+  resetShape();
+}
+
+
+/* =========================================================
+   STYLE
+========================================================= */
+
+function selectStyle(style){
+
+  currentStyle=style;
+
+  renderStyleButtons();
+  resetShape();
+}
+
+
+function renderStyleButtons(){
+
+  styleBar.innerHTML="";
+
+  Object.keys(
+    styleNames[currentGarment]
+  ).forEach(style=>{
+
+    const button=
+      document.createElement("button");
+
+    button.className=
+      "style-btn"+
+      (
+        style===currentStyle
+        ?" active"
+        :""
+      );
+
+    button.textContent=
+      styleNames[currentGarment][style];
+
+    button.onclick=
+      ()=>selectStyle(style);
+
+    styleBar.appendChild(button);
+
+  });
+}
+
+
+/* =========================================================
+   FORM RESET
+========================================================= */
+
+function resetShape(){
+
+  buildMesh();
+  drawGarment();
+}
+
+
+/* =========================================================
    FARBE
-===================================================== */
+========================================================= */
 
 function setColor(color){
 
-  currentColor =
-    color;
+  currentColor=color;
 
-  garmentPath.style.fill =
-    color;
+  garmentPath.style.fill=color;
 
   document.getElementById(
     "colorPicker"
-  ).value =
-    color;
+  ).value=color;
 }
 
 
-/* =====================================================
+/* =========================================================
    MUSTER
-===================================================== */
+========================================================= */
 
 function setPattern(pattern){
 
-  currentPattern =
-    pattern;
+  currentPattern=pattern;
 
-  updatePatternShape();
+  drawPattern();
 }
 
 
-function updatePatternShape(){
+function drawPattern(){
 
-  const overlay =
-    document.getElementById(
-      "patternOverlay"
-    );
+  patternGroup.innerHTML="";
 
-  overlay.className =
-    "pattern-overlay";
-
-  if(currentPattern !== "none"){
-    overlay.classList.add(
-      "pattern-"+currentPattern
-    );
+  if(currentPattern==="none"){
+    return;
   }
 
-  /*
-    SVG clip-path wird nicht benötigt,
-    weil das Muster als Overlay
-    über dem Kleidungsstück liegt.
-  */
+  if(currentPattern==="dots"){
+
+    for(let x=70;x<=330;x+=22){
+
+      for(let y=70;y<=470;y+=22){
+
+        const c=
+          document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+
+        c.setAttribute("cx",x);
+        c.setAttribute("cy",y);
+        c.setAttribute("r",2);
+
+        c.setAttribute(
+          "class",
+          "pattern-dot"
+        );
+
+        patternGroup.appendChild(c);
+      }
+    }
+  }
+
+
+  if(currentPattern==="lines"){
+
+    for(let x=-300;x<700;x+=18){
+
+      const line=
+        document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "line"
+        );
+
+      line.setAttribute("x1",x);
+      line.setAttribute("y1",0);
+      line.setAttribute("x2",x+500);
+      line.setAttribute("y2",540);
+
+      line.setAttribute(
+        "class",
+        "pattern-line"
+      );
+
+      patternGroup.appendChild(line);
+    }
+  }
+
+
+  if(currentPattern==="grid"){
+
+    for(let x=40;x<=360;x+=25){
+
+      const line=
+        document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "line"
+        );
+
+      line.setAttribute("x1",x);
+      line.setAttribute("y1",0);
+      line.setAttribute("x2",x);
+      line.setAttribute("y2",540);
+
+      line.setAttribute(
+        "class",
+        "pattern-grid"
+      );
+
+      patternGroup.appendChild(line);
+    }
+
+    for(let y=40;y<=540;y+=25){
+
+      const line=
+        document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "line"
+        );
+
+      line.setAttribute("x1",0);
+      line.setAttribute("y1",y);
+      line.setAttribute("x2",400);
+      line.setAttribute("y2",y);
+
+      line.setAttribute(
+        "class",
+        "pattern-grid"
+      );
+
+      patternGroup.appendChild(line);
+    }
+  }
 }
 
 
-/* =====================================================
+/* =========================================================
    TEXT
-===================================================== */
+========================================================= */
 
 function updateText(){
 
-  currentText =
+  currentText=
     document.getElementById(
       "textInput"
     ).value;
 
   document.getElementById(
     "designText"
-  ).textContent =
-    currentText;
+  ).textContent=currentText;
 }
 
 
-/* =====================================================
+/* =========================================================
    STICKER
-===================================================== */
+========================================================= */
 
 function setSticker(sticker){
 
-  currentSticker =
-    sticker;
+  currentSticker=sticker;
 
   document.getElementById(
     "sticker"
-  ).textContent =
-    sticker;
+  ).textContent=sticker;
 }
 
 
-/* =====================================================
+/* =========================================================
    GRÖSSE
-===================================================== */
+========================================================= */
 
 function resizeGarment(value){
 
-  garmentScale =
+  garmentScale=
     Number(value)/100;
 
-  document.querySelector(
-    ".garment-wrap"
-  ).style.transform =
+  garmentWrap.style.transform=
     `scale(${garmentScale})`;
 }
 
 
-/* =====================================================
+/* =========================================================
    SPEICHERN
-===================================================== */
+========================================================= */
 
 function saveDesign(){
 
-  const data = {
+  const data={
 
-    garment:
-      currentGarment,
+    garment:currentGarment,
+    style:currentStyle,
+    color:currentColor,
+    pattern:currentPattern,
+    sticker:currentSticker,
+    text:currentText,
+    scale:garmentScale,
 
-    style:
-      currentStyle,
+    mesh:mesh.map(p=>({
+      x:p.x,
+      y:p.y,
+      ox:p.ox,
+      oy:p.oy,
+      inside:p.inside,
+      boundary:p.boundary,
+      boundaryIndex:p.boundaryIndex
+    }))
 
-    color:
-      currentColor,
-
-    pattern:
-      currentPattern,
-
-    sticker:
-      currentSticker,
-
-    text:
-      currentText,
-
-    points:
-      points,
-
-    scale:
-      garmentScale
   };
 
   localStorage.setItem(
@@ -1575,13 +2039,13 @@ function saveDesign(){
 }
 
 
-/* =====================================================
+/* =========================================================
    LADEN
-===================================================== */
+========================================================= */
 
 function loadDesign(){
 
-  const saved =
+  const saved=
     localStorage.getItem(
       "arveDesign"
     );
@@ -1597,48 +2061,30 @@ function loadDesign(){
 
   try{
 
-    const data =
+    const data=
       JSON.parse(saved);
 
-    currentGarment =
-      data.garment || "shirt";
+    currentGarment=
+      data.garment||"shirt";
 
-    currentStyle =
-      data.style || "classic";
+    currentStyle=
+      data.style||"classic";
 
-    currentColor =
-      data.color || "#eee6d4";
+    currentColor=
+      data.color||"#eee6d4";
 
-    currentPattern =
-      data.pattern || "none";
+    currentPattern=
+      data.pattern||"none";
 
-    currentSticker =
-      data.sticker || "";
+    currentSticker=
+      data.sticker||"";
 
-    currentText =
-      data.text || "";
+    currentText=
+      data.text||"";
 
-    garmentScale =
-      data.scale || 1;
+    garmentScale=
+      data.scale||1;
 
-    if(
-      !styleNames[currentGarment] ||
-      !styleNames[currentGarment][currentStyle]
-    ){
-
-      currentStyle =
-        Object.keys(
-          styleNames[currentGarment]
-        )[0];
-    }
-
-    points =
-      Array.isArray(data.points)
-        ? data.points.map(point=>({
-            x:Number(point.x),
-            y:Number(point.y)
-          }))
-        : getStylePoints().map(point=>({...point}));
 
     document.querySelectorAll(
       ".tool-btn"
@@ -1646,13 +2092,14 @@ function loadDesign(){
       btn.classList.remove("active");
     });
 
-    if(currentGarment === "pants"){
+
+    if(currentGarment==="pants"){
 
       document.getElementById(
         "pantsButton"
       ).classList.add("active");
 
-    }else if(currentGarment === "formal"){
+    }else if(currentGarment==="formal"){
 
       document.getElementById(
         "formalButton"
@@ -1665,25 +2112,37 @@ function loadDesign(){
       ).classList.add("active");
     }
 
-    document.getElementById(
-      "textInput"
-    ).value =
-      currentText;
-
-    document.getElementById(
-      "colorPicker"
-    ).value =
-      currentColor;
-
-    document.querySelector(
-      ".garment-wrap"
-    ).style.transform =
-      `scale(${garmentScale})`;
 
     renderStyleButtons();
 
-    setPattern(currentPattern);
+
+    if(
+      Array.isArray(data.mesh)
+      &&
+      data.mesh.length
+    ){
+
+      mesh=data.mesh;
+
+    }else{
+
+      buildMesh();
+    }
+
+
+    document.getElementById(
+      "textInput"
+    ).value=currentText;
+
+    document.getElementById(
+      "colorPicker"
+    ).value=currentColor;
+
+    garmentWrap.style.transform=
+      `scale(${garmentScale})`;
+
     setSticker(currentSticker);
+    setPattern(currentPattern);
 
     drawGarment();
 
@@ -1692,53 +2151,34 @@ function loadDesign(){
     alert(
       "Das gespeicherte Design konnte nicht geladen werden."
     );
+
   }
 }
 
 
-/* =====================================================
-   RESET
-===================================================== */
+/* =========================================================
+   KOMPLETTER RESET
+========================================================= */
 
 function resetDesign(){
 
-  currentGarment =
-    "shirt";
-
-  currentStyle =
-    "classic";
-
-  currentColor =
-    "#eee6d4";
-
-  currentPattern =
-    "none";
-
-  currentSticker =
-    "";
-
-  currentText =
-    "";
-
-  garmentScale =
-    1;
-
-  points =
-    getStylePoints().map(point=>({...point}));
+  currentGarment="shirt";
+  currentStyle="classic";
+  currentColor="#eee6d4";
+  currentPattern="none";
+  currentSticker="";
+  currentText="";
+  garmentScale=1;
 
   document.getElementById(
     "textInput"
-  ).value =
-    "";
+  ).value="";
 
   document.getElementById(
     "colorPicker"
-  ).value =
-    "#eee6d4";
+  ).value="#eee6d4";
 
-  document.querySelector(
-    ".garment-wrap"
-  ).style.transform =
+  garmentWrap.style.transform=
     "scale(1)";
 
   document.querySelectorAll(
@@ -1751,24 +2191,20 @@ function resetDesign(){
     "shirtButton"
   ).classList.add("active");
 
-  renderStyleButtons();
-
-  setPattern("none");
   setSticker("");
+  setPattern("none");
 
-  drawGarment();
+  renderStyleButtons();
+  resetShape();
 }
 
 
-/* =====================================================
+/* =========================================================
    START
-===================================================== */
+========================================================= */
 
 renderStyleButtons();
-
-points =
-  getStylePoints().map(point=>({...point}));
-
+buildMesh();
 drawGarment();
 
 </script>
